@@ -10,10 +10,10 @@ public class CompInt {
         double currentTotal;
         int totalYears;
         double yearIntRate;
-        int currentYear = 1;
-        double quartIntRate;
+        double userIntRate;
         double intEarned;
         double quarterEarned;
+        int x;
        
         System.out.print("How much money will you be starting your account with? ");
         initialPrincipal = sc.nextDouble();
@@ -22,23 +22,24 @@ public class CompInt {
         totalYears = sc.nextInt();
         System.out.print("What is the yearly interest rate for your account? ");
         yearIntRate = sc.nextDouble();
-        quartIntRate = (yearIntRate/4);
+        System.out.print("How many times per year will interest be compounded? ");
+        x = sc.nextInt();
+        userIntRate = (yearIntRate/x);
         
-        while ( (totalYears) >= currentYear ){
+        for (int currentYear = 1; currentYear <= totalYears; currentYear++){
             System.out.println("In year " + currentYear);
             System.out.println("You will start with " + currentTotal);
             
             intEarned = 0;
             
-            for(int i =1; i<=4; i++){
+            for(int i =1; i<=x; i++){
                 quarterEarned=0;
-                quarterEarned += (currentTotal * (quartIntRate/100));
+                quarterEarned += (currentTotal * (userIntRate/100));
                 intEarned += quarterEarned;
                 currentTotal += quarterEarned;
             }
             System.out.println("You will earn $" + intEarned + " this year.");
             System.out.println("At year end, you will have $" + currentTotal + "in your account.");
-            currentYear++;
         }
         
     }
