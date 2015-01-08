@@ -20,11 +20,12 @@ public class GenderGame {
         lastName = sc.nextLine();
         System.out.print("Age: ");
         age = sc.nextInt();
+        sc.nextLine();
         System.out.println("");
         
         if(gender.equalsIgnoreCase("f") && age>19){
         System.out.print("Are you married, " + firstName + " (y or n)? ");
-        maritalStatus = sc.next();
+        maritalStatus = sc.nextLine();
         System.out.println("");
         if (maritalStatus.equalsIgnoreCase("y")){
             System.out.println("Then I shall call you Mrs. " + lastName + ".");
