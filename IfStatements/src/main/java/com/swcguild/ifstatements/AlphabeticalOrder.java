@@ -7,19 +7,29 @@ public class AlphabeticalOrder {
         Scanner sc = new Scanner(System.in);
         
         String lastName = "";
-        int a = lastName.compareTo("Carswell");
-        int b = lastName.compareTo("Jones");
-        int c = lastName.compareTo("Smith");
-        int d = lastName.compareTo("Young");
         
         System.out.print("What's your last name? ");
         lastName = sc.nextLine();
         
+        int a = lastName.compareToIgnoreCase("Carswell");
+        int b = lastName.compareToIgnoreCase("Jones");
+        int c = lastName.compareToIgnoreCase("Smith");
+        int d = lastName.compareToIgnoreCase("Young");
+        
         if ( a <= 0 ){
             System.out.println("You don't have to wait long.");
         }
-        if (a>0 && b<0){
+        else if (a>0 && b<0){
             System.out.println("That's not bad.");
+        }
+        else if (b>0 && c<0){
+            System.out.println("Looks like a bit of a wait.");
+        }
+        else if (c>0 && d<0){
+            System.out.println("It's going to be a while.");
+        }
+        else{
+            System.out.println("Grab a Snickers, homie...");
         }
         
     }
