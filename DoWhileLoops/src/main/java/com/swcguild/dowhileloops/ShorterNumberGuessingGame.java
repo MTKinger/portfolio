@@ -20,7 +20,9 @@ public class ShorterNumberGuessingGame {
 
             System.out.print("Your guess: ");
             userGuess = sc.nextInt();
-            System.out.println("That is incorrect. Guess again.");
+            if (userGuess != magicNumber) {
+                System.out.println("That is incorrect. Guess again.");
+            }
             totalGuesses++;
         } while (userGuess != magicNumber);
 
