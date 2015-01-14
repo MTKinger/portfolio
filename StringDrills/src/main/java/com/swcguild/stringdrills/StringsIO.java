@@ -26,11 +26,30 @@ public class StringsIO {
         String output = word.substring(word.length() - 2) + word.substring(word.length() - 2) + word.substring(word.length() - 2);
         return output;
     }
+
     public String firstHalf(String word) {
-        String output = word.substring(0, word.length()/2);
+        String output = word.substring(0, word.length() / 2);
         return output;
     }
-    
+
+    public String trimOne(String word) {
+        String output = word.substring(1, word.length() - 1);
+        return output;
+    }
+
+    public String longInMiddle(String a, String b) {
+        String output;
+        if (a.length() < b.length()) {
+            output = a + b + a;
+        } else {
+            output = b + a + b;
+        }
+        return output;
+    }
+    public String rotateLeft2(String word){
+        String output = word.substring(2) + word.substring(0, 2);
+        return output;
+    }
 
 }
 
