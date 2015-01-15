@@ -158,38 +158,42 @@ public class StudentQuizScores {
 
     public static void printHighScore(HashMap<String, ArrayList> map) {
         double max = 0;
-        double current;
+        String highStudent = "";
 
         Set<String> keys = map.keySet();
         for (String k : keys) {
             ArrayList list = map.get(k);
             Iterator<Double> iter = list.iterator();
             while (iter.hasNext()) {
-                current = iter.next();
+                double current = iter.next();
                 if (current > max) {
+                    highStudent = k;
                     max = current;
                 }
             }
         }
-        System.out.println("\nThe High Score for the class was: " + max);
+        System.out.println("\nThe High Score for the class was: " + highStudent
+                + " with a score of " + max + ".");
     }
 
     public static void printLowScore(HashMap<String, ArrayList> map) {
         double min = 100;
-        double current;
+        String lowStudent = "";
 
         Set<String> keys = map.keySet();
         for (String k : keys) {
             ArrayList list = map.get(k);
             Iterator<Double> iter = list.iterator();
             while (iter.hasNext()) {
-                current = iter.next();
-                if (current < min) {
+                double current = iter.next();
+                if (current <= min) {
+                    lowStudent = k;
                     min = current;
                 }
             }
         }
-        System.out.println("\nThe Low Score for the class was: " + min);
+        System.out.println("\nThe Low Score for the class was: " + lowStudent
+                + " with a score of " + min + ".");
     }
 
 }
