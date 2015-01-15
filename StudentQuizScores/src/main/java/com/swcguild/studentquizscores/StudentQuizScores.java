@@ -34,8 +34,7 @@ public class StudentQuizScores {
                 printClassAverage(map);
             } else if (menu == 7) {
                 printHighScore(map);
-            }
-            else if(menu == 8){
+            } else if (menu == 8) {
                 printLowScore(map);
             }
             menu = getMenuChoice();
