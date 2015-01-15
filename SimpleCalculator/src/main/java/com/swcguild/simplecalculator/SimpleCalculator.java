@@ -19,7 +19,7 @@ public class SimpleCalculator {
 
     public void divideCalc(double a, double b) {
         double ans = (a / b);
-        System.out.println("\nThe quotient is" + ans + "\n");
+        System.out.println("\nThe quotient is " + ans + "\n");
     }
 
 }

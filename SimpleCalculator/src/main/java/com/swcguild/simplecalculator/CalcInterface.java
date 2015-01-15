@@ -11,9 +11,9 @@ public class CalcInterface {
         Scanner sc = new Scanner(System.in);
         SimpleCalculator simp = new SimpleCalculator();
         int choice = 12345678;
-
+        cio.printMessage("CALCULATOR");
         while (choice != 5) {
-            cio.printMessage("CALCULATOR");
+
             Thread.sleep(500);
             cio.printMessage("\nWhich operation do you wish to perform?\n");
             Thread.sleep(500);
