@@ -3,7 +3,7 @@ package com.swcguild.basicarraylists;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BasicArrayList2 {
+public class BasicArrayLists2 {
     
     public static void main(String[] args) {
         
