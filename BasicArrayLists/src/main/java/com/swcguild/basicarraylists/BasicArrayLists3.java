@@ -16,7 +16,7 @@ public class BasicArrayLists3 {
 
         for (int i = 0; i < 1000; i++) {
             System.out.print(myArray.get(i) + ",  ");
-            if (1+i%10 == 0){
+            if ((1+i)%20 == 0){
                 System.out.println();
             }
         }
