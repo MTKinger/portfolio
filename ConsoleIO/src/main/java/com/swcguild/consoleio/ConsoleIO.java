@@ -7,12 +7,23 @@ public class ConsoleIO {
     Scanner sc = new Scanner(System.in);
 
     public int getInt(String prompt) {
-        System.out.print(prompt);
-        int input = Integer.parseInt(sc.nextLine());
-        return input;
+        boolean badInput;
+        int result = 0;
+
+        do {
+            try {
+                System.out.println(prompt);
+                result = Integer.parseInt(sc.nextLine());
+                badInput = false;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Please enter a numeric value!");
+                badInput = true;
+            }
+        } while (badInput);
+        return result;
     }
 
-    public int getInt(String prompt, int max, int min) {
+    public int getInt(String prompt, int min, int max) {
         int input;
         do {
             System.out.println(prompt);
@@ -26,12 +37,14 @@ public class ConsoleIO {
         String input = sc.nextLine();
         return input;
     }
+
     public float getFloat(String prompt) {
         System.out.print(prompt);
         float input = Float.parseFloat(sc.nextLine());
         return input;
     }
-    public float getFloat(String prompt, float max, float min) {
+
+    public float getFloat(String prompt, float min, float max) {
         float input;
         do {
             System.out.println(prompt);
@@ -39,12 +52,14 @@ public class ConsoleIO {
         } while (input < min || input > max);
         return input;
     }
-    public double getDouble(String prompt){
+
+    public double getDouble(String prompt) {
         System.out.println(prompt);
         double input = Double.parseDouble(sc.nextLine());
         return input;
     }
-    public double getDouble(String prompt, double max, double min){
+
+    public double getDouble(String prompt, double min, double max) {
         double input;
         do {
             System.out.println(prompt);
@@ -52,8 +67,8 @@ public class ConsoleIO {
         } while (input < min || input > max);
         return input;
     }
-    public void printMessage(String prompt){
+
+    public void printMessage(String prompt) {
         System.out.println(prompt);
     }
 }
- 
