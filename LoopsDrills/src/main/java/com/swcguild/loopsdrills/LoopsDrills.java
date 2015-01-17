@@ -132,9 +132,93 @@ public class LoopsDrills {
         } else {
             shortWord = a.length();
         }
-        for (int i = 0; i < shortWord -1; i++){
-            if (a.substring(i, i+2).equalsIgnoreCase(b.substring(i, i+2))){
+        for (int i = 0; i < shortWord - 1; i++) {
+            if (a.substring(i, i + 2).equalsIgnoreCase(b.substring(i, i + 2))) {
                 output++;
+            }
+        }
+        return output;
+    }
+
+    public String stringX(String a) {
+        String output = a;
+        int count = 0;
+        if (a.length() < 3) {
+            output = a;
+        } else {
+            for (int i = 1; i < (a.length() - count) - 1;) {
+                if (output.substring(i, i + 1).equalsIgnoreCase("x")) {
+                    output = output.substring(0, i) + output.substring(i + 1);
+                    count++;
+                } else {
+                    i++;
+                }
+            }
+        }
+        return output;
+    }
+
+    public String altPairs(String a) {
+        String output = "";
+        for (int i = 0; i < a.length(); i += 4) {
+            if (i + 1 < a.length()) {
+                output = output + a.substring(i, i + 2);
+            } else {
+                output = output + a.substring(i);
+            }
+        }
+        return output;
+    }
+
+    public String doNotYak(String a) {
+        String output = a;
+        for (int i = 0; i < output.length() - 2;) {
+            if (output.substring(i, i + 3).equalsIgnoreCase("yak")) {
+                output = output.substring(0, i) + output.substring(i + 3);
+            } else {
+                i++;
+            }
+        }
+
+        return output;
+    }
+
+    public int array667(int[] testArray) {
+        int counter = 0;
+        for (int i = 0; i < testArray.length - 1; i++) {
+            if ((testArray[i] == 6 && testArray[i + 1] == 6)
+                    || (testArray[i] == 6 && testArray[i + 1] == 7)) {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    public boolean noTripples(int[] testArray) {
+        boolean output = true;
+        if (testArray.length < 3) {
+            output = true;
+        } else {
+            for (int i = 0; i < testArray.length - 2; i++) {
+                if (testArray[i] == testArray[i + 1] && testArray[i] == testArray[i + 2]) {
+                    output = false;
+                }
+            }
+        }
+        return output;
+    }
+
+    public boolean pattern51(int[] testArray) {
+        boolean output = false;
+        boolean check = false;
+        if (testArray.length < 3) {
+            output = false;
+        } else {
+            for (int i = 0; i < testArray.length - 2 && check == false; i++) {
+                if (testArray[i] + 5 == testArray[i + 1] && testArray[i] - 1 == testArray[i + 2]) {
+                    output = true;
+                    check = true;
+                }
             }
         }
         return output;

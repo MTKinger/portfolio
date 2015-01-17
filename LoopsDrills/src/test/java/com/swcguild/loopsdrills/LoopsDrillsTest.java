@@ -168,4 +168,81 @@ public class LoopsDrillsTest {
         intResult = ld.substringMatch("abc", "axz");
         assertEquals(intResult, 0);
     }
+    
+    @Test
+    public void stringXTest(){
+        stringResult = ld.stringX("xxHxix");
+        assertEquals(stringResult, "xHix");
+        stringResult = ld.stringX("abxxxcd");
+        assertEquals(stringResult, "abcd");
+        stringResult = ld.stringX("xabxxxcdx");
+        assertEquals(stringResult, "xabcdx");
+    }
+    
+    @Test
+    public void altPairsTest(){
+        stringResult = ld.altPairs("kitten");
+        assertEquals(stringResult,"kien");
+        stringResult = ld.altPairs("Chocolate");
+        assertEquals(stringResult, "Chole");
+        stringResult = ld.altPairs("CodingHorror");
+        assertEquals(stringResult, "Congrr");
+        stringResult = ld.altPairs("MichaelThomasKing");
+        assertEquals(stringResult, "MiaehosKg");
+    }
+    
+    @Test
+    public void doNotYakTest(){
+        stringResult = ld.doNotYak("yakpak");
+        assertEquals(stringResult, "pak");
+        stringResult = ld.doNotYak("pakyak");
+        assertEquals(stringResult, "pak");
+        stringResult = ld.doNotYak("yak123ya");
+        assertEquals(stringResult, "123ya");
+    }
+    
+    @Test
+    public void array667Test(){
+        int[] testArray1 = {6,6,2};
+        intResult = ld.array667(testArray1);
+        assertEquals(intResult,1);
+        int[] testArray2 = {6,6,2,6};
+        intResult = ld.array667(testArray2);
+        assertEquals(intResult, 1);
+        int[] testArray3 = {6,7,2,6};
+        intResult = ld.array667(testArray3);
+        assertEquals(intResult, 1);
+        int[] testArray4 = {6,6,2,4,6,7,6,6,2,6,7,6};
+        intResult = ld.array667(testArray4);
+        assertEquals(intResult,4);
+    }
+    
+    @Test
+    public void noTripplesTest(){
+        int[] testArray1 = {1,1,2,2,1};
+        result = ld.noTripples(testArray1);
+        assertTrue(result);
+        int[] testArray2 = {1,1,2,2,2,1};
+        result = ld.noTripples(testArray2);
+        assertFalse(result);
+        int[] testArray3 = {1,1,1,2,2,2,1};
+        result = ld.noTripples(testArray3);
+        assertFalse(result);
+    }
+    
+    @Test
+    public void pattern51Test(){
+        int[] testArray1 = {1,2,7,1};
+        result = ld.pattern51(testArray1);
+        assertTrue(result);
+        int[] testArray2 = {1,2,8,1};
+        result = ld.pattern51(testArray2);
+        assertFalse(result);
+        int[] testArray3 = {2,7,1};
+        result = ld.pattern51(testArray3);
+        assertTrue(result);
+        int[] testArray4 = {4,9,3};
+        result = ld.pattern51(testArray4);
+        assertTrue(result);
+    }
 }
