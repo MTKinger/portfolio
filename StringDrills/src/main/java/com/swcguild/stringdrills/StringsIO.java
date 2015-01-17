@@ -108,6 +108,7 @@ public class StringsIO {
         return output;
     }
     
+    // REMEMBER TO MAKE hasBAD CLASS!!!!!!!!
 }
 
 //StringsIO sio = new StringsIO();
