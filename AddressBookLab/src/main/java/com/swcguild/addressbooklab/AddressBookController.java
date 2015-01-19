@@ -1,50 +1,64 @@
 package com.swcguild.addressbooklab;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AddressBookController {
-
+    
     ConsoleIO cio = new ConsoleIO();
     AddressBook addressBook = new AddressBook();
-
+    
     public void run() {
         boolean keepGoing = true;
         int menuSelection = 0;
-
-        while (keepGoing) {
-            printMenu();
-            menuSelection = cio.getInt("", 1, 7);
-
-            switch (menuSelection) {
-                case 1:
-                    createHouse();
-                    break;
-                case 2:
-                    removeHouse();
-                    break;
-                case 3:
-                    viewAddress();
-                    break;
-                case 4:
-                    countAddresses();
-                    break;
-                case 5:
-                    viewAllAddresses();
-                    break;
+        try {
+            addressBook.loadAddressBook();
+            while (keepGoing) {
+                printMenu();
+                menuSelection = cio.getInt("", 1, 9);
+                
+                switch (menuSelection) {
+                    case 1:
+                        createHouse();
+                        break;
+                    case 2:
+                        removeHouse();
+                        break;
+                    case 3:
+                        viewAddress();
+                        break;
+                    case 4:
+                        countAddresses();
+                        break;
+                    case 5:
+                        viewAllAddresses();
+                        break;
                     case 6:
-                    editAddress();
-                    break;
-                case 7:
-                    cio.printMessage("Exiting....");
-                    keepGoing = false;
-                    break;
-                default:
-                    cio.printMessage("Unknown Command...");
+                        editAddress();
+                        break;
+                    case 7:
+                        addressBook.loadAddressBook();
+                        break;
+                    case 8:
+                        addressBook.writeAddressBook();
+                        break;
+                    case 9:
+                        cio.printMessage("Exiting....");
+                        keepGoing = false;
+                        break;
+                    default:
+                        cio.printMessage("Unknown Command...");
+                }
+                
             }
-
+        } catch (FileNotFoundException ex) {
+            cio.printMessage("Error Loading Address Book...");
+        } catch (IOException ex) {
+            cio.printMessage("Error Writing to File...");
         }
     }
-
+    
     private void printMenu() {
         cio.printMessage("MAIN MENU:");
         cio.printMessage("\tPlease select the operation you wish to perform:");
@@ -54,9 +68,11 @@ public class AddressBookController {
         cio.printMessage("\t\t4. List Address Count");
         cio.printMessage("\t\t5. List All Addresses");
         cio.printMessage("\t\t6. Edit Existing Address");
-        cio.printMessage("\t\t7. Exit");
+        cio.printMessage("\t\t7. Load Address Book from File");
+        cio.printMessage("\t\t8. Save Address Book to File");
+        cio.printMessage("\t\t9. Exit");
     }
-
+    
     private void createHouse() {
         cio.printMessage("Add Address Menu");
         String firstName = cio.getString("\tPlease Enter First Name: ");
@@ -80,7 +96,7 @@ public class AddressBookController {
             }
         } while (exit != 1);
     }
-
+    
     private void removeHouse() {
         cio.printMessage("Delete Address Menu:");
         String lastName = cio.getString("\tPlease Enter Last Name of Address to Delete:");
@@ -103,7 +119,7 @@ public class AddressBookController {
             }
         } while (!response.equalsIgnoreCase("yes") && !response.equalsIgnoreCase("no") && exit != 1);
     }
-
+    
     private void viewAddress() {
         cio.printMessage("Find Address Menu:");
         String lastName = cio.getString("\tPlease Enter Last Name of Address to Find:");
@@ -123,9 +139,9 @@ public class AddressBookController {
                 cio.printMessage("\n\tInput Error");
             }
         } while (exit != 1);
-
+        
     }
-
+    
     private void countAddresses() {
         cio.printMessage("List Address Count Menu:");
         int numberHouses = addressBook.getNumberHouses();
@@ -135,9 +151,9 @@ public class AddressBookController {
             exit = cio.getInt("\n\n\tPress 1 to go to Main Menu");
         }
     }
-
+    
     private void viewAllAddresses() {
-        String[] lastNames = addressBook.getLastNames();
+        ArrayList<String> lastNames = addressBook.getLastNames();
         for (String lastName : lastNames) {
             House currentHouse = addressBook.getHouse(lastName);
             cio.printMessage("\n\t" + currentHouse.getFirstName() + " " + currentHouse.getLastName());
@@ -153,7 +169,7 @@ public class AddressBookController {
             }
         } while (exit != 1);
     }
-
+    
     private void editAddress() {
         cio.printMessage("Edit Address Menu:");
         String lastName = cio.getString("\tPlease Enter Last Name of Address to Edit:");
@@ -190,6 +206,6 @@ public class AddressBookController {
                 cio.printMessage("\n\tInput Error");
             }
         } while (exit != 1);
-
+        
     }
 }

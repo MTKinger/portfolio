@@ -1,15 +1,15 @@
 package com.swcguild.addressbooklab;
 
 public class House {
-    
+
     private final String lastName;
     private String firstName;
     private String streetAddress;
     private String city;
     private String state;
     private String zip;
-    
-    public House (String lastName){
+
+    public House(String lastName) {
         this.lastName = lastName;
     }
 
@@ -56,7 +56,5 @@ public class House {
     public void setZip(String zip) {
         this.zip = zip;
     }
-    
-    
 
 }
