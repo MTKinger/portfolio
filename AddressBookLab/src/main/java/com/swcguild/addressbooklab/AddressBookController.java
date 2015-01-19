@@ -13,7 +13,7 @@ public class AddressBookController {
 
         while (keepGoing) {
             printMenu();
-            menuSelection = cio.getInt("", 1, 6);
+            menuSelection = cio.getInt("", 1, 7);
 
             switch (menuSelection) {
                 case 1:
@@ -31,7 +31,10 @@ public class AddressBookController {
                 case 5:
                     viewAllAddresses();
                     break;
-                case 6:
+                    case 6:
+                    editAddress();
+                    break;
+                case 7:
                     cio.printMessage("Exiting....");
                     keepGoing = false;
                     break;
@@ -50,7 +53,8 @@ public class AddressBookController {
         cio.printMessage("\t\t3. Find Address");
         cio.printMessage("\t\t4. List Address Count");
         cio.printMessage("\t\t5. List All Addresses");
-        cio.printMessage("\t\t6. Exit");
+        cio.printMessage("\t\t6. Edit Existing Address");
+        cio.printMessage("\t\t7. Exit");
     }
 
     private void createHouse() {
@@ -150,4 +154,42 @@ public class AddressBookController {
         } while (exit != 1);
     }
 
+    private void editAddress() {
+        cio.printMessage("Edit Address Menu:");
+        String lastName = cio.getString("\tPlease Enter Last Name of Address to Edit:");
+        House currentHouse = addressBook.getHouse(lastName);
+        int exit = 0;
+        if (currentHouse != null) {
+            cio.printMessage("\n\t" + currentHouse.getFirstName() + " " + currentHouse.getLastName());
+            cio.printMessage("\t" + currentHouse.getStreetAddress());
+            cio.printMessage("\t" + currentHouse.getCity() + ", " + currentHouse.getState()
+                    + ", " + currentHouse.getZip());
+            String newStreetAddress = cio.getString("\n\n\tPlease Enter New Street Address:");
+            String newCity = cio.getString("\tPlease Enter New City:");
+            String newState = cio.getString("\tPlease Enter New State:");
+            String newZip = cio.getString("\tPlease Enter New Zip Code:");
+            
+            currentHouse.setStreetAddress(newStreetAddress);
+            currentHouse.setCity(newCity);
+            currentHouse.setState(newState);
+            currentHouse.setZip(newZip);
+            
+            cio.printMessage("\nRevised Address:");
+            
+            cio.printMessage("\n\t" + currentHouse.getFirstName() + " " + currentHouse.getLastName());
+            cio.printMessage("\t" + currentHouse.getStreetAddress());
+            cio.printMessage("\t" + currentHouse.getCity() + ", " + currentHouse.getState()
+                    + ", " + currentHouse.getZip());
+            
+        } else {
+            cio.printMessage("\n\tLast Name Not Found.");
+        }
+        do {
+            exit = cio.getInt("\n\n\tPress 1 to go to Main Menu");
+            if (exit != 1) {
+                cio.printMessage("\n\tInput Error");
+            }
+        } while (exit != 1);
+
+    }
 }
