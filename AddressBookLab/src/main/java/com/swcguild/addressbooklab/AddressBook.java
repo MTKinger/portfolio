@@ -79,4 +79,18 @@ public class AddressBook {
         out.close();
     }
 
+    // Returns an array list of all last name matches.
+    public ArrayList<String> checkLastName(String lastName) {
+        Set<String> lastNameSet = addressMap.keySet();
+        ArrayList<String> lastNameList = new ArrayList<>(lastNameSet);
+        ArrayList<String> matchesList = new ArrayList<>();
+        for (String currentLastName : lastNameList) {
+            String localCurrent = currentLastName.substring(0, currentLastName.length() - 4);
+            if (localCurrent.equalsIgnoreCase(lastName)) {
+                matchesList.add(currentLastName);
+            }
+        }
+        return matchesList;
+    }
+
 }
