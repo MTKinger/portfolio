@@ -12,24 +12,24 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class DVDCollection {
-
+    
     public static final String DVD_FILE = "dvdCollection.txt";
     public static final String DELIMITER = "::";
-
+    
     private HashMap<String, DVD> collection = new HashMap<>();
-
+    
     public DVD addDVD(String title, DVD dvd) {
         return collection.put(title, dvd);
     }
-
+    
     public DVD getDVD(String title) {
         return collection.get(title);
     }
-
+    
     public DVD removeDVD(String title) {
         return collection.remove(title);
     }
-
+    
     public ArrayList<String> getTitles() {
         Set<String> titleSet = collection.keySet();
         ArrayList<String> titleList = new ArrayList<String>(titleSet);
@@ -100,7 +100,7 @@ public class DVDCollection {
         }
         return titleList;
     }
-
+    
     public ArrayList<String> getTitleKeyWord(String keyword) {
         Set<String> titleSet = collection.keySet();
         ArrayList<String> titleList = new ArrayList<>(titleSet);
@@ -124,12 +124,12 @@ public class DVDCollection {
         }
         return titleList;
     }
-
+    
     public void loadDVDCollection() throws FileNotFoundException {
         Scanner sc = new Scanner(new BufferedReader(new FileReader(DVD_FILE)));
         String currentLine;
         String[] currentTokens;
-
+        
         while (sc.hasNextLine()) {
             currentLine = sc.nextLine();
             currentTokens = currentLine.split(DELIMITER);
@@ -146,33 +146,33 @@ public class DVDCollection {
                 comments.set(i - 6, currentTokens[i]);
             }
             currentDVD.setComments(comments);
-
+            
             collection.put(currentDVD.getTitle(), currentDVD);
         }
         sc.close();
     }
-
+    
     public void writeAddressBook() throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(DVD_FILE));
-
+        
         ArrayList<String> titles = getTitles();
         for (String title : titles) {
             DVD currentDVD = collection.get(title);
-
+            
             out.print(currentDVD.getTitle() + DELIMITER + currentDVD.getReleaseDate()
                     + DELIMITER + currentDVD.getMPAA() + DELIMITER + currentDVD.getDirector()
                     + DELIMITER + currentDVD.getStudio() + DELIMITER + currentDVD.getUserRating());
-
+            
             ArrayList<String> comments = currentDVD.getComments();
             if (comments.size() > 0) {
                 for (String comment : comments) {
                     out.print(DELIMITER + comment);
                 }
-
+                out.print("\n");
             }
             out.flush();
         }
-
+        
         out.close();
     }
 }

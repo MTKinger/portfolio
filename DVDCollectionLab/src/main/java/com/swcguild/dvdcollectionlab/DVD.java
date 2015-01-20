@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class DVD {
 
-    private String title;
+    private final String title;
     private int releaseDate;
     private String MPAA;
     private String director;
     private String studio;
     private double userRating;
-    private ArrayList<String> comments = new ArrayList<String>();
+    private ArrayList<String> comments = new ArrayList<>();
 
     public DVD(String title) {
         this.title = title;
