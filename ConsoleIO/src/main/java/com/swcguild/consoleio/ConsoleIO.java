@@ -1,5 +1,6 @@
 package com.swcguild.consoleio;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleIO {
@@ -16,7 +17,7 @@ public class ConsoleIO {
                 result = Integer.parseInt(sc.nextLine());
                 badInput = false;
             } catch (NumberFormatException nfe) {
-                System.out.println("Please enter a numeric value!");
+                System.out.println("Please enter an integer!");
                 badInput = true;
             }
         } while (badInput);
@@ -24,11 +25,22 @@ public class ConsoleIO {
     }
 
     public int getInt(String prompt, int min, int max) {
-        int input;
+        int input = 0;
+        boolean badInput;
         do {
-            System.out.println(prompt);
-            input = Integer.parseInt(sc.nextLine());
-        } while (input < min || input > max);
+            do {
+                try {
+                    System.out.println(prompt);
+                    input = Integer.parseInt(sc.nextLine());
+                    badInput = false;
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Please enter an integer!");
+                    badInput = true;
+                }
+
+            } while (input < min || input > max);
+        } while (badInput);
+
         return input;
     }
 
@@ -39,32 +51,72 @@ public class ConsoleIO {
     }
 
     public float getFloat(String prompt) {
-        System.out.print(prompt);
-        float input = Float.parseFloat(sc.nextLine());
+        boolean badInput;
+        float input = 0;
+
+        do {
+            try {
+                System.out.print(prompt);
+                input = Float.parseFloat(sc.nextLine());
+                badInput = false;
+            } catch (InputMismatchException ime) {
+                System.out.println("Please enter a valid numerical value!");
+                badInput = true;
+            }
+        } while (badInput);
         return input;
     }
 
     public float getFloat(String prompt, float min, float max) {
-        float input;
+        float input = 0;
+        boolean badInput;
         do {
-            System.out.println(prompt);
-            input = Float.parseFloat(sc.nextLine());
-        } while (input < min || input > max);
+            do {
+                try {
+                    System.out.println(prompt);
+                    input = Float.parseFloat(sc.nextLine());
+                    badInput = false;
+                } catch (InputMismatchException ime) {
+                    System.out.println("Please enter a valid numerical value!");
+                    badInput = true;
+                }
+            } while (input < min || input > max);
+        } while (badInput);
         return input;
     }
 
     public double getDouble(String prompt) {
-        System.out.println(prompt);
-        double input = Double.parseDouble(sc.nextLine());
+        boolean badInput;
+        double input = 0;
+        do {
+            try {
+                System.out.println(prompt);
+                input = Double.parseDouble(sc.nextLine());
+                badInput = false;
+            } catch (InputMismatchException ime) {
+                System.out.println("Please enter a valid numerical value!");
+                badInput = true;
+            }
+
+        } while (badInput);
         return input;
     }
 
     public double getDouble(String prompt, double min, double max) {
-        double input;
+        double input = 0;
+        boolean badInput;
         do {
-            System.out.println(prompt);
-            input = Double.parseDouble(sc.nextLine());
-        } while (input < min || input > max);
+            do {
+                try {
+                    System.out.println(prompt);
+                    input = Double.parseDouble(sc.nextLine());
+                    badInput = false;
+                } catch (InputMismatchException ime) {
+                    System.out.println("Please enter a valid numerical value!");
+                    badInput = true;
+                }
+            } while (input < min || input > max);
+        } while (badInput);
         return input;
     }
 
