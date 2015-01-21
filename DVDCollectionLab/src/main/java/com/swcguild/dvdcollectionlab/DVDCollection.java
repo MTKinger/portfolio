@@ -12,27 +12,27 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class DVDCollection {
-    
+
     public static final String DVD_FILE = "dvdCollection.txt";
     public static final String DELIMITER = "::";
-    
+
     private HashMap<String, DVD> collection = new HashMap<>();
-    
+
     public DVD addDVD(String title, DVD dvd) {
         return collection.put(title, dvd);
     }
-    
+
     public DVD getDVD(String title) {
         return collection.get(title);
     }
-    
+
     public DVD removeDVD(String title) {
         return collection.remove(title);
     }
-    
+
     public ArrayList<String> getTitles() {
         Set<String> titleSet = collection.keySet();
-        ArrayList<String> titleList = new ArrayList<String>(titleSet);
+        ArrayList<String> titleList = new ArrayList<>(titleSet);
         return titleList;
     }
 
@@ -40,70 +40,76 @@ public class DVDCollection {
     public ArrayList<String> getTitlesYear(int year) {
         Set<String> titleSet = collection.keySet();
         ArrayList<String> titleList = new ArrayList<>(titleSet);
-        for (String title : titleList) {
-            DVD currentDVD = collection.get(title);
-            if (currentDVD.getReleaseDate() != year) {
-                titleList.remove(title);
+        ArrayList<String> matchesList = new ArrayList<>();
+        for (String currentTitle : titleList) {
+            DVD currentDVD = collection.get(currentTitle);
+            if (currentDVD.getReleaseDate() == year) {
+                matchesList.remove(currentTitle);
             }
         }
-        return titleList;
+        return matchesList;
     }
 
     // J-Unit Required
     public ArrayList<String> getTitlesMPAA(String mpaaRating) {
         Set<String> titleSet = collection.keySet();
         ArrayList<String> titleList = new ArrayList(titleSet);
-        for (String title : titleList) {
-            DVD dvd = new DVD(title);
-            if (!dvd.getMPAA().equalsIgnoreCase(mpaaRating)) {
-                titleList.remove(title);
+        ArrayList<String> matchesList = new ArrayList<>();
+        for (String currentTitle : titleList) {
+            DVD dvd = new DVD(currentTitle);
+            if (dvd.getMPAA().equalsIgnoreCase(mpaaRating)) {
+                matchesList.remove(currentTitle);
             }
         }
-        return titleList;
+        return matchesList;
     }
 
     // J-Unit Required
     public ArrayList<String> getTitlesDirector(String director) {
         Set<String> titleSet = collection.keySet();
         ArrayList<String> titleList = new ArrayList<>(titleSet);
-        for (String title : titleList) {
-            DVD dvd = new DVD(title);
-            if (!dvd.getDirector().equalsIgnoreCase(director)) {
-                titleList.remove(title);
+        ArrayList<String> matchesList = new ArrayList<>();
+        for (String currentTitle : titleList) {
+            DVD dvd = new DVD(currentTitle);
+            if (dvd.getDirector().equalsIgnoreCase(director)) {
+                matchesList.add(currentTitle);
             }
         }
-        return titleList;
+        return matchesList;
     }
 
     // J-Unit Required
     public ArrayList<String> getTitleStudio(String studio) {
         Set<String> titleSet = collection.keySet();
         ArrayList<String> titleList = new ArrayList<>(titleSet);
-        for (String title : titleList) {
-            DVD dvd = new DVD(title);
-            if (!dvd.getStudio().equalsIgnoreCase(studio)) {
-                titleList.remove(title);
+        ArrayList<String> matchesList = new ArrayList<>();
+        for (String currentTitle : titleList) {
+            DVD dvd = new DVD(currentTitle);
+            if (dvd.getStudio().equalsIgnoreCase(studio)) {
+                matchesList.add(currentTitle);
             }
         }
-        return titleList;
+        return matchesList;
     }
 
     // J-Unit Required
     public ArrayList<String> getTitleRating(double rating) {
         Set<String> titleSet = collection.keySet();
         ArrayList<String> titleList = new ArrayList(titleSet);
-        for (String title : titleList) {
-            DVD dvd = new DVD(title);
-            if (dvd.getUserRating() < rating) {
-                titleList.remove(title);
+        ArrayList<String> matchesList = new ArrayList<>();
+        for (String currentTitle : titleList) {
+            DVD dvd = new DVD(currentTitle);
+            if (dvd.getUserRating() >= rating) {
+                matchesList.add(currentTitle);
             }
         }
-        return titleList;
+        return matchesList;
     }
-    
+
     public ArrayList<String> getTitleKeyWord(String keyword) {
         Set<String> titleSet = collection.keySet();
         ArrayList<String> titleList = new ArrayList<>(titleSet);
+        ArrayList<String> matchesList = new ArrayList<>();
         boolean found = false;
         for (String title : titleList) {
             DVD currentDVD = collection.get(title);
@@ -118,18 +124,31 @@ public class DVDCollection {
                     }
                 }
             }
-            if (found == false) {
-                titleList.remove(title);
+            if (found == true) {
+                matchesList.add(title);
             }
         }
-        return titleList;
+        return matchesList;
     }
     
+    public ArrayList<String> getTitlesByTitle(String title){
+        Set<String> titleSet = collection.keySet();
+        ArrayList<String> titlesList = new ArrayList<>(titleSet);
+        ArrayList<String> matchesList = new ArrayList<>();
+        for (String currentTitle : titlesList){
+            DVD dvd = new DVD(currentTitle);
+            if(dvd.getTitle().equalsIgnoreCase(title)){
+                matchesList.add(currentTitle);
+            }
+        }
+        return matchesList;
+    }
+
     public void loadDVDCollection() throws FileNotFoundException {
         Scanner sc = new Scanner(new BufferedReader(new FileReader(DVD_FILE)));
         String currentLine;
         String[] currentTokens;
-        
+
         while (sc.hasNextLine()) {
             currentLine = sc.nextLine();
             currentTokens = currentLine.split(DELIMITER);
@@ -146,23 +165,23 @@ public class DVDCollection {
                 comments.set(i - 6, currentTokens[i]);
             }
             currentDVD.setComments(comments);
-            
+
             collection.put(currentDVD.getTitle(), currentDVD);
         }
         sc.close();
     }
-    
+
     public void writeAddressBook() throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(DVD_FILE));
-        
+
         ArrayList<String> titles = getTitles();
         for (String title : titles) {
             DVD currentDVD = collection.get(title);
-            
+
             out.print(currentDVD.getTitle() + DELIMITER + currentDVD.getReleaseDate()
                     + DELIMITER + currentDVD.getMPAA() + DELIMITER + currentDVD.getDirector()
                     + DELIMITER + currentDVD.getStudio() + DELIMITER + currentDVD.getUserRating());
-            
+
             ArrayList<String> comments = currentDVD.getComments();
             if (comments.size() > 0) {
                 for (String comment : comments) {
@@ -172,7 +191,7 @@ public class DVDCollection {
             }
             out.flush();
         }
-        
+
         out.close();
     }
 }
