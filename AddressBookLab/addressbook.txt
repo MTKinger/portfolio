@@ -1,5 +1,3 @@
-King0002::Tom::13464 Priestly St::Philadelphia::PA::19446
-King0001::Mike::1383 Brook Lane::Jamison::PA::18929
-Bostick0001::Jim::9900 Ashley::Mentor::OH::44060
-Bostick0002::Martha::9900 Ashley Ln::Mentor::OH::44060
-Ragan0001::Mike::123 new st::new::NW::12345
+King0002::Debi::1383 Brook La::Jamison::PA::18929
+King0001::Mike::401 S Main St::Akron::OH::44311
+Bostick0001::Jim::9900 Ashley Rd::Mentor::OH::44606
