@@ -1,0 +1,9 @@
+Snickers::A1::100::7
+Take 5::A2::125::2
+Reese's Pieces::A3::75::8
+Butterfinger::B1::110::5
+Milky Way::B2::90::5
+Famous Amos::B3::150::5
+M&Ms::C1::80::4
+Doritos::C2::135::7
+Lifesavers::C3::50::3
