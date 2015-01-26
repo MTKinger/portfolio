@@ -17,7 +17,7 @@ public class ConsoleIO {
                 result = Integer.parseInt(sc.nextLine());
                 badInput = false;
             } catch (NumberFormatException nfe) {
-                System.out.println("Please enter an integer!");
+                System.out.println("Please enter a valid numerical value!");
                 badInput = true;
             }
         } while (badInput);
@@ -34,7 +34,7 @@ public class ConsoleIO {
                     input = Integer.parseInt(sc.nextLine());
                     badInput = false;
                 } catch (NumberFormatException nfe) {
-                    System.out.println("Please enter an integer!");
+                    System.out.println("Please enter a valid numerical value!");
                     badInput = true;
                 }
 
@@ -122,5 +122,9 @@ public class ConsoleIO {
 
     public void printMessage(String prompt) {
         System.out.println(prompt);
+    }
+    
+    public void printMessageNoReturn(String prompt) {
+        System.out.print(prompt);
     }
 }
