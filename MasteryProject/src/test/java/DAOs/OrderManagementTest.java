@@ -5,18 +5,23 @@
  */
 package DAOs;
 
+import DTOs.Order;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author apprentice
  */
 public class OrderManagementTest {
+    
+    OrderManagement om = new OrderManagement();
+    Order testOrder = new Order("Mike", "Wood", 10);
+    
     
     public OrderManagementTest() {
     }
@@ -42,4 +47,18 @@ public class OrderManagementTest {
     //
     // @Test
     // public void hello() {}
+    
+    @Test
+    public void addRemoveCurrentOrderTest(){
+        assertEquals(om.getCurrentOrderSize(),0);
+        om.addOrder(testOrder, "date");
+        assertEquals(om.getCurrentOrderSize(),1);
+        assertEquals(testOrder.getCustomerName(), om.getOrder(0).getCustomerName());
+        testOrder.setOrderNumber(2);
+        om.removeOrder("date", 3);
+        assertEquals(om.getCurrentOrderSize(),1);
+        om.removeOrder("date", 2);
+        assertEquals(om.getCurrentOrderSize(),0);
+    }
+    
 }
