@@ -1,6 +1,6 @@
 package DTOs;
 
-public abstract class  Taxes {
+public  class  Taxes {
     
     protected String state;
     protected double taxRate;

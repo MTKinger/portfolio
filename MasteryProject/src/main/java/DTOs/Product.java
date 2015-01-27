@@ -1,6 +1,6 @@
 package DTOs;
 
-public abstract class Product extends Taxes{
+public class Product extends Taxes{
     
     protected String productType;
     protected double costPSF;
