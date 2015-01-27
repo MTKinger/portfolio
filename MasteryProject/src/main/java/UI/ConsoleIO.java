@@ -93,7 +93,7 @@ public class ConsoleIO {
                 System.out.println(prompt);
                 input = Double.parseDouble(sc.nextLine());
                 badInput = false;
-            } catch (InputMismatchException ime) {
+            } catch (NumberFormatException ime) {
                 System.out.println("Please enter a valid numerical value!");
                 badInput = true;
             }

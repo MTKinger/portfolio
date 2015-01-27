@@ -1,19 +1,28 @@
 package BuisnessLogic;
 
-import BuisnessLogic.*;
+import DAOs.OrderManagement;
+import DAOs.ProductManagement;
+import DAOs.TaxManagement;
+import DTOs.Order;
 import UI.ConsoleIO;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class ManagementController {
 
     ConsoleIO cio = new ConsoleIO();
     int menuChoice;
+    TaxManagement tm = new TaxManagement();
+    ProductManagement pm = new ProductManagement();
+    OrderManagement om = new OrderManagement();
+    CostCalculator calc = new CostCalculator();
 
-    public void run() {
+    public void run() throws FileNotFoundException {
         doMenu();
     }
 
-    private void doMenu() {
+    private void doMenu() throws FileNotFoundException {
         do {
             printMenu();
             menuChoice = cio.getInt("Please make a selection from the above choices:", 1, 6);
@@ -22,7 +31,7 @@ public class ManagementController {
                     // displayOrders();
                     break;
                 case 2:
-                    // addOrder();
+                     addOrder();
                     break;
                 case 3:
                     // editOrder();
@@ -56,6 +65,54 @@ public class ManagementController {
         cio.printMessage("* 6. Quit");
         cio.printMessage("*");
         cio.printMessage("***************************************************\n\n");
+    }
+
+    private void addOrder() throws FileNotFoundException {
+        tm.loadFromFile();
+        String userName = cio.getString("Who placed the order?");
+        double area = cio.getDouble("What's the area of the order, in square feet");
+        String state = "";
+        String productType = "";
+
+        boolean stateCheck = false;
+        do {
+            state = cio.getString("What is the two letter code of the state in which the order is being placed?").toUpperCase();
+            ArrayList<String> allStates = tm.getStates();
+            for (String currentState : allStates) {
+                if (state.equals(currentState)) {
+                    stateCheck = true;
+                } 
+            }
+        } while (stateCheck == false);
+        
+        boolean productCheck = false;
+        do {
+            productType = cio.getString("What is the product type of the order?");
+            ArrayList<String>allTypes = pm.getAllProductTypes();
+            for(String currentProduct : allTypes) {
+                if(productType.equals(currentProduct)) {
+                    productCheck = true;
+                }
+            }
+        } while (productCheck == false);
+        
+        String year = cio.getString("Please enter the year you would like the order to be processed (YYYY)");
+        String month = cio.getString("Please enter the month you would like the order to be processed (MM)");
+        String day = cio.getString("Please enter the day of month you would like the order to be processed (DD)");
+        String date = year + "-" + month + "-" + day;
+        LocalDate ld = LocalDate.parse(date); //THIS IS WHERE WE CHECK IF CURRENT DATE
+        Order currentOrder = new Order(userName, productType, area);
+        currentOrder.setDate(ld);
+        currentOrder.setLaborTotal(calc.calculateLabor(area, pm.getLaborPerSquareFoot(productType)));
+        currentOrder.setMaterialTotal(calc.calculateMaterial(area, pm.getCostPerSquareFoot(productType)));
+        double cost = calc.calculateCost(currentOrder.getLaborTotal(), currentOrder.getMaterialTotal());
+        currentOrder.setTaxTotal(calc.calculateTax(cost, tm.getTaxRate(state)));
+        currentOrder.setTaxRate(tm.getTaxRate(state));
+        currentOrder.setTotalCost(calc.calculateTotalCost(currentOrder.getTaxTotal(), cost));
+        currentOrder.setLaborPSF(pm.getLaborPerSquareFoot(productType));
+        currentOrder.setCostPSF(pm.getCostPerSquareFoot(productType));
+        
+        om.addOrder(currentOrder, date);
     }
 
 }
