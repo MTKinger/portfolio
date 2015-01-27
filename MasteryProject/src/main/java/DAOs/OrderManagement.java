@@ -14,7 +14,6 @@ import java.util.ArrayList;
  */
 public class OrderManagement implements OrderInterface {
     
-    private int counter = 1;
     ArrayList<Order> todayOrders = new ArrayList<>();
     final String DELIMITER = ":::";
     
@@ -36,8 +35,6 @@ public class OrderManagement implements OrderInterface {
 
     @Override
     public ArrayList<Order> addOrder(Order newOrder, String monthDayYear) {
-        newOrder.setOrderNumber(counter);
-        counter ++;
         todayOrders.add(newOrder);
         return todayOrders;
     }

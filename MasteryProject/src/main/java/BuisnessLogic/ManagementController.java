@@ -17,6 +17,7 @@ public class ManagementController {
     ProductManagement pm = new ProductManagement();
     OrderManagement om = new OrderManagement();
     CostCalculator calc = new CostCalculator();
+    private int counter = 1;
 
     public void run() throws FileNotFoundException {
         doMenu();
@@ -31,7 +32,7 @@ public class ManagementController {
                     // displayOrders();
                     break;
                 case 2:
-                     addOrder();
+                    addOrder();
                     break;
                 case 3:
                     // editOrder();
@@ -69,6 +70,7 @@ public class ManagementController {
 
     private void addOrder() throws FileNotFoundException {
         tm.loadFromFile();
+        pm.loadFromFile();
         String userName = cio.getString("Who placed the order?");
         double area = cio.getDouble("What's the area of the order, in square feet");
         String state = "";
@@ -81,21 +83,21 @@ public class ManagementController {
             for (String currentState : allStates) {
                 if (state.equals(currentState)) {
                     stateCheck = true;
-                } 
+                }
             }
         } while (stateCheck == false);
-        
+
         boolean productCheck = false;
         do {
             productType = cio.getString("What is the product type of the order?");
-            ArrayList<String>allTypes = pm.getAllProductTypes();
-            for(String currentProduct : allTypes) {
-                if(productType.equals(currentProduct)) {
+            ArrayList<String> allTypes = pm.getAllProductTypes();
+            for (String currentProduct : allTypes) {
+                if (productType.equalsIgnoreCase(currentProduct)) {
                     productCheck = true;
                 }
             }
         } while (productCheck == false);
-        
+
         String year = cio.getString("Please enter the year you would like the order to be processed (YYYY)");
         String month = cio.getString("Please enter the month you would like the order to be processed (MM)");
         String day = cio.getString("Please enter the day of month you would like the order to be processed (DD)");
@@ -111,8 +113,20 @@ public class ManagementController {
         currentOrder.setTotalCost(calc.calculateTotalCost(currentOrder.getTaxTotal(), cost));
         currentOrder.setLaborPSF(pm.getLaborPerSquareFoot(productType));
         currentOrder.setCostPSF(pm.getCostPerSquareFoot(productType));
-        
-        om.addOrder(currentOrder, date);
+        currentOrder.setOrderNumber(counter);
+        currentOrder.setState(state);
+
+        cio.printMessage("Please review your submitted order:\n\n");
+        cio.printMessage(currentOrder.orderToString());
+        int approved = cio.getInt("\nAre you sure you would like to submit this order? (press 1 for yes, 2 for no)" ,1,2);
+
+        if (approved == 1) {
+            om.addOrder(currentOrder, date);
+            cio.printMessage("\nYour order has been processed. Thank you.");
+            counter++;
+        }else{
+            cio.printMessage("\nYour order will not be processed.");
+        }
     }
 
 }

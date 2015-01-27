@@ -22,7 +22,7 @@ public class CostCalculator implements Calculator {
 
     @Override
     public double calculateTax(double cost, double taxRate) {
-        double tax = cost * taxRate;
+        double tax = cost*(taxRate/100);
         return tax;
     }
 

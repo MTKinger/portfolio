@@ -96,7 +96,8 @@ public class Order extends Product{
                 taxRate + "% tax applied\n" + 
                 "$" + df.format(taxTotal) + " tax added\n\n" + 
                 "Total cost of order : $" + df.format(totalCost) + "\n\n" + 
-                "Order ID# : " + orderNumber;
+                "Order ID# : " + orderNumber +
+                "\nProcess Date: " + date;
     }
     
     
