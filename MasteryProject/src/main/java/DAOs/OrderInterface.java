@@ -19,6 +19,5 @@ public interface OrderInterface {
     public ArrayList<Order> displayOrders(String monthDayYear);
     public ArrayList<Order> addOrder(Order newOrder, String monthDayYear);
     public ArrayList<Order> removeOrder(String monthDayYear, int orderNumber);
-    public Order editOrder(String monthDayYear, int orderNumber);
     
 }

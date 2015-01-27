@@ -29,8 +29,8 @@ public class OrderManagement implements OrderInterface {
 
     @Override
     public ArrayList<Order> displayOrders(String monthDayYear) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        return todayOrders;
+        }
 
     @Override
     public ArrayList<Order> addOrder(Order newOrder, String monthDayYear) {
@@ -54,17 +54,22 @@ public class OrderManagement implements OrderInterface {
         return todayOrders;
     }
 
-    @Override
-    public Order editOrder(String monthDayYear, int orderNumber) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public int getCurrentOrderSize() {
         return todayOrders.size();
     }
 
     public Order getOrder(int slot) {
         return todayOrders.get(slot);
+    }
+    
+    public Order getOrderByID(int id){
+        Order returnOrder = new Order("null", "null" , 0.0);
+        for(Order currentOrder: todayOrders){
+            if(id == currentOrder.getOrderNumber()){
+                returnOrder = currentOrder;
+            }
+        }
+        return returnOrder;
     }
 
 }

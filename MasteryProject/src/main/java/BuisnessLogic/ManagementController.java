@@ -29,16 +29,16 @@ public class ManagementController {
             menuChoice = cio.getInt("Please make a selection from the above choices:", 1, 6);
             switch (menuChoice) {
                 case 1:
-                    // displayOrders();
+                    displayOrders();
                     break;
                 case 2:
                     addOrder();
                     break;
                 case 3:
-                    // editOrder();
+                    editOrder();
                     break;
                 case 4:
-                    // removeOrder();
+                    removeOrder();
                     break;
                 case 5:
                     // saveCurrentWork();
@@ -118,15 +118,107 @@ public class ManagementController {
 
         cio.printMessage("Please review your submitted order:\n\n");
         cio.printMessage(currentOrder.orderToString());
-        int approved = cio.getInt("\nAre you sure you would like to submit this order? (press 1 for yes, 2 for no)" ,1,2);
+        int approved = cio.getInt("\nAre you sure you would like to submit this order? (press 1 for yes, 2 for no)", 1, 2);
 
         if (approved == 1) {
             om.addOrder(currentOrder, date);
             cio.printMessage("\nYour order has been processed. Thank you.");
             counter++;
-        }else{
+        } else {
             cio.printMessage("\nYour order will not be processed.");
         }
     }
 
+    private void displayOrders() {
+        ArrayList<Order> toDisplay = om.displayOrders("date");
+        for (Order currentOrder : toDisplay) {
+            cio.printMessage("\n" + currentOrder.orderToString());
+        }
+    }
+
+    private void removeOrder() {
+        String year = cio.getString("Please enter the year for the order you wish to remove (YYYY) ");
+        String month = cio.getString("Please enter the month for the order you wish to remove (MM) ");
+        String day = cio.getString("Please enter the day of month for the order you wish to remove (DD)");
+        String date = year + month + day;
+        Order foundOrder = new Order("null", "null", 0.0);
+        int orderNumber = cio.getInt("Please enter the order ID# for the order you wish to remove");
+        foundOrder = om.getOrderByID(orderNumber);
+        while (foundOrder.getCustomerName().equalsIgnoreCase("null")) {
+            orderNumber = cio.getInt("Error: No such Order ID# has been found. Please enter a valid ID#");
+            foundOrder = om.getOrderByID(orderNumber);
+        }
+        cio.printMessage(foundOrder.orderToString());
+
+        int approved = cio.getInt("\nAre you sure you would like to delete this order? (press 1 for yes, 2 for no)", 1, 2);
+        if (approved == 1) {
+            om.removeOrder(date, orderNumber);
+            cio.printMessage("\nYour order has been deleted. Thank you.");
+        } else {
+            cio.printMessage("\nYour order will not be deleted.");
+        }
+    }
+
+    private void editOrder() {
+        boolean badDouble = false;
+        String year = cio.getString("Please enter the year for the order you wish to edit (YYYY) ");
+        String month = cio.getString("Please enter the month for the order you wish to edit (MM) ");
+        String day = cio.getString("Please enter the day of month for the order you wish to edit (DD)");
+        String date = year + month + day;
+        Order foundOrder = new Order("null", "null", 0.0);
+        int orderNumber = cio.getInt("Please enter the order ID# for the order you wish to edit");
+        foundOrder = om.getOrderByID(orderNumber);
+        while (foundOrder.getCustomerName().equalsIgnoreCase("null")) {
+            orderNumber = cio.getInt("Error: No such Order ID# has been found. Please enter a valid ID#");
+            foundOrder = om.getOrderByID(orderNumber);
+        }
+        cio.printMessage(foundOrder.orderToString());
+
+        String newName = cio.getString("Enter customer name (" + foundOrder.getCustomerName() + ") :");
+        if (!newName.equalsIgnoreCase("")) {
+            foundOrder.setCustomerName(newName);
+        }
+
+        do {
+            try {
+                String newArea = cio.getString("Please enter the new area (" + foundOrder.getArea() + ") :");
+                if (!newArea.equalsIgnoreCase("")) {
+                    double newArea1 = Double.parseDouble(newArea);
+                    foundOrder.setArea(newArea1);
+                    badDouble = false;
+                }
+            } catch (NumberFormatException nfe) {
+                cio.printMessage("Please enter a valid area.");
+                badDouble = true;
+            }
+        } while (badDouble == true);
+
+        String newProduct = cio.getString("Please enter the new product type (" + foundOrder.getProductType() + ") :");
+        if (!newProduct.equalsIgnoreCase("")) {
+            
+            boolean productCheck = false;
+            ArrayList<String> allTypes = pm.getAllProductTypes();
+            
+            for (String currentProduct : allTypes) {
+                
+                if (newProduct.equalsIgnoreCase(currentProduct)) {
+                    productCheck = true;
+                }
+                
+                while (productCheck == false) {
+                    newProduct = cio.getString("No such product found. Please enter a valid product type.");
+                    
+                    for (String currentProduct1 : allTypes) {
+                        
+                        if (newProduct.equalsIgnoreCase(currentProduct1)) {
+                            productCheck = true;
+                        }
+
+                    }
+                }
+                foundOrder.setProductType(newProduct);
+            }
+        }
+
+    }
 }
