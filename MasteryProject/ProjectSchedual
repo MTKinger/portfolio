@@ -1,0 +1,52 @@
+
+
+Mastery Project
+
+Mike King - Sam Sawan
+
+Production Schedual:
+
+Tuesday 1/27
+
+Morning:
+Coder: Sam
+Complete functional 'add order' operation, no checks.
+
+Afternoon:
+Coder: Mike
+Fully functional (w/ checks) 'add order operation - fully tested.
+
+Wednesday 1/28
+
+Morning:
+Coder: Mike
+Fully functional remove order (w/ checks) fully tested.
+
+Afternoon:
+Coder: Sam
+Fully functional 'display current orders', fully tested 'save work' operation.
+
+Thursday 1/29
+
+Morning
+Coder: Sam
+Fully functional 'display orders by date' (past or future) operation.
+
+Afternoon
+Coder: Mike
+"Catch up time." Fix any bugs, fine-tune format. Basically time to fix any problems before launch on friday.
+
+Friday 1/30
+
+Morning:
+Coder: Mike
+'Edit Orders' fully functional and fully tested.
+
+Afternoon:
+Coder: Sam
+Complete fully persistant 'add/remove/edit' for any order/any date.  All testing complete.
+
+
+Out plan also involves whoever is in the 'navigator' seat to be testing any completed portion of the project as necessary.
+
+
