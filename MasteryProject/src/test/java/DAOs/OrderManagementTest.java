@@ -51,13 +51,13 @@ public class OrderManagementTest {
     @Test
     public void addRemoveCurrentOrderTest(){
         assertEquals(om.getCurrentOrderSize(),0);
-        om.addOrder(testOrder, "date");
+        om.addOrder(testOrder);
         assertEquals(om.getCurrentOrderSize(),1);
         assertEquals(testOrder.getCustomerName(), om.getOrder(0).getCustomerName());
         testOrder.setOrderNumber(2);
-        om.removeOrder("date", 3);
+        om.removeOrder(3);
         assertEquals(om.getCurrentOrderSize(),1);
-        om.removeOrder("date", 2);
+        om.removeOrder(2);
         assertEquals(om.getCurrentOrderSize(),0);
     }
     

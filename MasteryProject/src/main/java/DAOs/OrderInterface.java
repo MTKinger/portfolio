@@ -17,7 +17,7 @@ public interface OrderInterface {
     public void writeToFile();
     public void loadFromFile();
     public ArrayList<Order> displayOrders(String monthDayYear);
-    public ArrayList<Order> addOrder(Order newOrder, String monthDayYear);
-    public ArrayList<Order> removeOrder(String monthDayYear, int orderNumber);
+    public ArrayList<Order> addOrder(Order newOrder);
+    public ArrayList<Order> removeOrder(int orderNumber);
     
 }

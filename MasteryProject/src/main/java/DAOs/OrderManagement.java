@@ -33,13 +33,13 @@ public class OrderManagement implements OrderInterface {
         }
 
     @Override
-    public ArrayList<Order> addOrder(Order newOrder, String monthDayYear) {
+    public ArrayList<Order> addOrder(Order newOrder) {
         todayOrders.add(newOrder);
         return todayOrders;
     }
 
     @Override
-    public ArrayList<Order> removeOrder(String monthDayYear, int orderNumber) {
+    public ArrayList<Order> removeOrder(int orderNumber) {
         int index = 0;
         boolean found = false;
         for (Order currentOrder : todayOrders) {
