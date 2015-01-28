@@ -5,10 +5,13 @@ import DAOs.ProductManagement;
 import DAOs.TaxManagement;
 import DTOs.Order;
 import UI.ConsoleIO;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ManagementController {
 
@@ -19,6 +22,8 @@ public class ManagementController {
     OrderManagement om = new OrderManagement();
     CostCalculator calc = new CostCalculator();
     private int counter = 1;
+    String MODE_FILE = "mode.txt";
+    boolean writeToFile = false;
 
     String defaultDate = localDateToStringToday();
 
@@ -74,7 +79,7 @@ public class ManagementController {
         cio.printMessage("* 6. Switch Date");
         cio.printMessage("* 7. Quit");
         cio.printMessage("*");
-        cio.printMessage(defaultDateToString());
+        cio.printMessage("*");
         cio.printMessage("***************************************************\n\n");
     }
 
@@ -114,7 +119,6 @@ public class ManagementController {
             }
         } while (productCheck == false);
 
-        
         Order currentOrder = new Order(userName, productType, area);
         currentOrder.setDate(giveLocalDate());
         currentOrder.setLaborTotal(calc.calculateLabor(area, pm.getLaborPerSquareFoot(productType)));
@@ -374,4 +378,21 @@ public class ManagementController {
         LocalDate output = LocalDate.parse(localDateDate);
         return output;
     }
+
+    private boolean setMode() throws FileNotFoundException {
+        boolean output;
+        Scanner sc = new Scanner(new BufferedReader(new FileReader(MODE_FILE)));
+        String currentLine = sc.nextLine();
+        if (currentLine.equalsIgnoreCase("production")) {
+            output = true;
+        } else {
+            output = false;
+        }
+        return output;
+    }
+    
+    private void saveCurrentWork(){
+        
+    }
+    
 }

@@ -26,8 +26,8 @@ public class OrderManagement implements OrderInterface {
     final String ORDER_ = "Order_";
 
     @Override
-    public void writeToFile(ArrayList<Order> orders,String month, String day, String year) throws IOException { //will ideally write to any file we want
-        String targetFile = ORDER_ + month + day + year + ".txt";                       //can take three parameters from LocalDate of the objecct we adding/editing
+    public void writeToFile(ArrayList<Order> orders,String monthDayYear) throws IOException { //will ideally write to any file we want
+        String targetFile = ORDER_ + monthDayYear + ".txt";  //can take three parameters from LocalDate of the objecct we adding/editing
         PrintWriter out = new PrintWriter(new FileWriter(targetFile));
         out.println("OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total");
         for (Order currentOrder : orders) {
@@ -49,8 +49,8 @@ public class OrderManagement implements OrderInterface {
     }
 
     @Override
-    public ArrayList<Order> loadFromFile(String month, String day, String year) throws FileNotFoundException {
-        Scanner sc = new Scanner(new BufferedReader(new FileReader(ORDER_ + month + day + year + ".txt")));
+    public ArrayList<Order> loadFromFile(String monthDayYear) throws FileNotFoundException {
+        Scanner sc = new Scanner(new BufferedReader(new FileReader(ORDER_ + monthDayYear+ ".txt")));
         String currentLine = sc.nextLine();
         String[] currentTokens;
         ArrayList<Order> ordersFromSelectedDate = new ArrayList<>();

@@ -16,8 +16,8 @@ import java.util.ArrayList;
  */
 public interface OrderInterface{
     
-    public void writeToFile(ArrayList<Order> orders, String month, String day, String year) throws IOException;
-    public ArrayList<Order> loadFromFile(String month, String day, String year) throws FileNotFoundException;
+    public void writeToFile(ArrayList<Order> orders, String monthDayYear) throws IOException;
+    public ArrayList<Order> loadFromFile(String monthDayYear) throws FileNotFoundException;
     public ArrayList<Order> displayOrders(String monthDayYear);
     public ArrayList<Order> addOrder(Order newOrder);
     public ArrayList<Order> removeOrder(int orderNumber);

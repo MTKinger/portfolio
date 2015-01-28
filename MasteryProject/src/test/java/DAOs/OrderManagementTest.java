@@ -70,8 +70,8 @@ public class OrderManagementTest {
     public void readWriteTest()throws IOException, FileNotFoundException{
         testArray.add(testOrder);
         testArray.add(testOrder2);
-        om.writeToFile(testArray, "12", "03", "1995");
-        ArrayList<Order> testRead = om.loadFromFile("12", "03", "1995");
+        om.writeToFile(testArray, "12031995");
+        ArrayList<Order> testRead = om.loadFromFile("12031995");
         assertEquals(testArray.get(0).getCustomerName(), testRead.get(0).getCustomerName());
         assertEquals(testArray.get(1).getArea(), testRead.get(1).getArea(), .0001);
     }
