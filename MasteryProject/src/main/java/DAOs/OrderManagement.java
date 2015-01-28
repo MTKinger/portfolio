@@ -6,10 +6,14 @@
 package DAOs;
 
 import DTOs.Order;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -37,7 +41,7 @@ public class OrderManagement implements OrderInterface {
                     + currentOrder.getLaborPSF() + DELIMITER
                     + currentOrder.getMaterialTotal() + DELIMITER
                     + currentOrder.getLaborTotal() + DELIMITER
-                    + currentOrder.getTaxRate() + DELIMITER
+                    + currentOrder.getTaxTotal()+ DELIMITER
                     + currentOrder.getTotalCost());
             out.flush();
         }
@@ -45,8 +49,42 @@ public class OrderManagement implements OrderInterface {
     }
 
     @Override
-    public void loadFromFile() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Order> loadFromFile(String month, String day, String year) throws FileNotFoundException {
+        Scanner sc = new Scanner(new BufferedReader(new FileReader(ORDER_ + month + day + year + ".txt")));
+        String currentLine = sc.nextLine();
+        String[] currentTokens;
+        ArrayList<Order> ordersFromSelectedDate = new ArrayList<>();
+        while (sc.hasNextLine()) {
+            currentLine = sc.nextLine();
+            currentTokens = currentLine.split(DELIMITER);
+            int orderNumber = Integer.parseInt(currentTokens[0]);
+            String name = currentTokens[1];
+            String state = currentTokens[2];
+            double taxRate = Double.parseDouble(currentTokens[3]);
+            String productType = currentTokens[4];
+            double area = Double.parseDouble(currentTokens[5]);
+            double costPSF = Double.parseDouble(currentTokens[6]);
+            double laborPSF = Double.parseDouble(currentTokens[7]);
+            double materialTotal = Double.parseDouble(currentTokens[8]);
+            double laborTotal = Double.parseDouble(currentTokens[9]);
+            double taxTotal = Double.parseDouble(currentTokens[10]);
+            double totalCost = Double.parseDouble(currentTokens[11]);
+            
+            Order currentOrder = new Order(name, productType, area);
+            currentOrder.setOrderNumber(orderNumber);
+            currentOrder.setState(state);
+            currentOrder.setTaxRate(taxRate);
+            currentOrder.setCostPSF(costPSF);
+            currentOrder.setLaborPSF(laborPSF);
+            currentOrder.setMaterialTotal(materialTotal);
+            currentOrder.setLaborTotal(laborTotal);
+            currentOrder.setTaxTotal(taxTotal);
+            currentOrder.setTotalCost(totalCost);
+            
+            ordersFromSelectedDate.add(currentOrder);
+        }
+        sc.close();
+        return ordersFromSelectedDate;
     }
 
     @Override
