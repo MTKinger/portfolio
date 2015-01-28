@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -81,6 +82,15 @@ public class OrderManagement implements OrderInterface {
             currentOrder.setTaxTotal(taxTotal);
             currentOrder.setTotalCost(totalCost);
             
+            String month = monthDayYear.substring(0, 2);
+            String day = monthDayYear.substring(2, 4);
+            String year = monthDayYear.substring(4);
+            
+            String date = year + "-" + month + "-" + day;
+            LocalDate ld = LocalDate.parse(date);
+            
+            currentOrder.setDate(ld);
+            
             ordersFromSelectedDate.add(currentOrder);
         }
         sc.close();
@@ -93,25 +103,25 @@ public class OrderManagement implements OrderInterface {
         }
 
     @Override
-    public ArrayList<Order> addOrder(Order newOrder) {
-        todayOrders.add(newOrder);
-        return todayOrders;
+    public ArrayList<Order> addOrder(Order newOrder, ArrayList<Order> orderToBeAdded) {
+        orderToBeAdded.add(newOrder);
+        return orderToBeAdded;
     }
 
     @Override
-    public ArrayList<Order> removeOrder(int orderNumber) {
+    public ArrayList<Order> removeOrder(int orderNumber, ArrayList<Order> orderToBeDeleted) {
         int index = 0;
         boolean found = false;
-        for (Order currentOrder : todayOrders) {
+        for (Order currentOrder : orderToBeDeleted) {
             if (currentOrder.getOrderNumber() == orderNumber) {
-                index = todayOrders.indexOf(currentOrder);
+                index = orderToBeDeleted.indexOf(currentOrder);
                 found = true;
             }
         }
         if (found == true) {
-            todayOrders.remove(index);
+            orderToBeDeleted.remove(index);
         }
-        return todayOrders;
+        return orderToBeDeleted;
     }
 
     public int getCurrentOrderSize() {

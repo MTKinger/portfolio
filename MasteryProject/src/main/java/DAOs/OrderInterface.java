@@ -19,7 +19,7 @@ public interface OrderInterface{
     public void writeToFile(ArrayList<Order> orders, String monthDayYear) throws IOException;
     public ArrayList<Order> loadFromFile(String monthDayYear) throws FileNotFoundException;
     public ArrayList<Order> displayOrders(String monthDayYear);
-    public ArrayList<Order> addOrder(Order newOrder);
-    public ArrayList<Order> removeOrder(int orderNumber);
+    public ArrayList<Order> addOrder(Order newOrder, ArrayList<Order> orderToBeAdded);
+    public ArrayList<Order> removeOrder(int orderNumber, ArrayList<Order> orderToBeDeleted);
     
 }
