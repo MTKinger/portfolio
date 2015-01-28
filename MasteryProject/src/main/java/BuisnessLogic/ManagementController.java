@@ -8,6 +8,7 @@ import UI.ConsoleIO;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -27,11 +28,11 @@ public class ManagementController {
 
     String defaultDate = localDateToStringToday();
 
-    public void run() throws FileNotFoundException {
+    public void run() throws FileNotFoundException, IOException {
         doMenu();
     }
 
-    private void doMenu() throws FileNotFoundException {
+    private void doMenu() throws FileNotFoundException, IOException {
         do {
             printMenu();
             menuChoice = cio.getInt("Please make a selection from the above choices:", 1, 7);
@@ -49,7 +50,7 @@ public class ManagementController {
                     removeOrder();
                     break;
                 case 5:
-                    // saveCurrentWork();
+                    saveCurrentWork();
                     break;
                 case 6:
                     changeDate();
@@ -86,13 +87,15 @@ public class ManagementController {
     private void addOrder() throws FileNotFoundException {
         tm.loadFromFile();
         pm.loadFromFile();
-        String userName = cio.getString("Who placed the order?");
+        String userFirstName = cio.getString("What is the customer's first name?");
+        String userLastName = cio.getString("What is the customer's last name?");
         double area = cio.getDouble("What's the area of the order, in square feet");
         String state = "";
         String productType = "";
 
         boolean stateCheck = false;
         do {
+            displayAllStates();
             state = cio.getString("What is the two letter code of the state in which the order is being placed?").toUpperCase();
             ArrayList<String> allStates = tm.getStates();
             for (String currentState : allStates) {
@@ -107,6 +110,7 @@ public class ManagementController {
 
         boolean productCheck = false;
         do {
+            displayProducts();
             productType = cio.getString("What is the product type of the order?");
             ArrayList<String> allTypes = pm.getAllProductTypes();
             for (String currentProduct : allTypes) {
@@ -118,8 +122,11 @@ public class ManagementController {
                 cio.printMessage("\nThis product is not in our database.  Please enter a new product.\n");
             }
         } while (productCheck == false);
+        String customerName = userFirstName + " " +  userLastName;
 
-        Order currentOrder = new Order(userName, productType, area);
+        Order currentOrder = new Order(customerName, productType, area);
+        currentOrder.setFirstName(userFirstName);
+        currentOrder.setLastName(userLastName);
         currentOrder.setDate(giveLocalDate());
         currentOrder.setLaborTotal(calc.calculateLabor(area, pm.getLaborPerSquareFoot(productType)));
         currentOrder.setMaterialTotal(calc.calculateMaterial(area, pm.getCostPerSquareFoot(productType)));
@@ -143,24 +150,28 @@ public class ManagementController {
         } else {
             cio.printMessage("\nYour order will not be processed.");
         }
+        tm.clearAllTaxes();
+        pm.clearAllProducts();
     }
 
     private void displayOrders() {
         ArrayList<Order> toDisplay = om.displayOrders("date");
         for (Order currentOrder : toDisplay) {
             cio.printMessage("\n" + currentOrder.orderToString());
+            
         }
     }
 
     private void removeOrder() {
         Order foundOrder = new Order("null", "null", 0.0);
+        displayOrders();
         int orderNumber = cio.getInt("Please enter the order ID# for the order you wish to remove");
         foundOrder = om.getOrderByID(orderNumber, om.getTodaysOrders());
         while (foundOrder.getCustomerName().equalsIgnoreCase("null")) {
             orderNumber = cio.getInt("Error: No such Order ID# has been found. Please enter a valid ID#");
             foundOrder = om.getOrderByID(orderNumber, om.getTodaysOrders());
         }
-        cio.printMessage(foundOrder.orderToString());
+        cio.printMessage("\n" + foundOrder.orderToString());
 
         int approved = cio.getInt("\nAre you sure you would like to delete this order? (press 1 for yes, 2 for no)", 1, 2);
         if (approved == 1) {
@@ -175,6 +186,7 @@ public class ManagementController {
         boolean badDouble = false;
         boolean badDate = false;
         Order foundOrder = new Order("null", "null", 0.0);
+        displayOrders();
         int orderNumber = cio.getInt("Please enter the order ID# for the order you wish to edit");
         foundOrder = om.getOrderByID(orderNumber, om.getTodaysOrders());
         Order editedOrder = new Order("", "", 0);
@@ -184,12 +196,20 @@ public class ManagementController {
         }
         cio.printMessage("\n\n" + foundOrder.orderToString());
 
-        String newName = cio.getString("Enter customer name (" + foundOrder.getCustomerName() + ") :");
-        if (!newName.equalsIgnoreCase("")) {
-            editedOrder.setCustomerName(newName);
+        String newFirstName = cio.getString("Enter customer's first name (" + foundOrder.getFirstName()+ ") :");
+        if (!newFirstName.equalsIgnoreCase("")) {
+            editedOrder.setFirstName(newFirstName);
         } else {
-            editedOrder.setCustomerName(foundOrder.getCustomerName());
+            editedOrder.setFirstName(foundOrder.getFirstName());
         }
+        
+        String newLastName = cio.getString("Enter customer's last name (" + foundOrder.getLastName()+ ") :");
+        if (!newLastName.equalsIgnoreCase("")) {
+            editedOrder.setLastName(newLastName);
+        } else {
+            editedOrder.setLastName(foundOrder.getLastName());
+        }
+        
 
         do {
             try {
@@ -207,6 +227,7 @@ public class ManagementController {
             }
         } while (badDouble == true);
 
+        displayProducts();
         String newProduct = cio.getString("Please enter the product type (" + foundOrder.getProductType() + ") :");
         if (!newProduct.equalsIgnoreCase("")) {
 
@@ -218,6 +239,7 @@ public class ManagementController {
                 }
             }
             while (productCheck == false) {
+                displayProducts();
                 newProduct = cio.getString("No such product found. Please enter a valid product type.");
                 for (String currentProduct1 : allTypes) {
 
@@ -274,7 +296,8 @@ public class ManagementController {
                 badDate = true;
             }
         } while (badDate == true);
-
+        
+        displayAllStates();
         String newState = cio.getString("Please enter the state (" + foundOrder.getState() + ") :").toUpperCase();
         if (!newState.equalsIgnoreCase("")) {
 
@@ -286,7 +309,8 @@ public class ManagementController {
                 }
             }
             while (stateCheck == false) {
-                newState = cio.getString("\nNo such state found. Please enter a valid state.");
+                displayAllStates();
+                newState = cio.getString("No such state found. Please enter a valid state.");
                 for (String currentState1 : allStates) {
                     if (newState.equalsIgnoreCase(currentState1)) {
                         stateCheck = true;
@@ -297,6 +321,7 @@ public class ManagementController {
         } else {
             editedOrder.setState(foundOrder.getState());
         }
+        editedOrder.setCustomerName(editedOrder.getFirstName()+" " + editedOrder.getLastName());
         editedOrder.setCostPSF(pm.getCostPerSquareFoot(editedOrder.getProductType()));
         editedOrder.setLaborPSF(pm.getLaborPerSquareFoot(editedOrder.getProductType()));
         editedOrder.setLaborTotal(calc.calculateLabor(editedOrder.getArea(), pm.getLaborPerSquareFoot(editedOrder.getProductType())));
@@ -318,6 +343,8 @@ public class ManagementController {
         } else {
             cio.printMessage("\nYour order will not be changed.");
         }
+        tm.clearAllTaxes();
+        pm.clearAllProducts();
 
     }
 
@@ -391,8 +418,30 @@ public class ManagementController {
         return output;
     }
     
-    private void saveCurrentWork(){
-        
+    private void saveCurrentWork()throws IOException{
+        ArrayList<Order> currentDayOrders = om.getTodaysOrders();
+        om.writeToFile(currentDayOrders, defaultDateToString());
     }
     
+    private void displayProducts(){
+        ArrayList<String> allProducts = pm.getAllProductTypes();
+        cio.printMessage("");
+        cio.printMessage("Available Products:");
+        for(String currentProduct : allProducts){
+            cio.printMessage(currentProduct);
+        }
+        cio.printMessage("");
+        allProducts.clear();
+    }
+    
+    private void displayAllStates(){
+        ArrayList<String> allStates = tm.getStates();
+        cio.printMessage("");
+        cio.printMessage("Available States:");
+        for( String currentState : allStates){
+            cio.printMessage(currentState);
+        }
+        cio.printMessage("");
+        allStates.clear();
+    }
 }

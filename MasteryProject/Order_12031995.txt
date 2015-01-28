@@ -1,3 +1,0 @@
-OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total
-0:::Mike:::null:::0.0:::Wood:::10.0:::0.0:::0.0:::0.0:::0.0:::0.0:::0.0
-0:::Sam:::null:::0.0:::Tile:::20.0:::0.0:::0.0:::0.0:::0.0:::0.0:::0.0

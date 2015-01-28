@@ -3,18 +3,20 @@ package DTOs;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 
-public class Order extends Product{
-    
+public class Order extends Product {
+
     private int orderNumber;
-    private String customerName;
     private LocalDate date;
     private double area;
     private double materialTotal;
     private double laborTotal;
     private double taxTotal;
     private double totalCost;
-    
-    public Order(String name, String productType, double area){
+    private String firstName;
+    private String lastName;
+    private String customerName = firstName + " " + lastName;
+
+    public Order(String name, String productType, double area) {
         this.customerName = name;
         this.productType = productType;
         this.area = area;
@@ -83,23 +85,37 @@ public class Order extends Product{
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
-    
-    public String orderToString(){
-        DecimalFormat df = new DecimalFormat("#.00");
-        return customerName + ", " + state + "\n" +
-                df.format(area) + " square feet of " + productType + 
-                " at a rate of $" + df.format(costPSF) + " per square foot\n" + 
-                df.format(area) + " square feet of labor at a rate of $" +
-                df.format(laborPSF) + "\n" +
-                "$" + df.format(materialTotal) + " total material cost\n" +
-                "$" + df.format(laborTotal) + " total cost for labor\n" + 
-                taxRate + "% tax applied\n" + 
-                "$" + df.format(taxTotal) + " tax added\n\n" + 
-                "Total cost of order : $" + df.format(totalCost) + "\n\n" + 
-                "Order ID# : " + orderNumber +
-                "\nProcess Date: " + date;
+
+    public String getFirstName() {
+        return firstName;
     }
-    
-    
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String orderToString() {
+        DecimalFormat df = new DecimalFormat("#.00");
+        return customerName + ", " + state + "\n"
+                + df.format(area) + " square feet of " + productType
+                + " at a rate of $" + df.format(costPSF) + " per square foot\n"
+                + df.format(area) + " square feet of labor at a rate of $"
+                + df.format(laborPSF) + "\n"
+                + "$" + df.format(materialTotal) + " total material cost\n"
+                + "$" + df.format(laborTotal) + " total cost for labor\n"
+                + taxRate + "% tax applied\n"
+                + "$" + df.format(taxTotal) + " tax added\n\n"
+                + "Total cost of order : $" + df.format(totalCost) + "\n\n"
+                + "Order ID# : " + orderNumber
+                + "\nProcess Date: " + date;
+    }
 
 }

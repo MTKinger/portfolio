@@ -65,5 +65,9 @@ public class TaxManagement implements TaxInterface {
     public int getSize() { //for testing purposes
         return allTaxes.size();
     }
+    
+    public void clearAllTaxes() {
+        allTaxes.clear();
+    }
 
 }

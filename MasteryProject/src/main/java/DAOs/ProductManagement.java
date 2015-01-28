@@ -79,6 +79,10 @@ public class ProductManagement implements ProductInterface {
         return allProducts.size();
     }
     
+    public void clearAllProducts() {
+        allProducts.clear();
+    }
+    
     
     
 }
