@@ -20,6 +20,8 @@ public class ManagementController {
     CostCalculator calc = new CostCalculator();
     private int counter = 1;
 
+    String defaultDate = localDateToStringToday();
+
     public void run() throws FileNotFoundException {
         doMenu();
     }
@@ -27,7 +29,7 @@ public class ManagementController {
     private void doMenu() throws FileNotFoundException {
         do {
             printMenu();
-            menuChoice = cio.getInt("Please make a selection from the above choices:", 1, 6);
+            menuChoice = cio.getInt("Please make a selection from the above choices:", 1, 7);
             switch (menuChoice) {
                 case 1:
                     displayOrders();
@@ -45,13 +47,16 @@ public class ManagementController {
                     // saveCurrentWork();
                     break;
                 case 6:
-                    // exit();
+                    changeDate();
+                    break;
+                case 7:
+                    //exit();
                     break;
                 default:
                     cio.printMessage("Please enter a valid menu choice!\n");
                     break;
             }
-        } while (menuChoice != 6);
+        } while (menuChoice != 7);
         cio.printMessage("\n\nThank you for chosing SWC Corp...");
     }
 
@@ -59,20 +64,23 @@ public class ManagementController {
         cio.printMessage("\n\n***************************************************");
         cio.printMessage("*\tSWC Corp. Flooring Program");
         cio.printMessage("*");
+        cio.printMessage("*\t\tDate:" + defaultDate);
+        cio.printMessage("*");
         cio.printMessage("* 1. Display Orders");
         cio.printMessage("* 2. Add an Order");
         cio.printMessage("* 3. Edit an Order");
         cio.printMessage("* 4. Remove an Order");
         cio.printMessage("* 5. Save Current Work");
-        cio.printMessage("* 6. Quit");
+        cio.printMessage("* 6. Switch Date");
+        cio.printMessage("* 7. Quit");
         cio.printMessage("*");
+        cio.printMessage(defaultDateToString());
         cio.printMessage("***************************************************\n\n");
     }
 
     private void addOrder() throws FileNotFoundException {
         tm.loadFromFile();
         pm.loadFromFile();
-        boolean badDate = false;
         String userName = cio.getString("Who placed the order?");
         double area = cio.getDouble("What's the area of the order, in square feet");
         String state = "";
@@ -87,7 +95,7 @@ public class ManagementController {
                     stateCheck = true;
                 }
             }
-            if(stateCheck == false){
+            if (stateCheck == false) {
                 cio.printMessage("\nThe state you have entered is not in out database.  Please enter a valid state.\n");
             }
         } while (stateCheck == false);
@@ -101,26 +109,14 @@ public class ManagementController {
                     productCheck = true;
                 }
             }
-            if(productCheck == false){
+            if (productCheck == false) {
                 cio.printMessage("\nThis product is not in our database.  Please enter a new product.\n");
             }
         } while (productCheck == false);
-        LocalDate ld = LocalDate.now();
-        do {
-            try {
-                String year = cio.getString("Please enter the year you would like the order to be processed (YYYY)");
-                String month = cio.getString("Please enter the month you would like the order to be processed (MM)");
-                String day = cio.getString("Please enter the day of month you would like the order to be processed (DD)");
-                String date = year + "-" + month + "-" + day;
-                ld = LocalDate.parse(date); //THIS IS WHERE WE CHECK IF CURRENT DATE
-                badDate = false;
-            } catch (DateTimeParseException dtpe) {
-                cio.printMessage("\nInvalid date entered. Please enter a valid date.");
-                badDate = true;
-            }
-        } while (badDate == true);
+
+        
         Order currentOrder = new Order(userName, productType, area);
-        currentOrder.setDate(ld);
+        currentOrder.setDate(giveLocalDate());
         currentOrder.setLaborTotal(calc.calculateLabor(area, pm.getLaborPerSquareFoot(productType)));
         currentOrder.setMaterialTotal(calc.calculateMaterial(area, pm.getCostPerSquareFoot(productType)));
         double cost = calc.calculateCost(currentOrder.getLaborTotal(), currentOrder.getMaterialTotal());
@@ -153,10 +149,6 @@ public class ManagementController {
     }
 
     private void removeOrder() {
-        String year = cio.getString("Please enter the year for the order you wish to remove (YYYY) ");
-        String month = cio.getString("Please enter the month for the order you wish to remove (MM) ");
-        String day = cio.getString("Please enter the day of month for the order you wish to remove (DD)");
-        String date = year + month + day;
         Order foundOrder = new Order("null", "null", 0.0);
         int orderNumber = cio.getInt("Please enter the order ID# for the order you wish to remove");
         foundOrder = om.getOrderByID(orderNumber, om.getTodaysOrders());
@@ -178,10 +170,6 @@ public class ManagementController {
     private void editOrder() {
         boolean badDouble = false;
         boolean badDate = false;
-        String year = cio.getString("Please enter the year for the order you wish to edit (YYYY) ");
-        String month = cio.getString("Please enter the month for the order you wish to edit (MM) ");
-        String day = cio.getString("Please enter the day of month for the order you wish to edit (DD)");
-        String date = year + month + day;
         Order foundOrder = new Order("null", "null", 0.0);
         int orderNumber = cio.getInt("Please enter the order ID# for the order you wish to edit");
         foundOrder = om.getOrderByID(orderNumber, om.getTodaysOrders());
@@ -206,8 +194,7 @@ public class ManagementController {
                     double newArea1 = Double.parseDouble(newArea);
                     editedOrder.setArea(newArea1);
                     badDouble = false;
-                }
-                else{
+                } else {
                     editedOrder.setArea(foundOrder.getArea());
                 }
             } catch (NumberFormatException nfe) {
@@ -259,7 +246,7 @@ public class ManagementController {
                     newDate = newDate + newMonth + "-";
                 } else {
                     if (foundOrder.getDate().getMonthValue() > 9) {
-                        newDate = newDate + foundOrder.getDate().getMonthValue()+ "-";
+                        newDate = newDate + foundOrder.getDate().getMonthValue() + "-";
                     } else {
                         newDate = newDate + "0" + foundOrder.getDate().getMonthValue() + "-";
                     }
@@ -276,9 +263,8 @@ public class ManagementController {
                 }
                 editedOrder.setDate(LocalDate.parse(newDate));
                 badDate = false;
-                
-                // End Here
 
+                // End Here
             } catch (DateTimeParseException dtpe) {
                 cio.printMessage("\nDate entered is invalid.  Please enter a valid date.\n");
                 badDate = true;
@@ -329,5 +315,63 @@ public class ManagementController {
             cio.printMessage("\nYour order will not be changed.");
         }
 
+    }
+
+    public void changeDate() {
+        boolean badDate = false;
+        String date = "";
+        String year = "";
+        String day = "";
+        String month = "";
+        do {
+            try {
+                year = cio.getString("Please enter the year you would like to access (YYYY)");
+                month = cio.getString("Please enter the month you would like to access (MM)");
+                day = cio.getString("Please enter the day of month you would like to access (DD)");
+                date = year + "-" + month + "-" + day;
+                LocalDate ld = LocalDate.parse(date); //THIS IS WHERE WE CHECK IF CURRENT DATE
+                badDate = false;
+            } catch (DateTimeParseException dtpe) {
+                cio.printMessage("\nInvalid date entered. Please enter a valid date.\n");
+                badDate = true;
+            }
+        } while (badDate == true);
+        date = month + "-" + day + "-" + year;
+        defaultDate = date;
+
+    }
+
+    private String localDateToStringToday() {
+        LocalDate today = LocalDate.now();
+        int numMonth = today.getMonthValue();
+        String month = Integer.toString(numMonth);
+        if (month.length() == 1) {
+            month = "0" + month;
+        }
+
+        String day = Integer.toString(today.getDayOfMonth());
+        if (day.length() == 1) {
+            day = "0" + day;
+        }
+
+        String year = Integer.toString(today.getYear());
+
+        return month + "-" + day + "-" + year;
+    }
+
+    private String defaultDateToString() {
+        String month = defaultDate.substring(0, 2);
+        String day = defaultDate.substring(3, 5);
+        String year = defaultDate.substring(6);
+        return month + day + year;
+    }
+
+    private LocalDate giveLocalDate() {
+        String month = defaultDate.substring(0, 2);
+        String day = defaultDate.substring(3, 5);
+        String year = defaultDate.substring(6);
+        String localDateDate = year + "-" + month + "-" + day;
+        LocalDate output = LocalDate.parse(localDateDate);
+        return output;
     }
 }
