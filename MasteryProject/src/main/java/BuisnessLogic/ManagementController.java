@@ -259,11 +259,12 @@ public class ManagementController {
                     newDate = newDate + newMonth + "-";
                 } else {
                     if (foundOrder.getDate().getMonthValue() > 9) {
-                        newDate = newDate + foundOrder.getDate().getMonth() + "-";
+                        newDate = newDate + foundOrder.getDate().getMonthValue()+ "-";
                     } else {
                         newDate = newDate + "0" + foundOrder.getDate().getMonthValue() + "-";
                     }
                 }
+                // Start Here
                 if (!newDay.equalsIgnoreCase("")) {
                     newDate = newDate + newDay;
                 } else {
@@ -275,6 +276,8 @@ public class ManagementController {
                 }
                 editedOrder.setDate(LocalDate.parse(newDate));
                 badDate = false;
+                
+                // End Here
 
             } catch (DateTimeParseException dtpe) {
                 cio.printMessage("\nDate entered is invalid.  Please enter a valid date.\n");
