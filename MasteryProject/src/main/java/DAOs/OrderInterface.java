@@ -6,15 +6,16 @@
 package DAOs;
 
 import DTOs.Order;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  *
  * @author apprentice
  */
-public interface OrderInterface {
+public interface OrderInterface{
     
-    public void writeToFile();
+    public void writeToFile(ArrayList<Order> orders, String month, String day, String year) throws IOException;
     public void loadFromFile();
     public ArrayList<Order> displayOrders(String monthDayYear);
     public ArrayList<Order> addOrder(Order newOrder);

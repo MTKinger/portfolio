@@ -6,6 +6,9 @@
 package DAOs;
 
 import DTOs.Order;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -16,10 +19,29 @@ public class OrderManagement implements OrderInterface {
 
     ArrayList<Order> todayOrders = new ArrayList<>();
     final String DELIMITER = ":::";
+    final String ORDER_ = "Order_";
 
     @Override
-    public void writeToFile() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void writeToFile(ArrayList<Order> orders,String month, String day, String year) throws IOException { //will ideally write to any file we want
+        String targetFile = ORDER_ + month + day + year + ".txt";                       //can take three parameters from LocalDate of the objecct we adding/editing
+        PrintWriter out = new PrintWriter(new FileWriter(targetFile));
+        out.println("OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total");
+        for (Order currentOrder : orders) {
+            out.println(currentOrder.getOrderNumber() + DELIMITER
+                    + currentOrder.getCustomerName() + DELIMITER
+                    + currentOrder.getState() + DELIMITER
+                    + currentOrder.getTaxRate() + DELIMITER
+                    + currentOrder.getProductType() + DELIMITER
+                    + currentOrder.getArea() + DELIMITER
+                    + currentOrder.getCostPSF() + DELIMITER
+                    + currentOrder.getLaborPSF() + DELIMITER
+                    + currentOrder.getMaterialTotal() + DELIMITER
+                    + currentOrder.getLaborTotal() + DELIMITER
+                    + currentOrder.getTaxRate() + DELIMITER
+                    + currentOrder.getTotalCost());
+            out.flush();
+        }
+        out.close();
     }
 
     @Override
