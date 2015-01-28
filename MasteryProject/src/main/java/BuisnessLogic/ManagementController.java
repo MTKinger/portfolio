@@ -87,6 +87,9 @@ public class ManagementController {
                     stateCheck = true;
                 }
             }
+            if(stateCheck == false){
+                cio.printMessage("\nThe state you have entered is not in out database.  Please enter a valid state.\n");
+            }
         } while (stateCheck == false);
 
         boolean productCheck = false;
@@ -97,6 +100,9 @@ public class ManagementController {
                 if (productType.equalsIgnoreCase(currentProduct)) {
                     productCheck = true;
                 }
+            }
+            if(productCheck == false){
+                cio.printMessage("\nThis product is not in our database.  Please enter a new product.\n");
             }
         } while (productCheck == false);
         LocalDate ld = LocalDate.now();
@@ -109,7 +115,7 @@ public class ManagementController {
                 ld = LocalDate.parse(date); //THIS IS WHERE WE CHECK IF CURRENT DATE
                 badDate = false;
             } catch (DateTimeParseException dtpe) {
-                cio.printMessage("Invalid date entered. Please enter a valid date.");
+                cio.printMessage("\nInvalid date entered. Please enter a valid date.");
                 badDate = true;
             }
         } while (badDate == true);
@@ -181,10 +187,10 @@ public class ManagementController {
         foundOrder = om.getOrderByID(orderNumber);
         Order editedOrder = new Order("", "", 0);
         while (foundOrder.getCustomerName().equalsIgnoreCase("null")) {
-            orderNumber = cio.getInt("Error: No such Order ID# has been found. Please enter a valid ID#");
+            orderNumber = cio.getInt("\nError: No such Order ID# has been found. Please enter a valid ID#");
             foundOrder = om.getOrderByID(orderNumber);
         }
-        cio.printMessage(foundOrder.orderToString());
+        cio.printMessage("\n\n" + foundOrder.orderToString());
 
         String newName = cio.getString("Enter customer name (" + foundOrder.getCustomerName() + ") :");
         if (!newName.equalsIgnoreCase("")) {
@@ -200,6 +206,9 @@ public class ManagementController {
                     double newArea1 = Double.parseDouble(newArea);
                     editedOrder.setArea(newArea1);
                     badDouble = false;
+                }
+                else{
+                    editedOrder.setArea(foundOrder.getArea());
                 }
             } catch (NumberFormatException nfe) {
                 cio.printMessage("Please enter a valid area.");
@@ -241,7 +250,6 @@ public class ManagementController {
                         + foundOrder.getDate().getDayOfMonth() + ") (DD):");
                 String newDate;
 
-                // ****Requires Catches to protect against bad input****
                 if (!newYear.equalsIgnoreCase("")) {
                     newDate = newYear + "-";
                 } else {
@@ -269,14 +277,12 @@ public class ManagementController {
                 badDate = false;
 
             } catch (DateTimeParseException dtpe) {
-                cio.printMessage("Date entered is invalid.  Please enter a valid date.\n");
+                cio.printMessage("\nDate entered is invalid.  Please enter a valid date.\n");
                 badDate = true;
             }
         } while (badDate == true);
 
-        // This is where we will add the section to change the state if necessary.
-        // do not want to start on this until we get the product type sorted out.
-        String newState = cio.getString("Please enter the state (" + foundOrder.getState() + ") :");
+        String newState = cio.getString("Please enter the state (" + foundOrder.getState() + ") :").toUpperCase();
         if (!newState.equalsIgnoreCase("")) {
 
             boolean stateCheck = false;
@@ -287,7 +293,7 @@ public class ManagementController {
                 }
             }
             while (stateCheck == false) {
-                newState = cio.getString("No such state found. Please enter a valid state.");
+                newState = cio.getString("\nNo such state found. Please enter a valid state.");
                 for (String currentState1 : allStates) {
                     if (newState.equalsIgnoreCase(currentState1)) {
                         stateCheck = true;
