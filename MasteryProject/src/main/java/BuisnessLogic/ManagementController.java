@@ -159,10 +159,10 @@ public class ManagementController {
         String date = year + month + day;
         Order foundOrder = new Order("null", "null", 0.0);
         int orderNumber = cio.getInt("Please enter the order ID# for the order you wish to remove");
-        foundOrder = om.getOrderByID(orderNumber);
+        foundOrder = om.getOrderByID(orderNumber, om.getTodaysOrders());
         while (foundOrder.getCustomerName().equalsIgnoreCase("null")) {
             orderNumber = cio.getInt("Error: No such Order ID# has been found. Please enter a valid ID#");
-            foundOrder = om.getOrderByID(orderNumber);
+            foundOrder = om.getOrderByID(orderNumber, om.getTodaysOrders());
         }
         cio.printMessage(foundOrder.orderToString());
 
@@ -184,11 +184,11 @@ public class ManagementController {
         String date = year + month + day;
         Order foundOrder = new Order("null", "null", 0.0);
         int orderNumber = cio.getInt("Please enter the order ID# for the order you wish to edit");
-        foundOrder = om.getOrderByID(orderNumber);
+        foundOrder = om.getOrderByID(orderNumber, om.getTodaysOrders());
         Order editedOrder = new Order("", "", 0);
         while (foundOrder.getCustomerName().equalsIgnoreCase("null")) {
             orderNumber = cio.getInt("\nError: No such Order ID# has been found. Please enter a valid ID#");
-            foundOrder = om.getOrderByID(orderNumber);
+            foundOrder = om.getOrderByID(orderNumber, om.getTodaysOrders());
         }
         cio.printMessage("\n\n" + foundOrder.orderToString());
 

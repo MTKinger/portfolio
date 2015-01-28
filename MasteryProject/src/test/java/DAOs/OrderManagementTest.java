@@ -6,6 +6,9 @@
 package DAOs;
 
 import DTOs.Order;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -21,6 +24,8 @@ public class OrderManagementTest {
     
     OrderManagement om = new OrderManagement();
     Order testOrder = new Order("Mike", "Wood", 10);
+    Order testOrder2 = new Order("Sam", "Tile", 20);
+    ArrayList<Order> testArray = new ArrayList<Order>();
     
     
     public OrderManagementTest() {
@@ -60,5 +65,28 @@ public class OrderManagementTest {
         om.removeOrder(2);
         assertEquals(om.getCurrentOrderSize(),0);
     }
+
+    @Test
+    public void readWriteTest()throws IOException, FileNotFoundException{
+        testArray.add(testOrder);
+        testArray.add(testOrder2);
+        om.writeToFile(testArray, "12", "03", "1995");
+        ArrayList<Order> testRead = om.loadFromFile("12", "03", "1995");
+        assertEquals(testArray.get(0).getCustomerName(), testRead.get(0).getCustomerName());
+        assertEquals(testArray.get(1).getArea(), testRead.get(1).getArea(), .0001);
+    }
     
+    @Test
+    public void getOrderByIDTest(){
+        testOrder.setOrderNumber(123);
+        testOrder2.setOrderNumber(987);
+        ArrayList<Order> testId = new ArrayList<Order>();
+        testId.add(testOrder);
+        testId.add(testOrder2);
+        Order testOrder3 = om.getOrderByID(123, testId);
+        Order testOrder4 = om.getOrderByID(987, testId);
+        assertEquals(testOrder3.getCustomerName(), "Mike");
+        assertEquals(testOrder4.getArea(), 20, .00001);
+        
+    }
 }

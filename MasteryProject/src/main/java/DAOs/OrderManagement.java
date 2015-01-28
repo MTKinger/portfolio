@@ -122,14 +122,18 @@ public class OrderManagement implements OrderInterface {
         return todayOrders.get(slot);
     }
     
-    public Order getOrderByID(int id){
+    public Order getOrderByID(int id, ArrayList<Order> currentList){
         Order returnOrder = new Order("null", "null" , 0.0);
-        for(Order currentOrder: todayOrders){
+        for(Order currentOrder: currentList){
             if(id == currentOrder.getOrderNumber()){
                 returnOrder = currentOrder;
             }
         }
         return returnOrder;
+    }
+    
+    public ArrayList<Order> getTodaysOrders() {
+        return todayOrders;
     }
 
 }
