@@ -3,6 +3,7 @@ package com.swcguild.masteryproject.businesslogic;
 import com.swcguild.masteryproject.daos.ProductManagement;
 import com.swcguild.masteryproject.daos.TaxManagement;
 import com.swcguild.masteryproject.dtos.Order;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 
 public class CostCalculator implements Calculator {
@@ -50,17 +51,42 @@ public class CostCalculator implements Calculator {
     }
     
     @Override
-    public Order buildOrder(String name, double area, String productType, String state, LocalDate ld5){
+    public Order buildOrder(String name, double area, String productType, String state, LocalDate ld5) throws FileNotFoundException{
+        tm.loadFromFile();
+        pm.loadFromFile();
         Order orderOut = new Order(name, productType, area);
         orderOut.setState(state);
+        double taxRate = tm.getTaxRate(state);
         orderOut.setTaxRate(tm.getTaxRate(state));
+        orderOut.setDate(ld5);
         orderOut.setCostPSF(pm.getCostPerSquareFoot(productType));
         orderOut.setLaborPSF(pm.getLaborPerSquareFoot(productType));
-        orderOut.setMaterialTotal(calculateMaterial(area, orderOut.getCostPSF()));
-        orderOut.setLaborTotal(calculateLabor(area, orderOut.getLaborPSF()));
-        orderOut.setTaxTotal(calculateTax(calculateCost(orderOut.getLaborTotal(), orderOut.getMaterialTotal()), orderOut.getTaxRate()));
-        orderOut.setTotalCost(calculateTotalCost(calculateCost(orderOut.getLaborTotal(), orderOut.getMaterialTotal()), orderOut.getTaxTotal()));
+        orderOut.setMaterialTotal(this.calculateMaterial(area, orderOut.getCostPSF()));
+        orderOut.setLaborTotal(this.calculateLabor(area, orderOut.getLaborPSF()));
+        orderOut.setTaxTotal(this.calculateTax(calculateCost(orderOut.getLaborTotal(), orderOut.getMaterialTotal()), orderOut.getTaxRate()));
+        orderOut.setTotalCost(this.calculateTotalCost(calculateCost(orderOut.getLaborTotal(), orderOut.getMaterialTotal()), orderOut.getTaxTotal()));
+        pm.clearAllProducts();
+        tm.clearAllTaxes();
         return orderOut;
+        
     }
+
+    @Override
+    public Order buildEditedOrder(Order editedOrder, String state, String productType) throws FileNotFoundException {
+        tm.loadFromFile();
+        pm.loadFromFile();
+        editedOrder.setCostPSF(pm.getCostPerSquareFoot(productType));
+        editedOrder.setLaborPSF(pm.getLaborPerSquareFoot(productType));
+        editedOrder.setLaborTotal(this.calculateLabor(editedOrder.getArea(), editedOrder.getLaborPSF()));
+        editedOrder.setMaterialTotal(this.calculateMaterial(editedOrder.getArea(), editedOrder.getCostPSF()));
+        editedOrder.setTaxRate(tm.getTaxRate(state));
+        editedOrder.setTaxTotal(this.calculateTax(calculateCost(editedOrder.getMaterialTotal(), editedOrder.getLaborTotal()), editedOrder.getTaxRate()));
+        editedOrder.setTotalCost(this.calculateTotalCost(calculateCost(editedOrder.getMaterialTotal(), editedOrder.getLaborTotal()), editedOrder.getTaxTotal()));
+        pm.clearAllProducts();
+        tm.clearAllTaxes();
+        return editedOrder;
+    }
+    
+   
 
 }

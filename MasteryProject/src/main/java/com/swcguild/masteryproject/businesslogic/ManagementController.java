@@ -151,18 +151,9 @@ public class ManagementController {
         } while (productCheck == false);
         String customerName = userName;
 
-        Order currentOrder = new Order(customerName, productType, area);
-        currentOrder.setDate(giveLocalDate());
-        currentOrder.setLaborTotal(calc.calculateLabor(area, pm.getLaborPerSquareFoot(productType)));
-        currentOrder.setMaterialTotal(calc.calculateMaterial(area, pm.getCostPerSquareFoot(productType)));
-        double cost = calc.calculateCost(currentOrder.getLaborTotal(), currentOrder.getMaterialTotal());
-        currentOrder.setTaxTotal(calc.calculateTax(cost, tm.getTaxRate(state)));
-        currentOrder.setTaxRate(tm.getTaxRate(state));
-        currentOrder.setTotalCost(calc.calculateTotalCost(currentOrder.getTaxTotal(), cost));
-        currentOrder.setLaborPSF(pm.getLaborPerSquareFoot(productType));
-        currentOrder.setCostPSF(pm.getCostPerSquareFoot(productType));
+        Order currentOrder = calc.buildOrder(customerName, area, productType, state, giveLocalDate());
         currentOrder.setOrderNumber(counter);
-        currentOrder.setState(state);
+
 
         cio.printMessage("Please review your submitted order:\n\n");
         cio.printMessage(currentOrder.orderToString());
@@ -382,14 +373,7 @@ public class ManagementController {
             } else {
                 editedOrder.setState(foundOrder.getState());
             }
-            editedOrder.setCostPSF(pm.getCostPerSquareFoot(editedOrder.getProductType()));
-            editedOrder.setLaborPSF(pm.getLaborPerSquareFoot(editedOrder.getProductType()));
-            editedOrder.setLaborTotal(calc.calculateLabor(editedOrder.getArea(), pm.getLaborPerSquareFoot(editedOrder.getProductType())));
-            editedOrder.setMaterialTotal(calc.calculateMaterial(editedOrder.getArea(), pm.getCostPerSquareFoot(editedOrder.getProductType())));
-            editedOrder.setTaxRate(tm.getTaxRate(editedOrder.getState()));
-            double cost = calc.calculateCost(editedOrder.getLaborTotal(), editedOrder.getMaterialTotal());
-            editedOrder.setTaxTotal(calc.calculateTax(cost, tm.getTaxRate(editedOrder.getState())));
-            editedOrder.setTotalCost(calc.calculateTotalCost(editedOrder.getTaxTotal(), cost));
+            calc.buildEditedOrder(editedOrder, editedOrder.getState(), editedOrder.getProductType());
             editedOrder.setOrderNumber(foundOrder.getOrderNumber());
 
             cio.printMessage("Please review your edited order:\n\n");

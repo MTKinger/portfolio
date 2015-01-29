@@ -6,19 +6,20 @@
 package com.swcguild.masteryproject.businesslogic;
 
 import com.swcguild.masteryproject.dtos.Order;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 
 /**
  *
  * @author apprentice
  */
-public interface Calculator {
+public interface Calculator{
     
     public double calculateMaterial(double area, double costPSF);
     public double calculateLabor(double area, double laborPSF);
     public double calculateCost(double material, double labor);
     public double calculateTax(double cost, double taxRate);
     public double calculateTotalCost(double tax, double cost);
-    public Order buildOrder(String name, double area, String productType, String state, LocalDate ld5);
-    
-}
+    public Order buildOrder(String name, double area, String productType, String state, LocalDate ld5)throws FileNotFoundException;
+    public Order buildEditedOrder(Order editedOrder, String state, String productType) throws FileNotFoundException;
+    }
