@@ -1,2 +1,0 @@
-OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total, CustomerFirstName, CustomerLastName
-12,Saban++++++++++Nick,OH,6.25,tile,150.0,3.5,4.15,525.0,622.5,71.71875,1219.21875

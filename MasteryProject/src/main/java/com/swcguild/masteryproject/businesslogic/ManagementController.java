@@ -24,15 +24,13 @@ public class ManagementController {
     ProductManagement pm = new ProductManagement();
     OrderManagement om = new OrderManagement();
     CostCalculator calc = new CostCalculator();
-    private int counter = 1;
     final String MODE_FILE = "ModeConfiguration.txt";
     boolean writeToFile = false;
     final String COUNTER_FILE = "counter.txt";
-
     String defaultDate = localDateToStringToday();
 
     public void run() throws FileNotFoundException, IOException {
-        counter = readCounter();
+        om.readCounter();
         doMenu();
     }
 
@@ -56,7 +54,7 @@ public class ManagementController {
                     break;
 
                 case 5:
-                    writeCounter();
+                    om.writeCounter();
                     cio.printMessage("saving....\n\nsaving.....\n\nYour work has been saved.\n");
                     break;
 
@@ -64,7 +62,7 @@ public class ManagementController {
                     changeDate();
                     break;
                 case 7:
-                    writeCounter();
+                    om.writeCounter();
                     break;
                 default:
                     cio.printMessage("Please enter a valid menu choice!\n");
@@ -152,11 +150,9 @@ public class ManagementController {
         String customerName = userName;
 
         Order currentOrder = calc.buildOrder(customerName, area, productType, state, giveLocalDate());
-        currentOrder.setOrderNumber(counter);
-
 
         cio.printMessage("Please review your submitted order:\n\n");
-        cio.printMessage(currentOrder.orderToString());
+        cio.printMessage(currentOrder.orderToStringWithoutOrderNumber());
         if (writeToFile == false) {
             cio.printMessage("\nSystem is currently configured to test mode.  Your order will not be saved.");
             cio.printMessage("Please contact your system administrator to reconfigure the program.\n\n");
@@ -166,16 +162,16 @@ public class ManagementController {
             if (approved == 1) {
                 try {
                     ArrayList<Order> allOrdersFromAnotherDate = om.loadFromFile(defaultDateToString());
-                    allOrdersFromAnotherDate.add(currentOrder);
+                    om.addOrder(currentOrder, allOrdersFromAnotherDate);
                     om.writeToFile(allOrdersFromAnotherDate, defaultDateToString());
-                    counter++;
                     cio.printMessage("Your order has been added to our database");
+                    cio.printMessage("Your order number was " + (om.getCounter() - 1));
                 } catch (FileNotFoundException fnf) {
                     ArrayList<Order> holdingOneOrder = new ArrayList<>();
-                    holdingOneOrder.add(currentOrder);
+                    om.addOrder(currentOrder, holdingOneOrder);
                     om.writeToFile(holdingOneOrder, defaultDateToString());
-                    counter++;
                     cio.printMessage("Your order has been added to our database");
+                    cio.printMessage("Your order number was " + (om.getCounter() - 1));
                 } catch (IOException ioe) {
                     cio.printMessage("Sorry, your order could not be added to our database.");
                 }
@@ -391,7 +387,7 @@ public class ManagementController {
                     onlyEditedOrder.add(editedOrder);
                     LocalDate ld3 = editedOrder.getDate();
                     ArrayList<Order> editedOrders = new ArrayList<>();
-                    editedOrders= om.loadFromFile(localDateToString(ld3));
+                    editedOrders = om.loadFromFile(localDateToString(ld3));
                     editedOrders.add(editedOrder);
                     om.writeToFile(editedOrders, localDateToString(ld3));
                     cio.printMessage("\nYour order has been changed. Thank you.");
@@ -407,7 +403,7 @@ public class ManagementController {
             cio.printMessage("Your order will be changed. Thank you.");
         } catch (IOException ioe) {
             cio.printMessage("Error changing our database, please try again later.");
-    }
+        }
 
     }
 
@@ -475,7 +471,7 @@ public class ManagementController {
 
         String year = Integer.toString(ld.getYear());
 
-        return month + day  + year;
+        return month + day + year;
 
     }
 
@@ -527,16 +523,4 @@ public class ManagementController {
         allStates.clear();
     }
 
-    private void writeCounter() throws IOException {
-        PrintWriter out = new PrintWriter(new FileWriter(COUNTER_FILE));
-        out.println(counter);
-        out.flush();
-        out.close();
-    }
-
-    private int readCounter() throws FileNotFoundException {
-        Scanner sc = new Scanner(new BufferedReader(new FileReader(COUNTER_FILE)));
-        int counter = sc.nextInt();
-        return counter;
-    }
 }
