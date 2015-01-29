@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<TaxRates>
+<tax>
+<state>OH</state>
+<rate>6.25</rate>
+</tax>
+<tax>
+<state>PA</state>
+<rate>6.75</rate>
+</tax>
+<tax>
+<state>MI</state>
+<rate>5.75</rate>
+</tax>
+<tax>
+<state>IN</state>
+<rate>6.00</rate>
+</tax>
+</TaxRates>

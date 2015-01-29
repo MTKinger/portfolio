@@ -7,10 +7,18 @@ package com.swcguild.masteryproject.daos;
 
 import com.swcguild.masteryproject.dtos.Taxes;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.EndElement;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
 
 /**
  *
@@ -21,6 +29,11 @@ public class TaxManagement implements TaxInterface {
     ArrayList<Taxes> allTaxes = new ArrayList<>();
     final String DELIMITER = ",";
     final String TARGET_FILE = "taxes.txt";
+    final String XML_TARGET_FILE = "xmlTaxes.txt";
+    
+    static final String TAX = "tax";
+    static final String STATE = "state";
+    static final String RATE = "rate";
 
     
             //**TESTED**
@@ -78,6 +91,56 @@ public class TaxManagement implements TaxInterface {
     
     public void clearAllTaxes() {
         allTaxes.clear();
+    }
+    
+    public ArrayList<Taxes> loadTaxesXML() throws FileNotFoundException, XMLStreamException{
+        ArrayList<Taxes> allTaxes = new ArrayList<Taxes>();
+        try{
+            
+            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+            InputStream in = new FileInputStream(XML_TARGET_FILE);
+            XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+            Taxes tax = null;
+            
+            while(eventReader.hasNext()){
+                XMLEvent event = eventReader.nextEvent();
+                
+                if (event.isStartElement()){
+                    StartElement startElement = event.asStartElement();
+                    
+                    if(startElement.getName().getLocalPart() == (TAX)){
+                        tax = new Taxes();
+                    }
+                    
+                    if (event.isStartElement()){
+                        if(event.asStartElement().getName().getLocalPart().equals(STATE)){
+                            event = eventReader.nextEvent();
+                            tax.setState(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    
+                    if ( event.asStartElement().getName().getLocalPart().equals(RATE)){
+                        event = eventReader.nextEvent();
+                        String rateString = (event.asCharacters().getData());
+                        double rate = Double.parseDouble(rateString);
+                        tax.setTaxRate(rate);
+                    }
+                }
+                
+                if (event.isEndElement()){
+                    EndElement endElement = event.asEndElement();
+                    if(endElement.getName().getLocalPart() == (TAX)){
+                        allTaxes.add(tax);
+                    }
+                }
+            }
+        }catch (FileNotFoundException fnf){
+            System.out.println("ERROR LOADING FROM FILE");
+        }catch (XMLStreamException xml){
+            System.out.println("ERROR OF SOME KIND...");
+        }
+        return allTaxes;
     }
 
 }

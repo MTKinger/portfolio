@@ -5,9 +5,10 @@
  */
 package com.swcguild.masteryproject.daos;
 
-import com.swcguild.masteryproject.daos.TaxManagement;
+import com.swcguild.masteryproject.dtos.Taxes;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import jdk.internal.util.xml.XMLStreamException;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -55,6 +56,16 @@ public class TaxManagementTest {
         assertEquals(6.25, taxes.getTaxRate("OH"), .01);
         assertEquals(5.75, taxes.getTaxRate(state2), .00001);
     }
+    
+    @Test
+    public void loadTaxesXMLTest() throws FileNotFoundException, javax.xml.stream.XMLStreamException{
+        ArrayList<Taxes> testList = taxes.loadTaxesXML();
+        assertEquals(4, testList.size());
+        assertEquals(testList.get(1).getTaxRate(), 6.75, .00001);
+        assertEquals(testList.get(3).getState(), "IN");
+    }
+    
+    
 
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

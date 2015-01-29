@@ -5,6 +5,7 @@
  */
 package com.swcguild.masteryproject.daos;
 
+import com.swcguild.masteryproject.dtos.Taxes;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
