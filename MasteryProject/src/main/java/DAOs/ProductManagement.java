@@ -22,6 +22,8 @@ public class ProductManagement implements ProductInterface {
     final String TARGET_FILE = "products.txt";
     ArrayList<Product> allProducts = new ArrayList<>();
 
+            //**TESTED**
+    
     @Override
     public void loadFromFile() throws FileNotFoundException {
         
@@ -43,6 +45,8 @@ public class ProductManagement implements ProductInterface {
         sc.close();
     }
 
+            //**TESTED**
+    
     @Override
     public double getCostPerSquareFoot(String productType) {
         double costPSF = 0;
@@ -54,6 +58,8 @@ public class ProductManagement implements ProductInterface {
         return costPSF;
     }
 
+            //**TESTED**
+    
     @Override
     public double getLaborPerSquareFoot(String productType) {
         double costLSF = 0;
@@ -65,6 +71,8 @@ public class ProductManagement implements ProductInterface {
         return costLSF;
     }
 
+            //**TESTED**
+    
     @Override
     public ArrayList<String> getAllProductTypes() {
         ArrayList<String> allProductTypes = new ArrayList<>();
@@ -74,6 +82,8 @@ public class ProductManagement implements ProductInterface {
         }
         return allProductTypes;
     }
+    
+            //**TESTED
     
     public int getSize() {
         return allProducts.size();

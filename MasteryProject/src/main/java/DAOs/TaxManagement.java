@@ -22,7 +22,10 @@ public class TaxManagement implements TaxInterface {
     final String DELIMITER = ":::";
     final String TARGET_FILE = "taxes.txt";
 
-    @Override //GETS A SINGLE TAX RATE THAT IS DEPENDENT ON THE STATE
+    
+            //**TESTED**
+    
+    @Override           //GETS A SINGLE TAX RATE THAT IS DEPENDENT ON THE STATE
     public double getTaxRate(String state) {
         double taxRate = 0;
         for (Taxes currentTaxes : allTaxes) {
@@ -34,6 +37,9 @@ public class TaxManagement implements TaxInterface {
         return taxRate;
     }
 
+    
+            //**TESTED**
+    
     @Override
     public void loadFromFile() throws FileNotFoundException {
         
@@ -53,6 +59,8 @@ public class TaxManagement implements TaxInterface {
         sc.close();
     }
 
+            //**TESTED**
+    
     @Override //GET AN ARRAY LIST OF ALL STATES TO CHECK AGAINST IN THE CONTROLLER
     public ArrayList<String> getStates() {
         ArrayList<String> allStates = new ArrayList<>();
@@ -61,6 +69,8 @@ public class TaxManagement implements TaxInterface {
         }
         return allStates;
     }
+    
+            //**TESTED**
     
     public int getSize() { //for testing purposes
         return allTaxes.size();

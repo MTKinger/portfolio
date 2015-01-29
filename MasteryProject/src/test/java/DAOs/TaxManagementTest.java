@@ -48,8 +48,11 @@ public class TaxManagementTest {
         ArrayList<String> testStates = taxes.getStates();
         assertEquals(4, testStates.size());
         String state = testStates.get(0);
+        String state2 = testStates.get(2);
         assertEquals("OH", state);
+        assertEquals("MI", state2);
         assertEquals(6.25, taxes.getTaxRate("OH"), .01);
+        assertEquals(5.75, taxes.getTaxRate(state2), .00001);
     }
 
     // TODO add test methods here.

@@ -49,9 +49,13 @@ public class ManagementController {
                 case 4:
                     removeOrder();
                     break;
+                
+                
                 case 5:
-                    saveCurrentWork();
+                    //saveCurrentWork();
                     break;
+                
+                
                 case 6:
                     changeDate();
                     break;
@@ -84,6 +88,8 @@ public class ManagementController {
         cio.printMessage("***************************************************\n\n");
     }
 
+
+    
     private void addOrder() throws FileNotFoundException, IOException {
         tm.loadFromFile();
         pm.loadFromFile();
@@ -180,6 +186,8 @@ public class ManagementController {
         }
     }
 
+
+    
     private void removeOrder() throws FileNotFoundException, IOException {
         Order foundOrder = new Order("null", "null", 0.0);
         try {
@@ -208,6 +216,7 @@ public class ManagementController {
         }
     }
 
+    
     private void editOrder() throws FileNotFoundException, IOException {
         boolean badDouble = false;
         boolean badDate = false;
@@ -381,6 +390,7 @@ public class ManagementController {
 
     }
 
+    
     public void changeDate() {
         boolean badDate = false;
         String date = "";
@@ -405,6 +415,7 @@ public class ManagementController {
 
     }
 
+    
     private String localDateToStringToday() {
         LocalDate today = LocalDate.now();
         int numMonth = today.getMonthValue();
@@ -423,6 +434,7 @@ public class ManagementController {
         return month + "-" + day + "-" + year;
     }
 
+    
     private String defaultDateToString() {
         String month = defaultDate.substring(0, 2);
         String day = defaultDate.substring(3, 5);
@@ -430,6 +442,7 @@ public class ManagementController {
         return month + day + year;
     }
 
+    
     private LocalDate giveLocalDate() {
         String month = defaultDate.substring(0, 2);
         String day = defaultDate.substring(3, 5);
@@ -439,6 +452,8 @@ public class ManagementController {
         return output;
     }
 
+    
+    
     private boolean setMode() throws FileNotFoundException {
         boolean output;
         Scanner sc = new Scanner(new BufferedReader(new FileReader(MODE_FILE)));
@@ -451,10 +466,10 @@ public class ManagementController {
         return output;
     }
 
-    private void saveCurrentWork() throws IOException {
-        ArrayList<Order> currentDayOrders = om.getTodaysOrders();
-        om.writeToFile(currentDayOrders, defaultDateToString());
-    }
+//    private void saveCurrentWork() throws IOException {
+//        ArrayList<Order> currentDayOrders = om.getTodaysOrders();
+//        om.writeToFile(currentDayOrders, defaultDateToString());
+//    }
 
     private void displayProducts() {
         ArrayList<String> allProducts = pm.getAllProductTypes();

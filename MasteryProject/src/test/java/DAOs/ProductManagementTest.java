@@ -57,6 +57,8 @@ public class ProductManagementTest {
         String prod = testProd.get(0);
         assertEquals("Carpet", prod);
         assertEquals(1.75, pm.getCostPerSquareFoot("Laminate"), .00001);
+        assertEquals(3.50, pm.getCostPerSquareFoot("tile"), .00001);
         assertEquals(2.10, pm.getLaborPerSquareFoot("Laminate"), .00001);
+        assertEquals(4.75, pm.getLaborPerSquareFoot("Wood"), .000001);
     }
 }

@@ -26,6 +26,8 @@ public class OrderManagement implements OrderInterface {
     final String DELIMITER = ":::";
     final String ORDER_ = "Order_";
 
+            //**TESTED**
+    
     @Override
     public void writeToFile(ArrayList<Order> orders,String monthDayYear) throws IOException { //will ideally write to any file we want
         String targetFile = ORDER_ + monthDayYear + ".txt";  //can take three parameters from LocalDate of the objecct we adding/editing
@@ -49,6 +51,8 @@ public class OrderManagement implements OrderInterface {
         out.close();
     }
 
+            //**TESTED**
+    
     @Override
     public ArrayList<Order> loadFromFile(String monthDayYear) throws FileNotFoundException {
         Scanner sc = new Scanner(new BufferedReader(new FileReader(ORDER_ + monthDayYear+ ".txt")));
@@ -97,17 +101,27 @@ public class OrderManagement implements OrderInterface {
         return ordersFromSelectedDate;
     }
 
-    @Override
-    public ArrayList<Order> displayOrders(String monthDayYear) {
-        return todayOrders;
-        }
+    
+    
+    
+//    @Override
+//    public ArrayList<Order> displayOrders(String monthDayYear) {
+//        return todayOrders;
+//        }
 
+            //**TESTED
+    
+    
+    
+    
     @Override
     public ArrayList<Order> addOrder(Order newOrder, ArrayList<Order> orderToBeAdded) {
         orderToBeAdded.add(newOrder);
         return orderToBeAdded;
     }
 
+            //**TESTED**
+    
     @Override
     public ArrayList<Order> removeOrder(int orderNumber, ArrayList<Order> orderToBeDeleted) {
         int index = 0;
@@ -124,13 +138,19 @@ public class OrderManagement implements OrderInterface {
         return orderToBeDeleted;
     }
 
-    public int getCurrentOrderSize() {
-        return todayOrders.size();
+            //**TESTED**
+    
+    public int getCurrentOrderSize(ArrayList<Order> orderSizeArray) {
+        return orderSizeArray.size();
     }
 
-    public Order getOrder(int slot) {
-        return todayOrders.get(slot);
+           //**TESTED**
+    
+    public Order getOrder(int slot, ArrayList<Order> getOrderArray) {
+        return getOrderArray.get(slot);
     }
+    
+            //**TESTED**
     
     public Order getOrderByID(int id, ArrayList<Order> currentList){
         Order returnOrder = new Order("null", "null" , 0.0);
