@@ -23,7 +23,7 @@ import java.util.Scanner;
 public class OrderManagement implements OrderInterface {
 
     ArrayList<Order> todayOrders = new ArrayList<>();
-    final String DELIMITER = ":::";
+    final String DELIMITER = ",";
     final String ORDER_ = "Order_";
 
     //**TESTED**

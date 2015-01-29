@@ -1,3 +1,0 @@
-OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total, CustomerFirstName, CustomerLastName
-1:::Mike King:::OH:::6.25:::tile:::100.0:::3.5:::4.15:::350.0:::415.00000000000006:::47.8125:::812.8125:::Mike:::King
-2:::Sam Sawan:::OH:::6.25:::carpet:::150.0:::2.25:::2.1:::337.5:::315.0:::40.78125:::693.28125:::Sam:::Sawan

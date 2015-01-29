@@ -1,2 +1,0 @@
-OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total, CustomerFirstName, CustomerLastName
-4:::Tom Jones:::MI:::5.75:::wood:::200.0:::5.15:::4.75:::1030.0:::950.0:::113.85000000000001:::2093.85:::Tom:::Jones

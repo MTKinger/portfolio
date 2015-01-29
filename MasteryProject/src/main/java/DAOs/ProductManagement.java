@@ -18,7 +18,7 @@ import java.util.Scanner;
  */
 public class ProductManagement implements ProductInterface {
     
-    final String DELIMITER = ":::";
+    final String DELIMITER = ",";
     final String TARGET_FILE = "products.txt";
     ArrayList<Product> allProducts = new ArrayList<>();
 

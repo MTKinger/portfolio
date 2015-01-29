@@ -19,7 +19,7 @@ import java.util.Scanner;
 public class TaxManagement implements TaxInterface {
 
     ArrayList<Taxes> allTaxes = new ArrayList<>();
-    final String DELIMITER = ":::";
+    final String DELIMITER = ",";
     final String TARGET_FILE = "taxes.txt";
 
     
