@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAOs;
+package com.swcguild.masteryproject.daos;
 
-import DTOs.Order;
+import com.swcguild.masteryproject.daos.OrderManagement;
+import com.swcguild.masteryproject.dtos.Order;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;

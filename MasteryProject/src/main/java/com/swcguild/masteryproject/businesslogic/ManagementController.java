@@ -1,10 +1,10 @@
-package BuisnessLogic;
+package com.swcguild.masteryproject.businesslogic;
 
-import DAOs.OrderManagement;
-import DAOs.ProductManagement;
-import DAOs.TaxManagement;
-import DTOs.Order;
-import UI.ConsoleIO;
+import com.swcguild.masteryproject.daos.OrderManagement;
+import com.swcguild.masteryproject.daos.ProductManagement;
+import com.swcguild.masteryproject.daos.TaxManagement;
+import com.swcguild.masteryproject.dtos.Order;
+import com.swcguild.masteryproject.ui.ConsoleIO;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -114,9 +114,9 @@ public class ManagementController {
         tm.loadFromFile();
         pm.loadFromFile();
         writeToFile = setMode();
-        String userFirstName = cio.getString("What is the customer's first name?");
-        String userLastName = cio.getString("What is the customer's last name?");
-        double area = cio.getDouble("What's the area of the order, in square feet");
+        String userName = cio.getString("What is the customer's name?");
+
+        double area = cio.getDouble("What's the area of the order, in square feet", 0, 1000000000);
         String state = "";
         String productType = "";
 
@@ -149,11 +149,9 @@ public class ManagementController {
                 cio.printMessage("\nThis product is not in our database.  Please enter a new product.\n");
             }
         } while (productCheck == false);
-        String customerName = userFirstName + " " + userLastName;
+        String customerName = userName;
 
         Order currentOrder = new Order(customerName, productType, area);
-        currentOrder.setFirstName(userFirstName);
-        currentOrder.setLastName(userLastName);
         currentOrder.setDate(giveLocalDate());
         currentOrder.setLaborTotal(calc.calculateLabor(area, pm.getLaborPerSquareFoot(productType)));
         currentOrder.setMaterialTotal(calc.calculateMaterial(area, pm.getCostPerSquareFoot(productType)));
@@ -245,6 +243,7 @@ public class ManagementController {
     }
 
     private void editOrder() throws FileNotFoundException, IOException {
+        ArrayList<Order> onlyEditedOrder = new ArrayList<>();
         boolean badDouble = false;
         boolean badDate = false;
         tm.loadFromFile();
@@ -262,18 +261,11 @@ public class ManagementController {
             }
             cio.printMessage("\n\n" + foundOrder.orderToString());
 
-            String newFirstName = cio.getString("Enter customer's first name (" + foundOrder.getFirstName() + ") :");
-            if (!newFirstName.equalsIgnoreCase("")) {
-                editedOrder.setFirstName(newFirstName);
+            String newName = cio.getString("Enter customer's name (" + foundOrder.getCustomerName() + ") :");
+            if (!newName.equalsIgnoreCase("")) {
+                editedOrder.setCustomerName(newName);
             } else {
-                editedOrder.setFirstName(foundOrder.getFirstName());
-            }
-
-            String newLastName = cio.getString("Enter customer's last name (" + foundOrder.getLastName() + ") :");
-            if (!newLastName.equalsIgnoreCase("")) {
-                editedOrder.setLastName(newLastName);
-            } else {
-                editedOrder.setLastName(foundOrder.getLastName());
+                editedOrder.setCustomerName(foundOrder.getCustomerName());
             }
 
             do {
@@ -281,6 +273,10 @@ public class ManagementController {
                     String newArea = cio.getString("Please enter the new area (" + foundOrder.getArea() + ") :");
                     if (!newArea.equalsIgnoreCase("")) {
                         double newArea1 = Double.parseDouble(newArea);
+                        while (newArea1 < 0) {
+                            newArea1 = cio.getDouble("\nPlease enter a valid area.", 0, 1000000000);
+                            cio.printMessage("");
+                        }
                         editedOrder.setArea(newArea1);
                         badDouble = false;
                     } else {
@@ -386,7 +382,6 @@ public class ManagementController {
             } else {
                 editedOrder.setState(foundOrder.getState());
             }
-            editedOrder.setCustomerName(editedOrder.getFirstName() + " " + editedOrder.getLastName());
             editedOrder.setCostPSF(pm.getCostPerSquareFoot(editedOrder.getProductType()));
             editedOrder.setLaborPSF(pm.getLaborPerSquareFoot(editedOrder.getProductType()));
             editedOrder.setLaborTotal(calc.calculateLabor(editedOrder.getArea(), pm.getLaborPerSquareFoot(editedOrder.getProductType())));
@@ -408,8 +403,13 @@ public class ManagementController {
 
                 if (approved == 1) {
                     om.removeOrder(foundOrder.getOrderNumber(), ordersToBeEdited);
-                    om.addOrder(editedOrder, ordersToBeEdited);
                     om.writeToFile(ordersToBeEdited, defaultDateToString());
+                    onlyEditedOrder.add(editedOrder);
+                    LocalDate ld3 = editedOrder.getDate();
+                    ArrayList<Order> editedOrders = new ArrayList<>();
+                    editedOrders= om.loadFromFile(localDateToString(ld3));
+                    editedOrders.add(editedOrder);
+                    om.writeToFile(editedOrders, localDateToString(ld3));
                     cio.printMessage("\nYour order has been changed. Thank you.");
                 } else {
                     cio.printMessage("\nYour order will not be changed.");
@@ -418,10 +418,12 @@ public class ManagementController {
             tm.clearAllTaxes();
             pm.clearAllProducts();
         } catch (FileNotFoundException fnf) {
-            cio.printMessage("No orders exist with that date!");
+            LocalDate ld4 = onlyEditedOrder.get(0).getDate();
+            om.writeToFile(onlyEditedOrder, localDateToString(ld4));
+            cio.printMessage("Your order will be changed. Thank you.");
         } catch (IOException ioe) {
             cio.printMessage("Error changing our database, please try again later.");
-        }
+    }
 
     }
 
@@ -474,6 +476,25 @@ public class ManagementController {
         return month + day + year;
     }
 
+    private String localDateToString(LocalDate ld) {
+
+        int numMonth = ld.getMonthValue();
+        String month = Integer.toString(numMonth);
+        if (month.length() == 1) {
+            month = "0" + month;
+        }
+
+        String day = Integer.toString(ld.getDayOfMonth());
+        if (day.length() == 1) {
+            day = "0" + day;
+        }
+
+        String year = Integer.toString(ld.getYear());
+
+        return month + day  + year;
+
+    }
+
     private LocalDate giveLocalDate() {
         String month = defaultDate.substring(0, 2);
         String day = defaultDate.substring(3, 5);
@@ -521,15 +542,15 @@ public class ManagementController {
         cio.printMessage("");
         allStates.clear();
     }
-    
-    private void writeCounter()throws IOException{
+
+    private void writeCounter() throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(COUNTER_FILE));
         out.println(counter);
         out.flush();
         out.close();
     }
-    
-    private int readCounter()throws FileNotFoundException{
+
+    private int readCounter() throws FileNotFoundException {
         Scanner sc = new Scanner(new BufferedReader(new FileReader(COUNTER_FILE)));
         int counter = sc.nextInt();
         return counter;

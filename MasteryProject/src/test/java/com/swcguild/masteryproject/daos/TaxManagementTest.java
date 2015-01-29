@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAOs;
+package com.swcguild.masteryproject.daos;
 
-import DTOs.Product;
+import com.swcguild.masteryproject.daos.TaxManagement;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import org.junit.After;
@@ -19,11 +19,11 @@ import org.junit.Test;
  *
  * @author apprentice
  */
-public class ProductManagementTest {
+public class TaxManagementTest {
     
-    ProductManagement pm = new ProductManagement();
+    TaxManagement taxes = new TaxManagement();
     
-    public ProductManagementTest() {
+    public TaxManagementTest() {
     }
     
     @BeforeClass
@@ -41,24 +41,24 @@ public class ProductManagementTest {
     @After
     public void tearDown() {
     }
+    
+    @Test
+    public void taxesTest() throws FileNotFoundException {
+        taxes.loadFromFile();
+        assertEquals(4, taxes.getSize());
+        ArrayList<String> testStates = taxes.getStates();
+        assertEquals(4, testStates.size());
+        String state = testStates.get(0);
+        String state2 = testStates.get(2);
+        assertEquals("OH", state);
+        assertEquals("MI", state2);
+        assertEquals(6.25, taxes.getTaxRate("OH"), .01);
+        assertEquals(5.75, taxes.getTaxRate(state2), .00001);
+    }
 
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
     // @Test
     // public void hello() {}
-    
-    @Test
-    public void productsTest() throws FileNotFoundException{
-        pm.loadFromFile();
-        assertEquals (4, pm.getSize());
-        ArrayList<String> testProd = pm.getAllProductTypes();
-        assertEquals(4, testProd.size());
-        String prod = testProd.get(0);
-        assertEquals("Carpet", prod);
-        assertEquals(1.75, pm.getCostPerSquareFoot("Laminate"), .00001);
-        assertEquals(3.50, pm.getCostPerSquareFoot("tile"), .00001);
-        assertEquals(2.10, pm.getLaborPerSquareFoot("Laminate"), .00001);
-        assertEquals(4.75, pm.getLaborPerSquareFoot("Wood"), .000001);
-    }
 }

@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package BuisnessLogic;
+package com.swcguild.masteryproject.businesslogic;
+
+import com.swcguild.masteryproject.dtos.Order;
+import java.time.LocalDate;
 
 /**
  *
@@ -16,5 +19,6 @@ public interface Calculator {
     public double calculateCost(double material, double labor);
     public double calculateTax(double cost, double taxRate);
     public double calculateTotalCost(double tax, double cost);
+    public Order buildOrder(String name, double area, String productType, String state, LocalDate ld5);
     
 }

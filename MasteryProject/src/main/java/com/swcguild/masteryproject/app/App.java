@@ -1,6 +1,6 @@
-package com.swcguild.masteryproject;
+package com.swcguild.masteryproject.app;
 
-import BuisnessLogic.ManagementController;
+import com.swcguild.masteryproject.businesslogic.ManagementController;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 

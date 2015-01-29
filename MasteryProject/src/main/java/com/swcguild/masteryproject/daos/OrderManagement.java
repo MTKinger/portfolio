@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAOs;
+package com.swcguild.masteryproject.daos;
 
-import DTOs.Order;
+import com.swcguild.masteryproject.dtos.Order;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -33,6 +33,13 @@ public class OrderManagement implements OrderInterface {
         PrintWriter out = new PrintWriter(new FileWriter(targetFile));
         out.println("OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total, CustomerFirstName, CustomerLastName");
         for (Order currentOrder : orders) {
+            StringBuilder nameChanged = new StringBuilder(currentOrder.getCustomerName());
+            for(int i = 0; i < nameChanged.length(); i ++) {
+                if (nameChanged.charAt(i) == ',') {
+                    nameChanged.replace(i, i+1, "++++++++++");
+                }
+            }
+            currentOrder.setCustomerName(nameChanged.toString());
             out.println(currentOrder.getOrderNumber() + DELIMITER
                     + currentOrder.getCustomerName() + DELIMITER
                     + currentOrder.getState() + DELIMITER
@@ -44,9 +51,7 @@ public class OrderManagement implements OrderInterface {
                     + currentOrder.getMaterialTotal() + DELIMITER
                     + currentOrder.getLaborTotal() + DELIMITER
                     + currentOrder.getTaxTotal() + DELIMITER
-                    + currentOrder.getTotalCost() + DELIMITER
-                    + currentOrder.getFirstName() + DELIMITER
-                    + currentOrder.getLastName());
+                    + currentOrder.getTotalCost());
             out.flush();
         }
         out.close();
@@ -74,10 +79,16 @@ public class OrderManagement implements OrderInterface {
             double laborTotal = Double.parseDouble(currentTokens[9]);
             double taxTotal = Double.parseDouble(currentTokens[10]);
             double totalCost = Double.parseDouble(currentTokens[11]);
-            String firstName = currentTokens[12];
-            String lastName = currentTokens[13];
+            
+            StringBuilder nameChanged = new StringBuilder(currentTokens[1]);
+            for (int i = 0; i < nameChanged.length()-10; i ++){
+                if (nameChanged.substring(i, i+10).equalsIgnoreCase("++++++++++")){
+                    nameChanged.replace(i, i+10, ",");
+                }
+            }
+            
 
-            Order currentOrder = new Order(name, productType, area);
+            Order currentOrder = new Order(nameChanged.toString(), productType, area);
             currentOrder.setOrderNumber(orderNumber);
             currentOrder.setState(state);
             currentOrder.setTaxRate(taxRate);
@@ -87,8 +98,6 @@ public class OrderManagement implements OrderInterface {
             currentOrder.setLaborTotal(laborTotal);
             currentOrder.setTaxTotal(taxTotal);
             currentOrder.setTotalCost(totalCost);
-            currentOrder.setFirstName(firstName);
-            currentOrder.setLastName(lastName);
 
             String month = monthDayYear.substring(0, 2);
             String day = monthDayYear.substring(2, 4);

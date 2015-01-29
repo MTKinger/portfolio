@@ -1,4 +1,4 @@
-package UI;
+package com.swcguild.masteryproject.ui;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -112,6 +112,9 @@ public class ConsoleIO {
                     input = Double.parseDouble(sc.nextLine());
                     badInput = false;
                 } catch (InputMismatchException ime) {
+                    System.out.println("Please enter a valid numerical value!");
+                    badInput = true;
+                }catch (NumberFormatException nfe){
                     System.out.println("Please enter a valid numerical value!");
                     badInput = true;
                 }

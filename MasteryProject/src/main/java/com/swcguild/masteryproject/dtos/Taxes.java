@@ -1,4 +1,4 @@
-package DTOs;
+package com.swcguild.masteryproject.dtos;
 
 public  class  Taxes {
     

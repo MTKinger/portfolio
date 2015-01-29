@@ -1,4 +1,4 @@
-package DTOs;
+package com.swcguild.masteryproject.dtos;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -12,9 +12,8 @@ public class Order extends Product {
     private double laborTotal;
     private double taxTotal;
     private double totalCost;
-    private String firstName;
-    private String lastName;
-    private String customerName = firstName + " " + lastName;
+    
+    private String customerName;
 
     public Order(String name, String productType, double area) {
         this.customerName = name;
@@ -84,22 +83,6 @@ public class Order extends Product {
 
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String orderToString() {

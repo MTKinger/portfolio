@@ -1,0 +1,2 @@
+OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total, CustomerFirstName, CustomerLastName
+8,Sam,OH,6.25,wood,900.0,5.15,4.75,4635.0,4275.0,556.875,9466.875
