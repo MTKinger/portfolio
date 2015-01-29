@@ -25,6 +25,8 @@ public class OrderManagement implements OrderInterface {
     ArrayList<Order> todayOrders = new ArrayList<>();
     final String DELIMITER = ",";
     final String ORDER_ = "Order_";
+    final String COUNTER_FILE = "counter.txt";
+    public int counter = 1;
 
     //**TESTED**
     @Override
@@ -116,6 +118,8 @@ public class OrderManagement implements OrderInterface {
 
     @Override
     public ArrayList<Order> addOrder(Order newOrder, ArrayList<Order> orderToBeAdded) {
+        newOrder.setOrderNumber(counter);
+        counter ++;
         orderToBeAdded.add(newOrder);
         return orderToBeAdded;
     }
@@ -161,5 +165,24 @@ public class OrderManagement implements OrderInterface {
     public ArrayList<Order> getTodaysOrders() {
         return todayOrders;
     }
+    
+     public void writeCounter() throws IOException {
+        PrintWriter out = new PrintWriter(new FileWriter(COUNTER_FILE));
+        out.println(counter);
+        out.flush();
+        out.close();
+    }
+
+    public void readCounter() throws FileNotFoundException {
+        Scanner sc = new Scanner(new BufferedReader(new FileReader(COUNTER_FILE)));
+        counter = sc.nextInt();
+        
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+    
+    
 
 }

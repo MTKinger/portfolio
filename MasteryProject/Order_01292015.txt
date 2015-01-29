@@ -1,1 +1,2 @@
 OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total, CustomerFirstName, CustomerLastName
+1,Red,OH,6.25,laminate,900.0,1.75,2.1,1575.0,1890.0,216.5625,3681.5625

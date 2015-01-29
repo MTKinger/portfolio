@@ -100,5 +100,20 @@ public class Order extends Product {
                 + "Order ID# : " + orderNumber
                 + "\nProcess Date: " + date;
     }
+    
+    public String orderToStringWithoutOrderNumber() {
+        DecimalFormat df = new DecimalFormat("#.00");
+        return customerName + ", " + state + "\n"
+                + df.format(area) + " square feet of " + productType
+                + " at a rate of $" + df.format(costPSF) + " per square foot\n"
+                + df.format(area) + " square feet of labor at a rate of $"
+                + df.format(laborPSF) + "\n"
+                + "$" + df.format(materialTotal) + " total material cost\n"
+                + "$" + df.format(laborTotal) + " total cost for labor\n"
+                + taxRate + "% tax applied\n"
+                + "$" + df.format(taxTotal) + " tax added\n\n"
+                + "Total cost of order : $" + df.format(totalCost) + "\n\n"
+                + "\nProcess Date: " + date;
+    }
 
 }

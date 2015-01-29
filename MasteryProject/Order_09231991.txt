@@ -1,2 +1,2 @@
 OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total, CustomerFirstName, CustomerLastName
-8,Sam,OH,6.25,wood,900.0,5.15,4.75,4635.0,4275.0,556.875,9466.875
+2,Red,OH,6.25,tile,500.0,3.5,4.15,1750.0,2075.0,239.0625,4064.0625
