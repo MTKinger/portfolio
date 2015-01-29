@@ -1,0 +1,2 @@
+OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total, CustomerFirstName, CustomerLastName
+3:::Jim Jones:::MI:::5.75:::laminate:::200.0:::1.75:::2.1:::350.0:::420.0:::44.275:::814.275:::Jim:::Jones

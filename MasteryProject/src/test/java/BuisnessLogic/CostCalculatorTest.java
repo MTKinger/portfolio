@@ -79,11 +79,11 @@ public class CostCalculatorTest {
     @Test
     public void calculateTaxTest(){
         result = cc.calculateTax(8.45, 9.6);
-        assertEquals(result, 81.12,.0001);
+        assertEquals(result, .8112,.01);
         result = cc.calculateTax(18.6, 1.345);
-        assertEquals(result, 25.017, .000000001);
+        assertEquals(result, .2501, .01);
         result = cc.calculateTax(3.45, 7.9);
-        assertEquals(result, 27.255, .000001);
+        assertEquals(result, .2725, .01);
     }
     
     @Test
