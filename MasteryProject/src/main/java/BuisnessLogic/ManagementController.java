@@ -8,7 +8,9 @@ import UI.ConsoleIO;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -23,17 +25,20 @@ public class ManagementController {
     OrderManagement om = new OrderManagement();
     CostCalculator calc = new CostCalculator();
     private int counter = 1;
-    String MODE_FILE = "mode.txt";
+    final String MODE_FILE = "ModeConfiguration.txt";
     boolean writeToFile = false;
+    final String COUNTER_FILE = "counter.txt";
 
     String defaultDate = localDateToStringToday();
 
     public void run() throws FileNotFoundException, IOException {
+        counter = readCounter();
         doMenu();
     }
 
     private void doMenu() throws FileNotFoundException, IOException {
         do {
+            writeToFile = setMode();
             printMenu();
             menuChoice = cio.getInt("Please make a selection from the above choices:", 1, 7);
             switch (menuChoice) {
@@ -49,18 +54,17 @@ public class ManagementController {
                 case 4:
                     removeOrder();
                     break;
-                
-                
+
                 case 5:
-                    //saveCurrentWork();
+                    writeCounter();
+                    cio.printMessage("saving....\n\nsaving.....\n\nYour work has been saved.\n");
                     break;
-                
-                
+
                 case 6:
                     changeDate();
                     break;
                 case 7:
-                    //exit();
+                    writeCounter();
                     break;
                 default:
                     cio.printMessage("Please enter a valid menu choice!\n");
@@ -71,28 +75,45 @@ public class ManagementController {
     }
 
     private void printMenu() {
-        cio.printMessage("\n\n***************************************************");
-        cio.printMessage("*\tSWC Corp. Flooring Program");
-        cio.printMessage("*");
-        cio.printMessage("*\t\tDate:" + defaultDate);
-        cio.printMessage("*");
-        cio.printMessage("* 1. Display Orders");
-        cio.printMessage("* 2. Add an Order");
-        cio.printMessage("* 3. Edit an Order");
-        cio.printMessage("* 4. Remove an Order");
-        cio.printMessage("* 5. Save Current Work");
-        cio.printMessage("* 6. Switch Date");
-        cio.printMessage("* 7. Quit");
-        cio.printMessage("*");
-        cio.printMessage("*");
-        cio.printMessage("***************************************************\n\n");
+        if (writeToFile == false) {
+            cio.printMessage("\n\n***************************************************");
+            cio.printMessage("*\tSWC Corp. Flooring Program");
+            cio.printMessage("*\t\t**TEST MODE**");
+            cio.printMessage("*\t\tDate:" + defaultDate);
+            cio.printMessage("*");
+            cio.printMessage("* 1. Display Orders");
+            cio.printMessage("* 2. Add an Order");
+            cio.printMessage("* 3. Edit an Order");
+            cio.printMessage("* 4. Remove an Order");
+            cio.printMessage("* 5. Save Current Work");
+            cio.printMessage("* 6. Switch Date");
+            cio.printMessage("* 7. Quit");
+            cio.printMessage("*");
+            cio.printMessage("*");
+            cio.printMessage("***************************************************\n\n");
+        } else {
+            cio.printMessage("\n\n***************************************************");
+            cio.printMessage("*\tSWC Corp. Flooring Program");
+            cio.printMessage("*");
+            cio.printMessage("*\t\tDate:" + defaultDate);
+            cio.printMessage("*");
+            cio.printMessage("* 1. Display Orders");
+            cio.printMessage("* 2. Add an Order");
+            cio.printMessage("* 3. Edit an Order");
+            cio.printMessage("* 4. Remove an Order");
+            cio.printMessage("* 5. Save Current Work");
+            cio.printMessage("* 6. Switch Date");
+            cio.printMessage("* 7. Quit");
+            cio.printMessage("*");
+            cio.printMessage("*");
+            cio.printMessage("***************************************************\n\n");
+        }
     }
 
-
-    
     private void addOrder() throws FileNotFoundException, IOException {
         tm.loadFromFile();
         pm.loadFromFile();
+        writeToFile = setMode();
         String userFirstName = cio.getString("What is the customer's first name?");
         String userLastName = cio.getString("What is the customer's last name?");
         double area = cio.getDouble("What's the area of the order, in square feet");
@@ -147,28 +168,32 @@ public class ManagementController {
 
         cio.printMessage("Please review your submitted order:\n\n");
         cio.printMessage(currentOrder.orderToString());
-        int approved = cio.getInt("\nAre you sure you would like to submit this order? (press 1 for yes, 2 for no)", 1, 2);
-
-        if (approved == 1) {
-            try {
-                ArrayList<Order> allOrdersFromAnotherDate = om.loadFromFile(defaultDateToString());
-                allOrdersFromAnotherDate.add(currentOrder);
-                om.writeToFile(allOrdersFromAnotherDate, defaultDateToString());
-                counter++;
-                cio.printMessage("Your order has been added to our database");
-            } catch (FileNotFoundException fnf) {
-                ArrayList<Order> holdingOneOrder = new ArrayList<>();
-                holdingOneOrder.add(currentOrder);
-                om.writeToFile(holdingOneOrder, defaultDateToString());
-                counter++;
-                cio.printMessage("Your order has been added to our database");
-            } catch (IOException ioe) {
-                cio.printMessage("Sorry, your order could not be added to our database.");
-            }
+        if (writeToFile == false) {
+            cio.printMessage("\nSystem is currently configured to test mode.  Your order will not be saved.");
+            cio.printMessage("Please contact your system administrator to reconfigure the program.\n\n");
         } else {
-            cio.printMessage("Your order will not be added to our database.");
-        }
+            int approved = cio.getInt("\nAre you sure you would like to submit this order? (press 1 for yes, 2 for no)", 1, 2);
 
+            if (approved == 1) {
+                try {
+                    ArrayList<Order> allOrdersFromAnotherDate = om.loadFromFile(defaultDateToString());
+                    allOrdersFromAnotherDate.add(currentOrder);
+                    om.writeToFile(allOrdersFromAnotherDate, defaultDateToString());
+                    counter++;
+                    cio.printMessage("Your order has been added to our database");
+                } catch (FileNotFoundException fnf) {
+                    ArrayList<Order> holdingOneOrder = new ArrayList<>();
+                    holdingOneOrder.add(currentOrder);
+                    om.writeToFile(holdingOneOrder, defaultDateToString());
+                    counter++;
+                    cio.printMessage("Your order has been added to our database");
+                } catch (IOException ioe) {
+                    cio.printMessage("Sorry, your order could not be added to our database.");
+                }
+            } else {
+                cio.printMessage("Your order will not be added to our database.");
+            }
+        }
         tm.clearAllTaxes();
         pm.clearAllProducts();
     }
@@ -186,8 +211,6 @@ public class ManagementController {
         }
     }
 
-
-    
     private void removeOrder() throws FileNotFoundException, IOException {
         Order foundOrder = new Order("null", "null", 0.0);
         try {
@@ -201,13 +224,18 @@ public class ManagementController {
             }
             cio.printMessage("\n" + foundOrder.orderToString());
 
-            int approved = cio.getInt("\nAre you sure you would like to delete this order? (press 1 for yes, 2 for no)", 1, 2);
-            if (approved == 1) {
-                om.removeOrder(orderNumber, ordersToBeDeleted);
-                om.writeToFile(ordersToBeDeleted, defaultDateToString());
-                cio.printMessage("\nYour order has been deleted. Thank you.");
+            if (writeToFile == false) {
+                cio.printMessage("\nSystem is currently configured to test mode.  Orders cannot be deleted at this time.");
+                cio.printMessage("Please contact your system administrator to reconfigure the program.\n\n");
             } else {
-                cio.printMessage("\nYour order will not be deleted.");
+                int approved = cio.getInt("\nAre you sure you would like to delete this order? (press 1 for yes, 2 for no)", 1, 2);
+                if (approved == 1) {
+                    om.removeOrder(orderNumber, ordersToBeDeleted);
+                    om.writeToFile(ordersToBeDeleted, defaultDateToString());
+                    cio.printMessage("\nYour order has been deleted. Thank you.");
+                } else {
+                    cio.printMessage("\nYour order will not be deleted.");
+                }
             }
         } catch (FileNotFoundException fnf) {
             cio.printMessage("No orders to be deleted with that date!");
@@ -216,10 +244,11 @@ public class ManagementController {
         }
     }
 
-    
     private void editOrder() throws FileNotFoundException, IOException {
         boolean badDouble = false;
         boolean badDate = false;
+        tm.loadFromFile();
+        pm.loadFromFile();
         Order foundOrder = new Order("null", "null", 0.0);
         try {
             displayOrders();
@@ -370,15 +399,21 @@ public class ManagementController {
 
             cio.printMessage("Please review your edited order:\n\n");
             cio.printMessage(editedOrder.orderToString());
-            int approved = cio.getInt("\nAre you sure you would like to submit this edited order? (press 1 for yes, 2 for no)", 1, 2);
 
-            if (approved == 1) {
-                om.removeOrder(foundOrder.getOrderNumber(), ordersToBeEdited);
-                om.addOrder(editedOrder, ordersToBeEdited);
-                om.writeToFile(ordersToBeEdited, defaultDateToString());
-                cio.printMessage("\nYour order has been changed. Thank you.");
+            if (writeToFile == false) {
+                cio.printMessage("\nSystem is currently configured to test mode.  Orders cannot be changed at this time.");
+                cio.printMessage("Please contact your system admin to reconfigure the system.\n\n");
             } else {
-                cio.printMessage("\nYour order will not be changed.");
+                int approved = cio.getInt("\nAre you sure you would like to submit this edited order? (press 1 for yes, 2 for no)", 1, 2);
+
+                if (approved == 1) {
+                    om.removeOrder(foundOrder.getOrderNumber(), ordersToBeEdited);
+                    om.addOrder(editedOrder, ordersToBeEdited);
+                    om.writeToFile(ordersToBeEdited, defaultDateToString());
+                    cio.printMessage("\nYour order has been changed. Thank you.");
+                } else {
+                    cio.printMessage("\nYour order will not be changed.");
+                }
             }
             tm.clearAllTaxes();
             pm.clearAllProducts();
@@ -390,7 +425,6 @@ public class ManagementController {
 
     }
 
-    
     public void changeDate() {
         boolean badDate = false;
         String date = "";
@@ -415,7 +449,6 @@ public class ManagementController {
 
     }
 
-    
     private String localDateToStringToday() {
         LocalDate today = LocalDate.now();
         int numMonth = today.getMonthValue();
@@ -434,7 +467,6 @@ public class ManagementController {
         return month + "-" + day + "-" + year;
     }
 
-    
     private String defaultDateToString() {
         String month = defaultDate.substring(0, 2);
         String day = defaultDate.substring(3, 5);
@@ -442,7 +474,6 @@ public class ManagementController {
         return month + day + year;
     }
 
-    
     private LocalDate giveLocalDate() {
         String month = defaultDate.substring(0, 2);
         String day = defaultDate.substring(3, 5);
@@ -452,8 +483,7 @@ public class ManagementController {
         return output;
     }
 
-    
-    
+    //**TESTED WHILE SET TO PUBLIC**
     private boolean setMode() throws FileNotFoundException {
         boolean output;
         Scanner sc = new Scanner(new BufferedReader(new FileReader(MODE_FILE)));
@@ -470,7 +500,6 @@ public class ManagementController {
 //        ArrayList<Order> currentDayOrders = om.getTodaysOrders();
 //        om.writeToFile(currentDayOrders, defaultDateToString());
 //    }
-
     private void displayProducts() {
         ArrayList<String> allProducts = pm.getAllProductTypes();
         cio.printMessage("");
@@ -491,5 +520,18 @@ public class ManagementController {
         }
         cio.printMessage("");
         allStates.clear();
+    }
+    
+    private void writeCounter()throws IOException{
+        PrintWriter out = new PrintWriter(new FileWriter(COUNTER_FILE));
+        out.println(counter);
+        out.flush();
+        out.close();
+    }
+    
+    private int readCounter()throws FileNotFoundException{
+        Scanner sc = new Scanner(new BufferedReader(new FileReader(COUNTER_FILE)));
+        int counter = sc.nextInt();
+        return counter;
     }
 }
