@@ -5,6 +5,7 @@ import com.swcguild.masteryproject.daos.ProductManagement;
 import com.swcguild.masteryproject.daos.TaxManagementXML;
 import com.swcguild.masteryproject.dtos.Order;
 import com.swcguild.masteryproject.dtos.Product;
+import com.swcguild.masteryproject.dtos.Taxes;
 import com.swcguild.masteryproject.ui.ConsoleIO;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -28,7 +29,7 @@ public class ManagementController {
     boolean writeToFile = false;
     final String COUNTER_FILE = "counter.txt";
     String defaultDate = localDateToStringToday();
-    private String password = "password123";
+    private String password = "1";
     private int managerModeCounter = 1;
 
     public void run() throws FileNotFoundException, IOException, XMLStreamException {
@@ -114,7 +115,7 @@ public class ManagementController {
         }
     }
 
-    private void managerEntry() throws IOException {
+    private void managerEntry() throws IOException, XMLStreamException {
         if (managerModeCounter < 4) {
             String enteredPassword = cio.getString("Please enter your authorization");
             while (!enteredPassword.equalsIgnoreCase(password) && managerModeCounter < 4) {
@@ -133,7 +134,7 @@ public class ManagementController {
         }
     }
 
-    private void doSubMenu() throws IOException {
+    private void doSubMenu() throws IOException, XMLStreamException {
         int userResponse = 0;
 
         do {
@@ -216,20 +217,20 @@ public class ManagementController {
         productToAdd.setCostPSF(costPSF);
         productToAdd.setLaborPSF(laborPSF);
         cio.printMessage(productToAdd.toString());
-        
+
         int userChoice = cio.getInt("\nAre you sure you want to add this product to the database? (Press 1 for yes or 2 for no)", 1, 2);
-        if (userChoice == 1){
+        if (userChoice == 1) {
             pm.clearAllProducts();
             pm.loadFromFile();
             pm.addProduct(productToAdd);
             pm.writeToFile();
             cio.printMessage("\nThis product will now be available for sale.");
-        }else{
+        } else {
             cio.printMessage("\nThis product will not be saved to out database.");
         }
     }
-    
-    private void removeProduct() throws IOException{
+
+    private void removeProduct() throws IOException {
         pm.clearAllProducts();
         pm.loadFromFile();
         cio.printMessage("");
@@ -249,35 +250,33 @@ public class ManagementController {
                 cio.printMessage("\nThis product is not in our database.  Please enter a new product.\n");
             }
         } while (productCheck == false);
-        
+
         int userChoice = cio.getInt("\nAre you sure you want to remove " + remove + " from the database? (Press 1 for yes or 2 for no)", 1, 2);
-        
-        if (userChoice == 1){
+
+        if (userChoice == 1) {
             pm.removeProduct(remove, pm.getAllProducts());
             pm.writeToFile();
             cio.printMessage("\nThis product has been removed from the database and will no longer be available.");
-        }else{
+        } else {
             cio.printMessage("This product will not be removed from the database.");
         }
-        
-    }
-    
-    
 
-    private void doTaxMenu() {
+    }
+
+    private void doTaxMenu() throws XMLStreamException, IOException {
         int userChoice = 0;
         do {
             displayTaxMenu();
             userChoice = cio.getInt("What would you like to do?", 1, 4);
             switch (userChoice) {
                 case 1:
-                    //addState();
+                    addState();
                     break;
                 case 2:
-                    //removeState();
+                    removeState();
                     break;
                 case 3:
-                    //editState();
+                    editState();
                     break;
                 case 4:
                     cio.printMessage("Returning to Manager Menu\n");
@@ -291,15 +290,130 @@ public class ManagementController {
     private void displayTaxMenu() {
         cio.printMessage("\n\n***************************************************");
         cio.printMessage("*\tSWC Corp. Flooring Program");
-        cio.printMessage("*\t\tPRODUCT DATABASE");
+        cio.printMessage("*\t\tTAX DATABASE");
         cio.printMessage("*");
-        cio.printMessage("* 1. Add a State to Database");
-        cio.printMessage("* 2. Remove a State from Database");
-        cio.printMessage("* 3. Edit an Existing State");
+        cio.printMessage("* 1. Add a Tax to Database");
+        cio.printMessage("* 2. Remove a Tax from Database");
+        cio.printMessage("* 3. Edit an Existing Tax");
         cio.printMessage("* 4. Return to Manager Menu.");
         cio.printMessage("*");
         cio.printMessage("*");
         cio.printMessage("***************************************************\n\n");
+    }
+
+    private void addState() throws FileNotFoundException, XMLStreamException, IOException {
+        {
+            cio.printMessage("");
+            String state = cio.getString("Please enter the two letter code of the state we are expanding to:");
+            double taxRate = cio.getDouble("Please enter the tax rate associated with said state", 0, 3000);
+            Taxes newTax = new Taxes();
+            newTax.setState(state);
+            newTax.setTaxRate(taxRate);
+            cio.printMessage(newTax.toString());
+
+            int userChoice = cio.getInt("\nAre you sure you want to add this state to the database? (Press 1 for yes or 2 for no)", 1, 2);
+            if (userChoice == 1) {
+                tm.clearAllTaxes();
+                tm.loadFromFile();
+                tm.addTax(state, taxRate);
+                tm.writeToFile();
+                cio.printMessage("\nThis state will not be available for selection.");
+            } else {
+                cio.printMessage("\nThis state will not be available for selection.");
+            }
+        }
+    }
+
+    private void removeState() throws FileNotFoundException, XMLStreamException, IOException {
+        tm.clearAllTaxes();
+        tm.loadFromFile();
+        cio.printMessage("");
+        boolean taxCheck = false;
+        String remove = "";
+        do {
+            displayAllStates();
+            String productType = cio.getString("What is the state you wish to remove?");
+            ArrayList<String> allStates = tm.getStates();
+            for (String currentState : allStates) {
+                if (productType.equalsIgnoreCase(currentState)) {
+                    taxCheck = true;
+                    remove = currentState;
+                }
+            }
+            if (taxCheck == false) {
+                cio.printMessage("\nThis state is not in our database.  Please enter a new state.\n");
+            }
+        } while (taxCheck == false);
+
+        int userChoice = cio.getInt("\nAre you sure you want to remove " + remove + " from the database? (Press 1 for yes or 2 for no)", 1, 2);
+
+        if (userChoice == 1) {
+            tm.removeTax(tm.getAllTaxes(), remove);
+            tm.writeToFile();
+            cio.printMessage("\nThis state has been removed from the database and will no longer be available.");
+        } else {
+            cio.printMessage("\nThis state will not be removed from the database.");
+        }
+    }
+
+    private void editState() throws FileNotFoundException, XMLStreamException, IOException {
+        tm.clearAllTaxes();
+        tm.loadFromFile();
+        cio.printMessage("");
+        boolean badDouble = false;
+        boolean taxCheck = false;
+        String edit = "";
+        Taxes taxToBeEdited = new Taxes();
+        Taxes foundTax = new Taxes();
+        do {
+            displayAllStates();
+            String productType = cio.getString("What is the state you wish to change?");
+            ArrayList<String> allStates = tm.getStates();
+            for (String currentState : allStates) {
+                if (productType.equalsIgnoreCase(currentState)) {
+                    taxCheck = true;
+                    edit = currentState;
+                }
+            }
+            if (taxCheck == false) {
+                cio.printMessage("\nThis state is not in our database.  Please enter a new state.\n");
+            }
+        } while (taxCheck == false);
+
+        ArrayList<Taxes> allTaxes = tm.getAllTaxes();
+        for (Taxes currentTax : allTaxes) {
+            if (currentTax.getState().equalsIgnoreCase(edit)) {
+                taxToBeEdited = currentTax;
+                foundTax = currentTax;
+            }
+        }
+        do {
+            String taxRate = cio.getString("\nPlease enter the new tax rate for " + edit + " " + "(" + taxToBeEdited.getTaxRate() + ") :");
+            if (!taxRate.equalsIgnoreCase("")) {
+                try {
+                    double taxRateNum = Double.parseDouble(taxRate);
+                    taxToBeEdited.setTaxRate(taxRateNum);
+                } catch (NumberFormatException nfe) {
+                    cio.printMessage("\nPlease enter a valid tax rate");
+                    badDouble = true;
+                }
+            }
+            else {
+                taxToBeEdited.setTaxRate(foundTax.getTaxRate());
+            }
+        } while (badDouble == true);
+        
+        taxToBeEdited.toString();
+        int userChoice = cio.getInt("\nWould you like to save these changes? 1 for yes, 2 for no", 1, 2);
+        if (userChoice == 1) {
+            tm.removeTax(allTaxes, edit);
+            tm.addTax(edit, taxToBeEdited.getTaxRate());
+            tm.writeToFile();
+            cio.printMessage("\nYour change has been submitted to out database.");
+        } else {
+            cio.printMessage("\nYour change will not be submitted to our database.");
+        }
+        
     }
 
     private void addOrder() throws FileNotFoundException, IOException, XMLStreamException {

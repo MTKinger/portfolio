@@ -64,7 +64,7 @@ public class TaxManagementXML implements TaxInterface {
         currentTax.setTaxRate(rate);
         allTaxes.add(currentTax);
     }
-
+    
     public void loadFromFile() throws FileNotFoundException, XMLStreamException {
         try {
 
@@ -112,6 +112,21 @@ public class TaxManagementXML implements TaxInterface {
             System.out.println("ERROR OF SOME KIND...");
         }
 
+    }
+    
+    public ArrayList<Taxes> removeTax(ArrayList<Taxes> allTaxes, String state) {
+        int index = 0;
+        boolean found = false;
+        for (Taxes currentTax : allTaxes) {
+            if(currentTax.getState().equalsIgnoreCase(state)) {
+                index = allTaxes.indexOf(currentTax);
+                found = true;
+            }
+        }
+        if(found == true) {
+            allTaxes.remove(index);
+        }
+        return allTaxes;
     }
 
     @Override
@@ -169,6 +184,10 @@ public class TaxManagementXML implements TaxInterface {
         EndElement eElement = eventFactory.createEndElement("", "", name);
         eventWriter.add(eElement);
         eventWriter.add(end);
+    }
+    
+    public ArrayList<Taxes> getAllTaxes() {
+        return allTaxes;
     }
 
 }

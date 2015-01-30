@@ -24,6 +24,13 @@ public  class  Taxes {
     public void setTaxRate(double taxRate) {
         this.taxRate = taxRate;
     }
+
+    @Override
+    public String toString() {
+        return "\nState: " + state + " :: Rate: " + taxRate;
+    }
+    
+    
     
     
 
