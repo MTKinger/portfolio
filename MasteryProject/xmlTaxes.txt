@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TAXRATE>
 <TAX>
-	<RATE>6.25</RATE>
-	<STATE>OH</STATE>
-</TAX>
-<TAX>
 	<RATE>6.75</RATE>
 	<STATE>PA</STATE>
 </TAX>
@@ -19,5 +15,13 @@
 <TAX>
 	<RATE>8.0</RATE>
 	<STATE>IN</STATE>
+</TAX>
+<TAX>
+	<RATE>10.0</RATE>
+	<STATE>OH</STATE>
+</TAX>
+<TAX>
+	<RATE>8.5</RATE>
+	<STATE>CA</STATE>
 </TAX>
 </TAXRATE>

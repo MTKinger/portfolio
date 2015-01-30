@@ -1,5 +1,7 @@
 package com.swcguild.masteryproject.dtos;
 
+import java.text.DecimalFormat;
+
 public  class  Taxes {
     
     protected String state;
@@ -27,7 +29,8 @@ public  class  Taxes {
 
     @Override
     public String toString() {
-        return "\nState: " + state + " :: Rate: " + taxRate;
+        DecimalFormat df = new DecimalFormat("#.00");
+        return "\nState: " + state + " :: Rate: " + df.format(taxRate);
     }
     
     

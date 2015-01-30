@@ -1,5 +1,7 @@
 package com.swcguild.masteryproject.dtos;
 
+import java.text.DecimalFormat;
+
 public class Product extends Taxes{
     
     protected String productType;
@@ -35,7 +37,8 @@ public class Product extends Taxes{
 
     @Override
     public String toString() {
-        return "\nProduct: " + productType + "\nCost Per Square Foot: " +  costPSF + "\nLabor Per Square Foot: " + laborPSF;
+        DecimalFormat df = new DecimalFormat("#.00");
+        return "\nProduct: " + productType + "\nCost Per Square Foot: " +  df.format(costPSF) + "\nLabor Per Square Foot: " + df.format(laborPSF);
     }
     
     
