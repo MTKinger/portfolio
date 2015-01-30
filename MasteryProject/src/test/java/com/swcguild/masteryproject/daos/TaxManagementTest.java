@@ -59,10 +59,10 @@ public class TaxManagementTest {
     
     @Test
     public void loadTaxesXMLTest() throws FileNotFoundException, javax.xml.stream.XMLStreamException{
-        ArrayList<Taxes> testList = taxes.loadTaxesXML();
-        assertEquals(4, testList.size());
-        assertEquals(testList.get(1).getTaxRate(), 6.75, .00001);
-        assertEquals(testList.get(3).getState(), "IN");
+        taxes.loadTaxesXML();
+        assertEquals(4, taxes.getSize());
+        assertEquals(taxes.getTaxRate("PA"), 6.75, .00001);
+        assertEquals(taxes.getStates().get(3), "IN");
     }
     
     

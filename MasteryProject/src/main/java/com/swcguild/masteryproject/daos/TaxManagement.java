@@ -31,9 +31,9 @@ public class TaxManagement implements TaxInterface {
     final String TARGET_FILE = "taxes.txt";
     final String XML_TARGET_FILE = "xmlTaxes.txt";
     
-    static final String TAX = "tax";
-    static final String STATE = "state";
-    static final String RATE = "rate";
+    static final String TAX = "TAX";
+    static final String STATE = "STATE";
+    static final String RATE = "RATE";
 
     
             //**TESTED**
@@ -93,8 +93,7 @@ public class TaxManagement implements TaxInterface {
         allTaxes.clear();
     }
     
-    public ArrayList<Taxes> loadTaxesXML() throws FileNotFoundException, XMLStreamException{
-        ArrayList<Taxes> allTaxes = new ArrayList<Taxes>();
+    public void loadTaxesXML() throws FileNotFoundException, XMLStreamException{
         try{
             
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -140,7 +139,6 @@ public class TaxManagement implements TaxInterface {
         }catch (XMLStreamException xml){
             System.out.println("ERROR OF SOME KIND...");
         }
-        return allTaxes;
     }
 
 }
