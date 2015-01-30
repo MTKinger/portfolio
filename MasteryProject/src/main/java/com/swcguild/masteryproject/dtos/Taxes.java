@@ -30,7 +30,7 @@ public  class  Taxes {
     @Override
     public String toString() {
         DecimalFormat df = new DecimalFormat("#.00");
-        return "\nState: " + state + " :: Rate: " + df.format(taxRate);
+        return "\nState: " + state + " :: Rate: " + df.format(taxRate) + "%";
     }
     
     

@@ -19,7 +19,7 @@ import java.util.Scanner;
 import javax.xml.stream.XMLStreamException;
 
 public class ManagementController {
-    
+
     ConsoleIO cio = new ConsoleIO();
     int menuChoice;
     TaxManagementXML tm = new TaxManagementXML();
@@ -33,12 +33,12 @@ public class ManagementController {
     private String password = "1";
     private int managerModeCounter = 1;
     DecimalFormat df = new DecimalFormat("#.00");
-    
+
     public void run() throws FileNotFoundException, IOException, XMLStreamException {
         om.readCounter();
         doMenu();
     }
-    
+
     private void doMenu() throws FileNotFoundException, IOException, XMLStreamException {
         do {
             writeToFile = setMode();
@@ -61,7 +61,7 @@ public class ManagementController {
                     om.writeCounter();
                     cio.printMessage("saving....\n\nsaving.....\n\nYour work has been saved.\n");
                     break;
-                
+
                 case 6:
                     changeDate();
                     break;
@@ -78,7 +78,7 @@ public class ManagementController {
         } while (menuChoice != 8);
         cio.printMessage("\n\nThank you for chosing SWC Corp...");
     }
-    
+
     private void printMenu() {
         if (writeToFile == false) {
             cio.printMessage("\n\n***************************************************");
@@ -116,7 +116,7 @@ public class ManagementController {
             cio.printMessage("***************************************************\n\n");
         }
     }
-    
+
     private void managerEntry() throws IOException, XMLStreamException {
         if (managerModeCounter < 4) {
             String enteredPassword = cio.getString("Please enter your authorization");
@@ -135,10 +135,10 @@ public class ManagementController {
             cio.printMessage("YOU ARE LOCKED OUT OF MANAGER MODE, PLEASE CONTACT YOUR MANAGER");
         }
     }
-    
+
     private void doSubMenu() throws IOException, XMLStreamException {
         int userResponse = 0;
-        
+
         do {
             displaySubMenu();
             userResponse = cio.getInt("What would you like to do?", 1, 3);
@@ -157,7 +157,7 @@ public class ManagementController {
             }
         } while (userResponse != 3);
     }
-    
+
     private void displaySubMenu() {
         cio.printMessage("\n\n***************************************************");
         cio.printMessage("*\tSWC Corp. Flooring Program");
@@ -170,7 +170,7 @@ public class ManagementController {
         cio.printMessage("*");
         cio.printMessage("***************************************************\n\n");
     }
-    
+
     private void doProductMenu() throws IOException {
         int userResponse = 0;
         do {
@@ -194,7 +194,7 @@ public class ManagementController {
             }
         } while (userResponse != 4);
     }
-    
+
     private void displayProductMenu() {
         cio.printMessage("\n\n***************************************************");
         cio.printMessage("*\tSWC Corp. Flooring Program");
@@ -208,10 +208,25 @@ public class ManagementController {
         cio.printMessage("*");
         cio.printMessage("***************************************************\n\n");
     }
-    
+
     private void addProduct() throws IOException {
         cio.printMessage("");
+        pm.clearAllProducts();
+        pm.loadFromFile();
+        boolean badProduct = false;
         String prodType = cio.getString("Please enter the name of the product you wish to add:");
+
+        do {
+            badProduct = false;
+            ArrayList<String> allProducts = pm.getAllProductTypes();
+            for (String currentProduct : allProducts) {
+                if (currentProduct.equalsIgnoreCase(prodType)) {
+                    prodType = cio.getString("That product is already in our database, please enter a new product");
+                    badProduct = true;
+                }
+            }
+        } while (badProduct == true);
+
         double costPSF = cio.getDouble("Please enter the cost of the product in dollars per square foot:", 0, 1000000000);
         double laborPSF = cio.getDouble("Please enter the labor cost of the product in dollars per square foot:", 0, 1000000000);
         Product productToAdd = new Product();
@@ -219,7 +234,7 @@ public class ManagementController {
         productToAdd.setCostPSF(costPSF);
         productToAdd.setLaborPSF(laborPSF);
         cio.printMessage(productToAdd.toString());
-        
+
         int userChoice = cio.getInt("\nAre you sure you want to add this product to the database? (Press 1 for yes or 2 for no)", 1, 2);
         if (userChoice == 1) {
             pm.clearAllProducts();
@@ -231,7 +246,7 @@ public class ManagementController {
             cio.printMessage("\nThis product will not be saved to out database.");
         }
     }
-    
+
     private void removeProduct() throws IOException {
         pm.clearAllProducts();
         pm.loadFromFile();
@@ -252,9 +267,9 @@ public class ManagementController {
                 cio.printMessage("\nThis product is not in our database.  Please enter a new product.\n");
             }
         } while (productCheck == false);
-        
+
         int userChoice = cio.getInt("\nAre you sure you want to remove " + remove + " from the database? (Press 1 for yes or 2 for no)", 1, 2);
-        
+
         if (userChoice == 1) {
             pm.removeProduct(remove, pm.getAllProducts());
             pm.writeToFile();
@@ -262,9 +277,9 @@ public class ManagementController {
         } else {
             cio.printMessage("This product will not be removed from the database.");
         }
-        
+
     }
-    
+
     private void editProduct() throws FileNotFoundException, IOException {
         pm.clearAllProducts();
         pm.loadFromFile();
@@ -288,7 +303,7 @@ public class ManagementController {
                 cio.printMessage("This product has not been found in our database. Please enter a new product.");
             }
         } while (productCheck == false);
-        
+
         ArrayList<Product> allProducts = pm.getAllProducts();
         for (Product currentProduct : allProducts) {
             if (currentProduct.getProductType().equalsIgnoreCase(edit)) {
@@ -314,7 +329,7 @@ public class ManagementController {
                 productToBeEdited.setCostPSF(productFound.getCostPSF());
             }
         } while (badDouble == true);
-        
+
         do {
             String laborPSF = cio.getString("\nPlease enter the new labor cost per square foot of " + edit + " (" + df.format(productFound.getLaborPSF()) + ") :");
             if (!laborPSF.equalsIgnoreCase("")) {
@@ -333,9 +348,9 @@ public class ManagementController {
                 productToBeEdited.setLaborPSF(productFound.getLaborPSF());
             }
         } while (badDouble == true);
-        
+
         cio.printMessage(productToBeEdited.toString());
-        
+
         int userChoice = cio.getInt("\nWould you like to save these changes? (Press 1 for yes, 2 for no)", 1, 2);
         if (userChoice == 1) {
             pm.removeProduct(edit, allProducts);
@@ -346,7 +361,7 @@ public class ManagementController {
             cio.printMessage("\nYour change will not be submitted to our database.");
         }
     }
-    
+
     private void doTaxMenu() throws XMLStreamException, IOException {
         int userChoice = 0;
         do {
@@ -370,7 +385,7 @@ public class ManagementController {
             }
         } while (userChoice != 4);
     }
-    
+
     private void displayTaxMenu() {
         cio.printMessage("\n\n***************************************************");
         cio.printMessage("*\tSWC Corp. Flooring Program");
@@ -384,30 +399,45 @@ public class ManagementController {
         cio.printMessage("*");
         cio.printMessage("***************************************************\n\n");
     }
-    
+
     private void addState() throws FileNotFoundException, XMLStreamException, IOException {
-        {
-            cio.printMessage("");
-            String state = cio.getString("Please enter the two letter code of the state we are expanding to:");
-            double taxRate = cio.getDouble("Please enter the tax rate associated with said state", 0, 3000);
-            Taxes newTax = new Taxes();
-            newTax.setState(state);
-            newTax.setTaxRate(taxRate);
-            cio.printMessage(newTax.toString());
-            
-            int userChoice = cio.getInt("\nAre you sure you want to add this state to the database? (Press 1 for yes or 2 for no)", 1, 2);
-            if (userChoice == 1) {
-                tm.clearAllTaxes();
-                tm.loadFromFile();
-                tm.addTax(state, taxRate);
-                tm.writeToFile();
-                cio.printMessage("\nThis state will now be available for selection.");
-            } else {
-                cio.printMessage("\nThis state will not be available for selection.");
+
+        tm.clearAllTaxes();
+        tm.loadFromFile();
+        cio.printMessage("");
+        boolean badState = false;
+        String state = cio.getString("Please enter the two letter code of the state we are expanding to:").toUpperCase();
+
+        do {
+            badState = false;
+            ArrayList<String> allStates = tm.getStates();
+            for (String currentState : allStates) {
+                if (currentState.equalsIgnoreCase(state)) {
+                    state = cio.getString("That state is already in our database, please enter a new state").toUpperCase();
+                    badState = true;
+                }
             }
+        } while (badState == true);
+
+        double taxRate = cio.getDouble("Please enter the tax rate associated with said state", 0, 3000);
+        Taxes newTax = new Taxes();
+        newTax.setState(state);
+        newTax.setTaxRate(taxRate);
+        cio.printMessage(newTax.toString());
+
+        int userChoice = cio.getInt("\nAre you sure you want to add this state to the database? (Press 1 for yes or 2 for no)", 1, 2);
+        if (userChoice == 1) {
+            tm.clearAllTaxes();
+            tm.loadFromFile();
+            tm.addTax(state, taxRate);
+            tm.writeToFile();
+            cio.printMessage("\nThis state will now be available for selection.");
+        } else {
+            cio.printMessage("\nThis state will not be available for selection.");
         }
+
     }
-    
+
     private void removeState() throws FileNotFoundException, XMLStreamException, IOException {
         tm.clearAllTaxes();
         tm.loadFromFile();
@@ -428,9 +458,9 @@ public class ManagementController {
                 cio.printMessage("\nThis state is not in our database.  Please enter a new state.\n");
             }
         } while (taxCheck == false);
-        
+
         int userChoice = cio.getInt("\nAre you sure you want to remove " + remove + " from the database? (Press 1 for yes or 2 for no)", 1, 2);
-        
+
         if (userChoice == 1) {
             tm.removeTax(tm.getAllTaxes(), remove);
             tm.writeToFile();
@@ -439,7 +469,7 @@ public class ManagementController {
             cio.printMessage("\nThis state will not be removed from the database.");
         }
     }
-    
+
     private void editState() throws FileNotFoundException, XMLStreamException, IOException {
         tm.clearAllTaxes();
         tm.loadFromFile();
@@ -463,7 +493,7 @@ public class ManagementController {
                 cio.printMessage("\nThis state is not in our database.  Please enter a new state.\n");
             }
         } while (taxCheck == false);
-        
+
         ArrayList<Taxes> allTaxes = tm.getAllTaxes();
         for (Taxes currentTax : allTaxes) {
             if (currentTax.getState().equalsIgnoreCase(edit)) {
@@ -489,7 +519,7 @@ public class ManagementController {
                 taxToBeEdited.setTaxRate(foundTax.getTaxRate());
             }
         } while (badDouble == true);
-        
+
         cio.printMessage(taxToBeEdited.toString());
         int userChoice = cio.getInt("\nWould you like to save these changes? 1 for yes, 2 for no", 1, 2);
         if (userChoice == 1) {
@@ -500,9 +530,9 @@ public class ManagementController {
         } else {
             cio.printMessage("\nYour change will not be submitted to our database.");
         }
-        
+
     }
-    
+
     private void addOrder() throws FileNotFoundException, IOException, XMLStreamException {
         tm.clearAllTaxes();
         pm.clearAllProducts();
@@ -510,11 +540,11 @@ public class ManagementController {
         pm.loadFromFile();
         writeToFile = setMode();
         String userName = cio.getString("What is the customer's name?");
-        
+
         double area = cio.getDouble("What's the area of the order, in square feet", 0, 1000000000);
         String state = "";
         String productType = "";
-        
+
         boolean stateCheck = false;
         do {
             displayAllStates();
@@ -529,7 +559,7 @@ public class ManagementController {
                 cio.printMessage("\nThe state you have entered is not in out database.  Please enter a valid state.\n");
             }
         } while (stateCheck == false);
-        
+
         boolean productCheck = false;
         do {
             displayProducts();
@@ -545,9 +575,9 @@ public class ManagementController {
             }
         } while (productCheck == false);
         String customerName = userName;
-        
+
         Order currentOrder = calc.buildOrder(customerName, area, productType, state, giveLocalDate());
-        
+
         cio.printMessage("Please review your submitted order:\n\n");
         cio.printMessage(currentOrder.orderToStringWithoutOrderNumber());
         if (writeToFile == false) {
@@ -555,7 +585,7 @@ public class ManagementController {
             cio.printMessage("Please contact your system administrator to reconfigure the program.\n\n");
         } else {
             int approved = cio.getInt("\nAre you sure you would like to submit this order? (press 1 for yes, 2 for no)", 1, 2);
-            
+
             if (approved == 1) {
                 try {
                     ArrayList<Order> allOrdersFromAnotherDate = om.loadFromFile(defaultDateToString());
@@ -579,7 +609,7 @@ public class ManagementController {
         tm.clearAllTaxes();
         pm.clearAllProducts();
     }
-    
+
     private void displayOrders() throws FileNotFoundException {
         try {
             ArrayList<Order> ordersToBeDisplayed = om.loadFromFile(defaultDateToString());
@@ -592,7 +622,7 @@ public class ManagementController {
             cio.printMessage("");
         }
     }
-    
+
     private void removeOrder() throws FileNotFoundException, IOException {
         Order foundOrder = new Order("null", "null", 0.0);
         try {
@@ -605,7 +635,7 @@ public class ManagementController {
                 foundOrder = om.getOrderByID(orderNumber, ordersToBeDeleted);
             }
             cio.printMessage("\n" + foundOrder.orderToString());
-            
+
             if (writeToFile == false) {
                 cio.printMessage("\nSystem is currently configured to test mode.  Orders cannot be deleted at this time.");
                 cio.printMessage("Please contact your system administrator to reconfigure the program.\n\n");
@@ -625,7 +655,7 @@ public class ManagementController {
             cio.printMessage("The updated order list could not be saved to our database");
         }
     }
-    
+
     private void editOrder() throws FileNotFoundException, IOException, XMLStreamException {
         ArrayList<Order> onlyEditedOrder = new ArrayList<>();
         boolean badDouble = false;
@@ -644,14 +674,14 @@ public class ManagementController {
                 foundOrder = om.getOrderByID(orderNumber, ordersToBeEdited);
             }
             cio.printMessage("\n\n" + foundOrder.orderToString());
-            
+
             String newName = cio.getString("Enter customer's name (" + foundOrder.getCustomerName() + ") :");
             if (!newName.equalsIgnoreCase("")) {
                 editedOrder.setCustomerName(newName);
             } else {
                 editedOrder.setCustomerName(foundOrder.getCustomerName());
             }
-            
+
             do {
                 try {
                     String newArea = cio.getString("Please enter the new area (" + foundOrder.getArea() + ") :");
@@ -671,11 +701,11 @@ public class ManagementController {
                     badDouble = true;
                 }
             } while (badDouble == true);
-            
+
             displayProducts();
             String newProduct = cio.getString("Please enter the product type (" + foundOrder.getProductType() + ") :");
             if (!newProduct.equalsIgnoreCase("")) {
-                
+
                 boolean productCheck = false;
                 ArrayList<String> allTypes = pm.getAllProductTypes();
                 for (String currentProduct : allTypes) {
@@ -687,7 +717,7 @@ public class ManagementController {
                     displayProducts();
                     newProduct = cio.getString("No such product found. Please enter a valid product type.");
                     for (String currentProduct1 : allTypes) {
-                        
+
                         if (newProduct.equalsIgnoreCase(currentProduct1)) {
                             productCheck = true;
                         }
@@ -697,7 +727,7 @@ public class ManagementController {
             } else {
                 editedOrder.setProductType(foundOrder.getProductType());
             }
-            
+
             do {
                 try {
                     String newYear = cio.getString("Please enter the year you would like your order to be processed ("
@@ -707,7 +737,7 @@ public class ManagementController {
                     String newDay = cio.getString("Please enter the day of month you would like your order to be processed ("
                             + foundOrder.getDate().getDayOfMonth() + ") (DD):");
                     String newDate;
-                    
+
                     if (!newYear.equalsIgnoreCase("")) {
                         newDate = newYear + "-";
                     } else {
@@ -741,11 +771,11 @@ public class ManagementController {
                     badDate = true;
                 }
             } while (badDate == true);
-            
+
             displayAllStates();
             String newState = cio.getString("Please enter the state (" + foundOrder.getState() + ") :").toUpperCase();
             if (!newState.equalsIgnoreCase("")) {
-                
+
                 boolean stateCheck = false;
                 ArrayList<String> allStates = tm.getStates();
                 for (String currentState : allStates) {
@@ -768,16 +798,16 @@ public class ManagementController {
             }
             calc.buildEditedOrder(editedOrder, editedOrder.getState(), editedOrder.getProductType());
             editedOrder.setOrderNumber(foundOrder.getOrderNumber());
-            
+
             cio.printMessage("Please review your edited order:\n\n");
             cio.printMessage(editedOrder.orderToString());
-            
+
             if (writeToFile == false) {
                 cio.printMessage("\nSystem is currently configured to test mode.  Orders cannot be changed at this time.");
                 cio.printMessage("Please contact your system admin to reconfigure the system.\n\n");
             } else {
                 int approved = cio.getInt("\nAre you sure you would like to submit this edited order? (press 1 for yes, 2 for no)", 1, 2);
-                
+
                 if (approved == 1) {
                     om.removeOrder(foundOrder.getOrderNumber(), ordersToBeEdited);
                     om.writeToFile(ordersToBeEdited, defaultDateToString());
@@ -801,9 +831,9 @@ public class ManagementController {
         } catch (IOException ioe) {
             cio.printMessage("Error changing our database, please try again later.");
         }
-        
+
     }
-    
+
     public void changeDate() {
         boolean badDate = false;
         String date = "";
@@ -825,9 +855,9 @@ public class ManagementController {
         } while (badDate == true);
         date = month + "-" + day + "-" + year;
         defaultDate = date;
-        
+
     }
-    
+
     private String localDateToStringToday() {
         LocalDate today = LocalDate.now();
         int numMonth = today.getMonthValue();
@@ -835,43 +865,43 @@ public class ManagementController {
         if (month.length() == 1) {
             month = "0" + month;
         }
-        
+
         String day = Integer.toString(today.getDayOfMonth());
         if (day.length() == 1) {
             day = "0" + day;
         }
-        
+
         String year = Integer.toString(today.getYear());
-        
+
         return month + "-" + day + "-" + year;
     }
-    
+
     private String defaultDateToString() {
         String month = defaultDate.substring(0, 2);
         String day = defaultDate.substring(3, 5);
         String year = defaultDate.substring(6);
         return month + day + year;
     }
-    
+
     private String localDateToString(LocalDate ld) {
-        
+
         int numMonth = ld.getMonthValue();
         String month = Integer.toString(numMonth);
         if (month.length() == 1) {
             month = "0" + month;
         }
-        
+
         String day = Integer.toString(ld.getDayOfMonth());
         if (day.length() == 1) {
             day = "0" + day;
         }
-        
+
         String year = Integer.toString(ld.getYear());
-        
+
         return month + day + year;
-        
+
     }
-    
+
     private LocalDate giveLocalDate() {
         String month = defaultDate.substring(0, 2);
         String day = defaultDate.substring(3, 5);
@@ -894,10 +924,6 @@ public class ManagementController {
         return output;
     }
 
-//    private void saveCurrentWork() throws IOException {
-//        ArrayList<Order> currentDayOrders = om.getTodaysOrders();
-//        om.writeToFile(currentDayOrders, defaultDateToString());
-//    }
     private void displayProducts() {
         ArrayList<String> allProducts = pm.getAllProductTypes();
         cio.printMessage("");
@@ -908,7 +934,7 @@ public class ManagementController {
         cio.printMessage("");
         allProducts.clear();
     }
-    
+
     private void displayAllStates() {
         ArrayList<String> allStates = tm.getStates();
         cio.printMessage("");
@@ -919,5 +945,5 @@ public class ManagementController {
         cio.printMessage("");
         allStates.clear();
     }
-    
+
 }
