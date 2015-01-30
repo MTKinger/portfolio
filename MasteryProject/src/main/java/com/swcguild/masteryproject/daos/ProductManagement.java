@@ -20,16 +20,15 @@ import java.util.Scanner;
  * @author apprentice
  */
 public class ProductManagement implements ProductInterface {
-    
+
     final String DELIMITER = ",";
     final String TARGET_FILE = "products.txt";
     ArrayList<Product> allProducts = new ArrayList<>();
 
-            //**TESTED**
-    
+    //**TESTED**
     @Override
     public void loadFromFile() throws FileNotFoundException {
-        
+
         Scanner sc = new Scanner(new BufferedReader(new FileReader(TARGET_FILE)));
         String currentLine = sc.nextLine();
         String[] currentTokens;
@@ -47,25 +46,24 @@ public class ProductManagement implements ProductInterface {
         }
         sc.close();
     }
-    
-        
-    public void writeToFile() throws IOException{
+
+    public void writeToFile() throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(TARGET_FILE));
         out.println("ProductType, CostPerSquareFoot, LaborPerSquareFoot");
-        for (Product currentProduct : allProducts){
+        for (Product currentProduct : allProducts) {
             out.println(currentProduct.getProductType() + DELIMITER
-            + currentProduct.getCostPSF() + DELIMITER
-            + currentProduct.getLaborPSF());
+                    + currentProduct.getCostPSF() + DELIMITER
+                    + currentProduct.getLaborPSF());
             out.flush();
         }
         out.close();
     }
-            //**TESTED**
-    
+    //**TESTED**
+
     @Override
     public double getCostPerSquareFoot(String productType) {
         double costPSF = 0;
-        for(Product currentProduct : allProducts) {
+        for (Product currentProduct : allProducts) {
             if (currentProduct.getProductType().equalsIgnoreCase(productType)) {
                 costPSF = currentProduct.getCostPSF();
             }
@@ -73,12 +71,11 @@ public class ProductManagement implements ProductInterface {
         return costPSF;
     }
 
-            //**TESTED**
-    
+    //**TESTED**
     @Override
     public double getLaborPerSquareFoot(String productType) {
         double costLSF = 0;
-        for(Product currentProduct : allProducts) {
+        for (Product currentProduct : allProducts) {
             if (currentProduct.getProductType().equalsIgnoreCase(productType)) {
                 costLSF = currentProduct.getLaborPSF();
             }
@@ -86,28 +83,48 @@ public class ProductManagement implements ProductInterface {
         return costLSF;
     }
 
-            //**TESTED**
-    
+    //**TESTED**
     @Override
     public ArrayList<String> getAllProductTypes() {
         ArrayList<String> allProductTypes = new ArrayList<>();
-        for(Product currentProduct : allProducts) {
+        for (Product currentProduct : allProducts) {
             String productName = currentProduct.getProductType();
             allProductTypes.add(productName);
         }
         return allProductTypes;
     }
     
-            //**TESTED
-    
+    public ArrayList<Product> getAllProducts(){
+        return allProducts;
+    }
+
+    //**TESTED
     public int getSize() {
         return allProducts.size();
     }
-    
+
     public void clearAllProducts() {
         allProducts.clear();
     }
+
+    public void addProduct(Product product) {
+        allProducts.add(product);
+    }
+
     
-    
-    
+    public ArrayList<Product> removeProduct(String productType, ArrayList<Product> productToBeDeleted) {
+        int index = 0;
+        boolean found = false;
+        for (Product currentProduct : productToBeDeleted) {
+            if (currentProduct.getProductType().equalsIgnoreCase(productType)) {
+                index = productToBeDeleted.indexOf(currentProduct);
+                found = true;
+            }
+        }
+        if (found == true) {
+            productToBeDeleted.remove(index);
+        }
+        return productToBeDeleted;
+    }
+
 }

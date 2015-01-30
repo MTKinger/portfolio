@@ -1,57 +1,54 @@
 package com.swcguild.masteryproject.businesslogic;
 
 import com.swcguild.masteryproject.daos.ProductManagement;
-import com.swcguild.masteryproject.daos.TaxManagementCSV;
+import com.swcguild.masteryproject.daos.TaxManagementXML;
 import com.swcguild.masteryproject.dtos.Order;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import javax.xml.stream.XMLStreamException;
 
 public class CostCalculator implements Calculator {
-    
-    TaxManagementCSV tm = new TaxManagementCSV();
+
+    TaxManagementXML tm = new TaxManagementXML();
     ProductManagement pm = new ProductManagement();
 
-        //**TESTED**
+    //**TESTED**
     @Override
     public double calculateMaterial(double area, double costPSF) {
         double materialCost = area * costPSF;
         return materialCost;
     }
 
-    
-        //**TESTED**
+    //**TESTED**
     @Override
     public double calculateLabor(double area, double laborPSF) {  //**TESTED**
         double laborCost = area * laborPSF;
         return laborCost;
     }
 
-    
-            //**TESTED**
+    //**TESTED**
     @Override
     public double calculateCost(double material, double labor) {  //**TESTED**
         double costBeforeTax = material + labor;
         return costBeforeTax;
     }
 
-    
-            //**TESTED**
+    //**TESTED**
     @Override
     public double calculateTax(double cost, double taxRate) {  //**TESTED**
         double tax = cost * (taxRate / 100);
         return tax;
     }
 
-    
-            //**TESTED**
+    //**TESTED**
     @Override
     public double calculateTotalCost(double tax, double cost) {  //**TESTED**
         double totalCost = tax + cost;
         return totalCost;
     }
-    
+
     @Override
-    public Order buildOrder(String name, double area, String productType, String state, LocalDate ld5) throws FileNotFoundException{
+    public Order buildOrder(String name, double area, String productType, String state, LocalDate ld5) throws FileNotFoundException, XMLStreamException {
         tm.loadFromFile();
         pm.loadFromFile();
         Order orderOut = new Order(name, productType, area);
@@ -68,11 +65,11 @@ public class CostCalculator implements Calculator {
         pm.clearAllProducts();
         tm.clearAllTaxes();
         return orderOut;
-        
+
     }
 
     @Override
-    public Order buildEditedOrder(Order editedOrder, String state, String productType) throws FileNotFoundException {
+    public Order buildEditedOrder(Order editedOrder, String state, String productType) throws FileNotFoundException, XMLStreamException {
         tm.loadFromFile();
         pm.loadFromFile();
         editedOrder.setCostPSF(pm.getCostPerSquareFoot(productType));
@@ -86,7 +83,5 @@ public class CostCalculator implements Calculator {
         tm.clearAllTaxes();
         return editedOrder;
     }
-    
-   
 
 }

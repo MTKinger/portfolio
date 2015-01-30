@@ -24,6 +24,9 @@ import org.junit.Test;
 public class ProductManagementTest {
     
     ProductManagement pm = new ProductManagement();
+    Product testProduct = new Product();
+    Product testProduct2 = new Product();
+    boolean result;
     
     public ProductManagementTest() {
     }
@@ -73,5 +76,18 @@ public class ProductManagementTest {
         assertEquals(pm.getSize(), 4);
         assertEquals(pm.getCostPerSquareFoot("Carpet"), 2.25, .00001);
         assertEquals(pm.getLaborPerSquareFoot("Tile"), 4.15, .000001);
+    }
+    
+    @Test
+    public void addRemoveTest() throws FileNotFoundException{
+        pm.loadFromFile();
+        testProduct.setProductType("Drywall");
+        testProduct2.setProductType("Stucco");
+        pm.addProduct(testProduct);
+        assertEquals(pm.getSize(), 5);
+        pm.addProduct(testProduct2);
+        assertEquals(pm.getSize(), 6);
+        pm.removeProduct("Stucco", pm.getAllProducts());
+        assertEquals(pm.getSize(), 5);
     }
 }

@@ -32,6 +32,13 @@ public class Product extends Taxes{
     public void setLaborPSF(double laborPSF) {
         this.laborPSF = laborPSF;
     }
+
+    @Override
+    public String toString() {
+        return "\nProduct: " + productType + "\nCost Per Square Foot: " +  costPSF + "\nLabor Per Square Foot: " + laborPSF;
+    }
+    
+    
     
     
 

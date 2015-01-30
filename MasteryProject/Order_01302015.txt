@@ -1,0 +1,4 @@
+OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total, CustomerFirstName, CustomerLastName
+4,Frank,MI,5.75,Tile,200.0,3.5,4.15,700.0,830.0000000000001,87.97500000000001,1617.975
+6,Tex,TX,5.67,carpet,300.0,2.25,2.1,675.0,630.0,73.9935,1378.9935
+7,Mike,TX,5.67,drywall,200.0,2.5,2.75,500.0,550.0,59.535000000000004,1109.535

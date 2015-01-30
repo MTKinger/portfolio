@@ -8,6 +8,7 @@ package com.swcguild.masteryproject.businesslogic;
 import com.swcguild.masteryproject.dtos.Order;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import javax.xml.stream.XMLStreamException;
 
 /**
  *
@@ -20,6 +21,6 @@ public interface Calculator{
     public double calculateCost(double material, double labor);
     public double calculateTax(double cost, double taxRate);
     public double calculateTotalCost(double tax, double cost);
-    public Order buildOrder(String name, double area, String productType, String state, LocalDate ld5)throws FileNotFoundException;
-    public Order buildEditedOrder(Order editedOrder, String state, String productType) throws FileNotFoundException;
+    public Order buildOrder(String name, double area, String productType, String state, LocalDate ld5)throws FileNotFoundException, XMLStreamException;
+    public Order buildEditedOrder(Order editedOrder, String state, String productType) throws FileNotFoundException, XMLStreamException;
     }

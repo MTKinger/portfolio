@@ -2,25 +2,25 @@ package com.swcguild.masteryproject.businesslogic;
 
 import com.swcguild.masteryproject.daos.OrderManagement;
 import com.swcguild.masteryproject.daos.ProductManagement;
-import com.swcguild.masteryproject.daos.TaxManagementCSV;
+import com.swcguild.masteryproject.daos.TaxManagementXML;
 import com.swcguild.masteryproject.dtos.Order;
+import com.swcguild.masteryproject.dtos.Product;
 import com.swcguild.masteryproject.ui.ConsoleIO;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.xml.stream.XMLStreamException;
 
 public class ManagementController {
 
     ConsoleIO cio = new ConsoleIO();
     int menuChoice;
-    TaxManagementCSV tm = new TaxManagementCSV();
+    TaxManagementXML tm = new TaxManagementXML();
     ProductManagement pm = new ProductManagement();
     OrderManagement om = new OrderManagement();
     CostCalculator calc = new CostCalculator();
@@ -31,12 +31,12 @@ public class ManagementController {
     private String password = "password123";
     private int managerModeCounter = 1;
 
-    public void run() throws FileNotFoundException, IOException {
+    public void run() throws FileNotFoundException, IOException, XMLStreamException {
         om.readCounter();
         doMenu();
     }
 
-    private void doMenu() throws FileNotFoundException, IOException {
+    private void doMenu() throws FileNotFoundException, IOException, XMLStreamException {
         do {
             writeToFile = setMode();
             printMenu();
@@ -114,7 +114,7 @@ public class ManagementController {
         }
     }
 
-    private void managerEntry() {
+    private void managerEntry() throws IOException {
         if (managerModeCounter < 4) {
             String enteredPassword = cio.getString("Please enter your authorization");
             while (!enteredPassword.equalsIgnoreCase(password) && managerModeCounter < 4) {
@@ -133,7 +133,7 @@ public class ManagementController {
         }
     }
 
-    private void doSubMenu() {
+    private void doSubMenu() throws IOException {
         int userResponse = 0;
 
         do {
@@ -141,10 +141,10 @@ public class ManagementController {
             userResponse = cio.getInt("What would you like to do?", 1, 3);
             switch (userResponse) {
                 case 1:
-                    //doTaxMenu();
+                    doTaxMenu();
                     break;
                 case 2:
-                    //doProductMenu();
+                    doProductMenu();
                     break;
                 case 3:
                     cio.printMessage("Returning to retail menu\n");
@@ -168,7 +168,143 @@ public class ManagementController {
         cio.printMessage("***************************************************\n\n");
     }
 
-    private void addOrder() throws FileNotFoundException, IOException {
+    private void doProductMenu() throws IOException {
+        int userResponse = 0;
+        do {
+            displayProductMenu();
+            userResponse = cio.getInt("What would you like to do?", 1, 4);
+            switch (userResponse) {
+                case 1:
+                    addProduct();
+                    break;
+                case 2:
+                    removeProduct();
+                    break;
+                case 3:
+                    //editProduct();
+                    break;
+                case 4:
+                    cio.printMessage("Returning to Manager Menu\n");
+                    break;
+                default:
+                    cio.printMessage("ERROR");
+            }
+        } while (userResponse != 4);
+    }
+
+    private void displayProductMenu() {
+        cio.printMessage("\n\n***************************************************");
+        cio.printMessage("*\tSWC Corp. Flooring Program");
+        cio.printMessage("*\t\tPRODUCT DATABASE");
+        cio.printMessage("*");
+        cio.printMessage("* 1. Add a Product to Database");
+        cio.printMessage("* 2. Remove a Product from Database");
+        cio.printMessage("* 3. Edit an Existing Product");
+        cio.printMessage("* 4. Return to Manager Menu.");
+        cio.printMessage("*");
+        cio.printMessage("*");
+        cio.printMessage("***************************************************\n\n");
+    }
+
+    private void addProduct() throws IOException {
+        cio.printMessage("");
+        String prodType = cio.getString("Please enter the name of the product you wish to add:");
+        double costPSF = cio.getDouble("Please enter the cost of the product in dollars per square foot:", 0, 1000000000);
+        double laborPSF = cio.getDouble("Please enter the labor cost of the product in dollars per square foot:", 0, 1000000000);
+        Product productToAdd = new Product();
+        productToAdd.setProductType(prodType);
+        productToAdd.setCostPSF(costPSF);
+        productToAdd.setLaborPSF(laborPSF);
+        cio.printMessage(productToAdd.toString());
+        
+        int userChoice = cio.getInt("\nAre you sure you want to add this product to the database? (Press 1 for yes or 2 for no)", 1, 2);
+        if (userChoice == 1){
+            pm.clearAllProducts();
+            pm.loadFromFile();
+            pm.addProduct(productToAdd);
+            pm.writeToFile();
+            cio.printMessage("\nThis product will now be available for sale.");
+        }else{
+            cio.printMessage("\nThis product will not be saved to out database.");
+        }
+    }
+    
+    private void removeProduct() throws IOException{
+        pm.clearAllProducts();
+        pm.loadFromFile();
+        cio.printMessage("");
+        boolean productCheck = false;
+        String remove = "";
+        do {
+            displayProducts();
+            String productType = cio.getString("What is the product type you wish to remove?");
+            ArrayList<String> allTypes = pm.getAllProductTypes();
+            for (String currentProduct : allTypes) {
+                if (productType.equalsIgnoreCase(currentProduct)) {
+                    productCheck = true;
+                    remove = currentProduct;
+                }
+            }
+            if (productCheck == false) {
+                cio.printMessage("\nThis product is not in our database.  Please enter a new product.\n");
+            }
+        } while (productCheck == false);
+        
+        int userChoice = cio.getInt("\nAre you sure you want to remove " + remove + " from the database? (Press 1 for yes or 2 for no)", 1, 2);
+        
+        if (userChoice == 1){
+            pm.removeProduct(remove, pm.getAllProducts());
+            pm.writeToFile();
+            cio.printMessage("\nThis product has been removed from the database and will no longer be available.");
+        }else{
+            cio.printMessage("This product will not be removed from the database.");
+        }
+        
+    }
+    
+    
+
+    private void doTaxMenu() {
+        int userChoice = 0;
+        do {
+            displayTaxMenu();
+            userChoice = cio.getInt("What would you like to do?", 1, 4);
+            switch (userChoice) {
+                case 1:
+                    //addState();
+                    break;
+                case 2:
+                    //removeState();
+                    break;
+                case 3:
+                    //editState();
+                    break;
+                case 4:
+                    cio.printMessage("Returning to Manager Menu\n");
+                    break;
+                default:
+                    cio.printMessage("ERROR");
+            }
+        } while (userChoice != 4);
+    }
+
+    private void displayTaxMenu() {
+        cio.printMessage("\n\n***************************************************");
+        cio.printMessage("*\tSWC Corp. Flooring Program");
+        cio.printMessage("*\t\tPRODUCT DATABASE");
+        cio.printMessage("*");
+        cio.printMessage("* 1. Add a State to Database");
+        cio.printMessage("* 2. Remove a State from Database");
+        cio.printMessage("* 3. Edit an Existing State");
+        cio.printMessage("* 4. Return to Manager Menu.");
+        cio.printMessage("*");
+        cio.printMessage("*");
+        cio.printMessage("***************************************************\n\n");
+    }
+
+    private void addOrder() throws FileNotFoundException, IOException, XMLStreamException {
+        tm.clearAllTaxes();
+        pm.clearAllProducts();
         tm.loadFromFile();
         pm.loadFromFile();
         writeToFile = setMode();
@@ -289,7 +425,7 @@ public class ManagementController {
         }
     }
 
-    private void editOrder() throws FileNotFoundException, IOException {
+    private void editOrder() throws FileNotFoundException, IOException, XMLStreamException {
         ArrayList<Order> onlyEditedOrder = new ArrayList<>();
         boolean badDouble = false;
         boolean badDate = false;

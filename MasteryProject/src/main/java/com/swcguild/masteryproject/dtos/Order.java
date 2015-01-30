@@ -91,7 +91,7 @@ public class Order extends Product {
                 + df.format(area) + " square feet of " + productType
                 + " at a rate of $" + df.format(costPSF) + " per square foot\n"
                 + df.format(area) + " square feet of labor at a rate of $"
-                + df.format(laborPSF) + "\n"
+                + df.format(laborPSF) + " per square foot\n"
                 + "$" + df.format(materialTotal) + " total material cost\n"
                 + "$" + df.format(laborTotal) + " total cost for labor\n"
                 + taxRate + "% tax applied\n"
