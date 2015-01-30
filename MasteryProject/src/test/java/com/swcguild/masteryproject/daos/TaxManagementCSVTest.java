@@ -9,7 +9,6 @@ import com.swcguild.masteryproject.dtos.Taxes;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import jdk.internal.util.xml.XMLStreamException;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;

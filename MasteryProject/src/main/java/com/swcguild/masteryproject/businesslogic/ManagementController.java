@@ -28,6 +28,8 @@ public class ManagementController {
     boolean writeToFile = false;
     final String COUNTER_FILE = "counter.txt";
     String defaultDate = localDateToStringToday();
+    private String password = "password123";
+    private int managerModeCounter = 1;
 
     public void run() throws FileNotFoundException, IOException {
         om.readCounter();
@@ -38,7 +40,7 @@ public class ManagementController {
         do {
             writeToFile = setMode();
             printMenu();
-            menuChoice = cio.getInt("Please make a selection from the above choices:", 1, 7);
+            menuChoice = cio.getInt("Please make a selection from the above choices:", 1, 8);
             switch (menuChoice) {
                 case 1:
                     displayOrders();
@@ -52,7 +54,6 @@ public class ManagementController {
                 case 4:
                     removeOrder();
                     break;
-
                 case 5:
                     om.writeCounter();
                     cio.printMessage("saving....\n\nsaving.....\n\nYour work has been saved.\n");
@@ -62,13 +63,16 @@ public class ManagementController {
                     changeDate();
                     break;
                 case 7:
+                    managerEntry();
+                    break;
+                case 8:
                     om.writeCounter();
                     break;
                 default:
                     cio.printMessage("Please enter a valid menu choice!\n");
                     break;
             }
-        } while (menuChoice != 7);
+        } while (menuChoice != 8);
         cio.printMessage("\n\nThank you for chosing SWC Corp...");
     }
 
@@ -85,7 +89,8 @@ public class ManagementController {
             cio.printMessage("* 4. Remove an Order");
             cio.printMessage("* 5. Save Current Work");
             cio.printMessage("* 6. Switch Date");
-            cio.printMessage("* 7. Quit");
+            cio.printMessage("* 7. Manager Mode");
+            cio.printMessage("* 8. Quit");
             cio.printMessage("*");
             cio.printMessage("*");
             cio.printMessage("***************************************************\n\n");
@@ -101,11 +106,66 @@ public class ManagementController {
             cio.printMessage("* 4. Remove an Order");
             cio.printMessage("* 5. Save Current Work");
             cio.printMessage("* 6. Switch Date");
-            cio.printMessage("* 7. Quit");
+            cio.printMessage("* 7. Manager Mode");
+            cio.printMessage("* 8. Quit");
             cio.printMessage("*");
             cio.printMessage("*");
             cio.printMessage("***************************************************\n\n");
         }
+    }
+
+    private void managerEntry() {
+        if (managerModeCounter < 4) {
+            String enteredPassword = cio.getString("Please enter your authorization");
+            while (!enteredPassword.equalsIgnoreCase(password) && managerModeCounter < 4) {
+                enteredPassword = cio.getString("Incorrect password. Please reenter authorization");
+                managerModeCounter++;
+            }
+            if (enteredPassword.equalsIgnoreCase(password)) {
+                cio.printMessage("Welcome to Manager Mode\n");
+                doSubMenu();
+                managerModeCounter = 1;
+            } else {
+                cio.printMessage("YOU ARE LOCKED OUT OF MANAGER MODE, PLEASE CONTACT YOUR MANAGER");
+            }
+        } else {
+            cio.printMessage("YOU ARE LOCKED OUT OF MANAGER MODE, PLEASE CONTACT YOUR MANAGER");
+        }
+    }
+
+    private void doSubMenu() {
+        int userResponse = 0;
+
+        do {
+            displaySubMenu();
+            userResponse = cio.getInt("What would you like to do?", 1, 3);
+            switch (userResponse) {
+                case 1:
+                    //doTaxMenu();
+                    break;
+                case 2:
+                    //doProductMenu();
+                    break;
+                case 3:
+                    cio.printMessage("Returning to retail menu\n");
+                    break;
+                default:
+                    cio.printMessage("ERROR");
+            }
+        } while (userResponse != 3);
+    }
+
+    private void displaySubMenu() {
+        cio.printMessage("\n\n***************************************************");
+        cio.printMessage("*\tSWC Corp. Flooring Program");
+        cio.printMessage("*\t\tMANAGER MODE");
+        cio.printMessage("*");
+        cio.printMessage("* 1. Change Tax Information");
+        cio.printMessage("* 2. Change Product Information");
+        cio.printMessage("* 3. Back To Retail Menu");
+        cio.printMessage("*");
+        cio.printMessage("*");
+        cio.printMessage("***************************************************\n\n");
     }
 
     private void addOrder() throws FileNotFoundException, IOException {
