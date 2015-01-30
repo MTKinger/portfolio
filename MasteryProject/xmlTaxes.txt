@@ -1,19 +1,23 @@
-<?xml version="1.0"?>
-<TaxRates>
+<?xml version="1.0" encoding="UTF-8"?>
+<TAXRATE>
 <TAX>
-<STATE>OH</STATE>
-<RATE>6.25</RATE>
+	<RATE>6.25</RATE>
+	<STATE>OH</STATE>
 </TAX>
 <TAX>
-<STATE>PA</STATE>
-<RATE>6.75</RATE>
+	<RATE>6.75</RATE>
+	<STATE>PA</STATE>
 </TAX>
 <TAX>
-<STATE>MI</STATE>
-<RATE>5.75</RATE>
+	<RATE>5.75</RATE>
+	<STATE>MI</STATE>
 </TAX>
 <TAX>
-<STATE>IN</STATE>
-<RATE>6.00</RATE>
+	<RATE>6.0</RATE>
+	<STATE>IN</STATE>
 </TAX>
-</TaxRates>
+<TAX>
+	<RATE>5.67</RATE>
+	<STATE>TX</STATE>
+</TAX>
+</TAXRATE>

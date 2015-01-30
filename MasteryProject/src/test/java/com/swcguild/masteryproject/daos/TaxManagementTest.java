@@ -7,6 +7,7 @@ package com.swcguild.masteryproject.daos;
 
 import com.swcguild.masteryproject.dtos.Taxes;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import jdk.internal.util.xml.XMLStreamException;
 import org.junit.After;
@@ -60,9 +61,39 @@ public class TaxManagementTest {
     @Test
     public void loadTaxesXMLTest() throws FileNotFoundException, javax.xml.stream.XMLStreamException{
         taxes.loadTaxesXML();
-        assertEquals(4, taxes.getSize());
+        assertEquals(5, taxes.getSize());
         assertEquals(taxes.getTaxRate("PA"), 6.75, .00001);
         assertEquals(taxes.getStates().get(3), "IN");
+        
+    }
+    
+    @Test
+    public void addTaxesTest() {
+        assertEquals(0, taxes.getSize());
+        taxes.addTax("RI", 0.12);
+        assertEquals(1, taxes.getSize());
+    
+}
+    
+    @Test
+    public void writeTaxesXMLTest() throws FileNotFoundException, javax.xml.stream.XMLStreamException {
+        assertEquals(0, taxes.getSize());
+        taxes.loadTaxesXML();
+        taxes.writeXMLFile();
+        taxes.clearAllTaxes();
+        taxes.loadTaxesXML();
+        assertEquals(5, taxes.getSize());
+        
+    }
+    
+    @Test
+    public void writeTaxesCSV() throws FileNotFoundException, IOException {
+        assertEquals(0, taxes.getSize());
+        taxes.loadFromFile();
+        taxes.writeToFile();
+        taxes.clearAllTaxes();
+        taxes.loadFromFile();
+        assertEquals(4, taxes.getSize());
     }
     
     
