@@ -76,7 +76,7 @@ public class ConsoleIO {
                     System.out.println(prompt);
                     input = Float.parseFloat(sc.nextLine());
                     badInput = false;
-                } catch (InputMismatchException ime) {
+                } catch (NumberFormatException nfe) {
                     System.out.println("Please enter a valid numerical value!");
                     badInput = true;
                 }
@@ -93,7 +93,7 @@ public class ConsoleIO {
                 System.out.println(prompt);
                 input = Double.parseDouble(sc.nextLine());
                 badInput = false;
-            } catch (InputMismatchException ime) {
+            } catch (NumberFormatException nfe) {
                 System.out.println("Please enter a valid numerical value!");
                 badInput = true;
             }
@@ -114,6 +114,9 @@ public class ConsoleIO {
                 } catch (InputMismatchException ime) {
                     System.out.println("Please enter a valid numerical value!");
                     badInput = true;
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Please enter a valid numerical value!");
+                    badInput = true;
                 }
             } while (input < min || input > max);
         } while (badInput);
@@ -123,7 +126,7 @@ public class ConsoleIO {
     public void printMessage(String prompt) {
         System.out.println(prompt);
     }
-    
+
     public void printMessageNoReturn(String prompt) {
         System.out.print(prompt);
     }
