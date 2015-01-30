@@ -5,9 +5,10 @@
  */
 package com.swcguild.masteryproject.daos;
 
-import com.swcguild.masteryproject.dtos.Taxes;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.xml.stream.XMLStreamException;
 
 /**
  *
@@ -16,7 +17,11 @@ import java.util.ArrayList;
 public interface TaxInterface {
     
 public double getTaxRate(String state);
-public void loadFromFile() throws FileNotFoundException;
+public void loadFromFile() throws FileNotFoundException , XMLStreamException;
+public void writeToFile() throws IOException , XMLStreamException;
 public ArrayList<String> getStates();
+public int getSize();
+public void clearAllTaxes();
+public void addTax(String state, double rate);
     
 }

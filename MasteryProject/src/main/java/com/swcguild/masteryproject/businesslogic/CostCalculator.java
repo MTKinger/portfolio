@@ -1,14 +1,14 @@
 package com.swcguild.masteryproject.businesslogic;
 
 import com.swcguild.masteryproject.daos.ProductManagement;
-import com.swcguild.masteryproject.daos.TaxManagement;
+import com.swcguild.masteryproject.daos.TaxManagementCSV;
 import com.swcguild.masteryproject.dtos.Order;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 
 public class CostCalculator implements Calculator {
     
-    TaxManagement tm = new TaxManagement();
+    TaxManagementCSV tm = new TaxManagementCSV();
     ProductManagement pm = new ProductManagement();
 
         //**TESTED**

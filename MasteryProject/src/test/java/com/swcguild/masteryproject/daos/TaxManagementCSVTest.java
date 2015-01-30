@@ -21,11 +21,11 @@ import org.junit.Test;
  *
  * @author apprentice
  */
-public class TaxManagementTest {
+public class TaxManagementCSVTest {
     
-    TaxManagement taxes = new TaxManagement();
+    TaxManagementCSV taxes = new TaxManagementCSV();
     
-    public TaxManagementTest() {
+    public TaxManagementCSVTest() {
     }
     
     @BeforeClass
@@ -57,16 +57,7 @@ public class TaxManagementTest {
         assertEquals(6.25, taxes.getTaxRate("OH"), .01);
         assertEquals(5.75, taxes.getTaxRate(state2), .00001);
     }
-    
-    @Test
-    public void loadTaxesXMLTest() throws FileNotFoundException, javax.xml.stream.XMLStreamException{
-        taxes.loadTaxesXML();
-        assertEquals(5, taxes.getSize());
-        assertEquals(taxes.getTaxRate("PA"), 6.75, .00001);
-        assertEquals(taxes.getStates().get(3), "IN");
-        
-    }
-    
+       
     @Test
     public void addTaxesTest() {
         assertEquals(0, taxes.getSize());
@@ -74,17 +65,6 @@ public class TaxManagementTest {
         assertEquals(1, taxes.getSize());
     
 }
-    
-    @Test
-    public void writeTaxesXMLTest() throws FileNotFoundException, javax.xml.stream.XMLStreamException {
-        assertEquals(0, taxes.getSize());
-        taxes.loadTaxesXML();
-        taxes.writeXMLFile();
-        taxes.clearAllTaxes();
-        taxes.loadTaxesXML();
-        assertEquals(5, taxes.getSize());
-        
-    }
     
     @Test
     public void writeTaxesCSV() throws FileNotFoundException, IOException {

@@ -2,7 +2,7 @@ package com.swcguild.masteryproject.businesslogic;
 
 import com.swcguild.masteryproject.daos.OrderManagement;
 import com.swcguild.masteryproject.daos.ProductManagement;
-import com.swcguild.masteryproject.daos.TaxManagement;
+import com.swcguild.masteryproject.daos.TaxManagementCSV;
 import com.swcguild.masteryproject.dtos.Order;
 import com.swcguild.masteryproject.ui.ConsoleIO;
 import java.io.BufferedReader;
@@ -20,7 +20,7 @@ public class ManagementController {
 
     ConsoleIO cio = new ConsoleIO();
     int menuChoice;
-    TaxManagement tm = new TaxManagement();
+    TaxManagementCSV tm = new TaxManagementCSV();
     ProductManagement pm = new ProductManagement();
     OrderManagement om = new OrderManagement();
     CostCalculator calc = new CostCalculator();
