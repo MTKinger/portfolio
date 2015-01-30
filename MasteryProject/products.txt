@@ -1,4 +1,5 @@
-Carpet,2.25,2.10
-Laminate,1.75,2.10
-Tile,3.50,4.15
+ProductType, CostPerSquareFoot, LaborPerSquareFoot
+Carpet,2.25,2.1
+Laminate,1.75,2.1
+Tile,3.5,4.15
 Wood,5.15,4.75

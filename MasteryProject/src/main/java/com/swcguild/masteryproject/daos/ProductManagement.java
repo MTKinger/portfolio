@@ -9,6 +9,9 @@ import com.swcguild.masteryproject.dtos.Product;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,7 +31,7 @@ public class ProductManagement implements ProductInterface {
     public void loadFromFile() throws FileNotFoundException {
         
         Scanner sc = new Scanner(new BufferedReader(new FileReader(TARGET_FILE)));
-        String currentLine;
+        String currentLine = sc.nextLine();
         String[] currentTokens;
         while (sc.hasNextLine()) {
             currentLine = sc.nextLine();
@@ -44,7 +47,19 @@ public class ProductManagement implements ProductInterface {
         }
         sc.close();
     }
-
+    
+        
+    public void writeToFile() throws IOException{
+        PrintWriter out = new PrintWriter(new FileWriter(TARGET_FILE));
+        out.println("ProductType, CostPerSquareFoot, LaborPerSquareFoot");
+        for (Product currentProduct : allProducts){
+            out.println(currentProduct.getProductType() + DELIMITER
+            + currentProduct.getCostPSF() + DELIMITER
+            + currentProduct.getLaborPSF());
+            out.flush();
+        }
+        out.close();
+    }
             //**TESTED**
     
     @Override

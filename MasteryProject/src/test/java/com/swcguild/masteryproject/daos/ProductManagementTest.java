@@ -8,6 +8,7 @@ package com.swcguild.masteryproject.daos;
 import com.swcguild.masteryproject.daos.ProductManagement;
 import com.swcguild.masteryproject.dtos.Product;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -61,5 +62,16 @@ public class ProductManagementTest {
         assertEquals(3.50, pm.getCostPerSquareFoot("tile"), .00001);
         assertEquals(2.10, pm.getLaborPerSquareFoot("Laminate"), .00001);
         assertEquals(4.75, pm.getLaborPerSquareFoot("Wood"), .000001);
+    }
+    
+    @Test
+    public void productsReadWriteTest() throws FileNotFoundException, IOException{
+        pm.loadFromFile();
+        pm.writeToFile();
+        pm.clearAllProducts();
+        pm.loadFromFile();
+        assertEquals(pm.getSize(), 4);
+        assertEquals(pm.getCostPerSquareFoot("Carpet"), 2.25, .00001);
+        assertEquals(pm.getLaborPerSquareFoot("Tile"), 4.15, .000001);
     }
 }
