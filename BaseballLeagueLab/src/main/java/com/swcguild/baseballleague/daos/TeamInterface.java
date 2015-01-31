@@ -1,14 +1,15 @@
 package com.swcguild.baseballleague.daos;
 
-import com.swcguild.baseballleague.dtos.Player;
 import com.swcguild.baseballleague.dtos.Team;
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashMap;
 
 public interface TeamInterface {
     
-    public void writeTeamToFile();
+    public void writeTeamsToFile() throws IOException;
     
-    public ArrayList<Player> loadTeamFromFile();
+    public void loadTeamsFromFile() throws FileNotFoundException;
     
     public Team getTeamByName(String name);
     

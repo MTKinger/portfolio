@@ -1,0 +1,31 @@
+City, Nickname, Stadium, League, Division
+Baltimore::Orioles::Camden Yards::AL::East
+Houston::Astros::Minute Maid Park::AL::West
+Arizona::Diamondbacks::Chase Field::NL::West
+Chicago::Cubs::Wrigley Field::NL::Central
+Cincinnati::Reds::Great American Ball Park::NL::Central
+San Diego::Padres::Petco Park::NL::West
+Atlanta::Braves::Turner Field::NL::East
+Pittsburgh::Pirates::PNC Park::NL::Central
+Toronto::Blue Jays::Rogers Centre::AL::East
+Tampa Bay::Rays::Tropicana Field::AL::East
+Philadelphia::Phillies::Citizens Bank Park::NL::East
+St. Louis::Cardinals::Busch Stadium::NL::Central
+Cleveland::Indians::Progressive Field::AL::Central
+New York::Mets::Citi Field::NL::East
+Seattle::Mariners::Safeco Field::AL::West
+Washington::Nationals::Nationals Park::NL::East
+Anaheim::Angels::Angel Stadium of Anaheim::AL::West
+Texas::Rangers::Globe Life Park in Arlington::AL::West
+Chicago::White Sox::U.S. Cellular Field::AL::Central
+New York::Yankees::Yankee Stadium::AL::East
+Boston::Red Sox::Fenway Park::AL::East
+Oakland::A's::O.co Coliseum::AL::West
+Kansas City::Royals::Kauffman Stadium::AL::Central
+Milwaukee::Brewers::Miller Park::NL::Central
+San Francisco::Giants::AT&T Park::NL::West
+Detroit::Tigers::Comerica Park::AL::Central
+Los Angeles::Dodgers::Dodger Stadium::NL::West
+Colorado::Rockies::Coors Field::NL::West
+Minnesota::Twins::Target Field::AL::Central
+Miami::Marlins::Marlins Park::NL::East

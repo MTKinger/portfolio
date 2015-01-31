@@ -1,6 +1,6 @@
 package com.swcguild.baseballleague.dtos;
 
-public class Batter {
+public class Batter extends Player {
     
     private int atBats;
     private int plateAppearances;
@@ -25,6 +25,10 @@ public class Batter {
     private double homerunsPerAB;
     private double strikeoutsPerAB;
     private double runsPerGame;
+    
+    public Batter(int id){
+        this.mlbPlayerId = id;
+    }
     
 
     public int getAtBats() {
