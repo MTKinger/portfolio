@@ -38,7 +38,7 @@ public class Product extends Taxes{
     @Override
     public String toString() {
         DecimalFormat df = new DecimalFormat("#.00");
-        return "\nProduct: " + productType + "\nCost Per Square Foot: " +  df.format(costPSF) + "\nLabor Per Square Foot: " + df.format(laborPSF);
+        return "\nProduct: " + productType + "\nCost Per Square Foot: $" +  df.format(costPSF) + "\nLabor Per Square Foot: $" + df.format(laborPSF);
     }
     
     
