@@ -1,13 +1,15 @@
 package com.swcguild.baseballleague.daos;
 
 import com.swcguild.baseballleague.dtos.Pitcher;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public interface PitcherInterface {
     
-    public void writePitchersToFile();
+    public void writePitchersToFile()throws IOException;
     
-    public ArrayList<Pitcher> loadPitchersFromFile();
+    public void loadPitchersFromFile() throws FileNotFoundException;
     
     public ArrayList<Pitcher> getAllPitchers();
     

@@ -4,15 +4,15 @@ import java.util.Objects;
 
 public class Player {
     
+    protected int mlbPlayerId;      //Pitcher*
     protected String firstName;     //Pitcher*
     protected String lastName;      //Pitcher*
-    private String position;        //Pitcher*
+    protected String position;        //Pitcher*
     protected int number;           //Pitcher*
     protected char batHand;         //Pitcher*
     protected char throwHand;       //Pitcher*
     protected int gamesPlayed;      //Pitcher*
     protected int gamesStarted;     //Pitcher*
-    protected int mlbPlayerId;      //Pitcher*
     protected String teamCity;      //Pitcher*
     protected String teamName;      //Pitcher*
     protected int age;              //Pitcher*
