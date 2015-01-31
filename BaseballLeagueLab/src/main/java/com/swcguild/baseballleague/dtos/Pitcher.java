@@ -2,24 +2,33 @@ package com.swcguild.baseballleague.dtos;
 
 public class Pitcher extends Player {
 
-    private int earnedRuns;                 //Added to String**
-    private int strikeouts;                 //Added to String**
-    private int homeRunsAllowed;            //Added to String**
-    private int wins;                       //Added to String**
-    private int losses;                     //Added to String**
-    private int saves;                      //Added to String**
-    private int blownSaves;                 //Added to String**
-    private int hitsAllowed;                //Added to String**
-    private int walksAllowed;               //Added to String**
-    private double era;                     //Added to String**
-    private double whip;                    //Added to String**
-    private double inningsPitched;          //Added to String**
-    private double hitsPer9;                //Added to String**
-    private double walksPer9;               //Added to String**
-    private double strikeoutsPer9;          //Added to String**
-    private double homerunsPer9;            //Added to String**
-    private double savesPerOpportunity;     //Added to String**
-    private double inningsPitchedMath;      //No Need
+    private int earnedRuns;                 
+    private int strikeouts;                 
+    private int homeRunsAllowed;            
+    private int wins;                       
+    private int losses;                     
+    private int saves;                      
+    private int blownSaves;                 
+    private int hitsAllowed;                
+    private int walksAllowed;               
+    private double era;                     
+    private double whip;                    
+    private double inningsPitched;          
+    private double hitsPer9;                
+    private double walksPer9;               
+    private double strikeoutsPer9;          
+    private double homerunsPer9;            
+    private double savesPerOpportunity;     
+    private double inningsPitchedMath;      
+    private double winLossPercent;          
+    private double strikeoutWalkRatio;      
+    private int runsAllowed;                
+    private int completeGames;              
+    private int shutouts;                   
+    private int hitBatters;                 
+    private int balks;                      
+    private int wildPitches;
+    private int battersFaced;               
 
     public Pitcher(int id) {
         this.mlbPlayerId = id;
@@ -169,57 +178,205 @@ public class Pitcher extends Player {
         this.inningsPitchedMath = inningsPitchedMath;
     }
 
+    public double getWinLossPercent() {
+        return winLossPercent;
+    }
+
+    public void setWinLossPercent(double winLossPercent) {
+        this.winLossPercent = winLossPercent;
+    }
+
+    public double getStrikeoutWalkRatio() {
+        return strikeoutWalkRatio;
+    }
+
+    public void setStrikeoutWalkRatio(double strikeoutWalkRatio) {
+        this.strikeoutWalkRatio = strikeoutWalkRatio;
+    }
+
+    public int getRunsAllowed() {
+        return runsAllowed;
+    }
+
+    public void setRunsAllowed(int runsAllowed) {
+        this.runsAllowed = runsAllowed;
+    }
+
+    public int getCompleteGames() {
+        return completeGames;
+    }
+
+    public void setCompleteGames(int completeGames) {
+        this.completeGames = completeGames;
+    }
+
+    public int getShutouts() {
+        return shutouts;
+    }
+
+    public void setShutouts(int shutouts) {
+        this.shutouts = shutouts;
+    }
+
+    public int getHitBatters() {
+        return hitBatters;
+    }
+
+    public void setHitBatters(int hitBatters) {
+        this.hitBatters = hitBatters;
+    }
+
+    public int getBalks() {
+        return balks;
+    }
+
+    public void setBalks(int balks) {
+        this.balks = balks;
+    }
+
+    public int getWildPitches() {
+        return wildPitches;
+    }
+
+    public void setWildPitches(int wildPitches) {
+        this.wildPitches = wildPitches;
+    }
+
+    public int getBattersFaced() {
+        return battersFaced;
+    }
+
+    public void setBattersFaced(int battersFaced) {
+        this.battersFaced = battersFaced;
+    }
 
     public void testingPitcherToString(Pitcher pitcher) {
-        System.out.println("\n\n" + pitcher.getLastName() + ", " + pitcher.getFirstName()
-                + " - " + pitcher.getPosition() + " - #" + pitcher.getNumber() + 
-                " - " + pitcher.getTeamCity() + " " + pitcher.getTeamName() + "\n\n"
-                + "-2014 STATS-\n");
-        System.out.printf("%-25s"
-                + "%-25s"
-                + "%-25s\n"
-                + "%-25s"
-                + "%-25s"
-                + "%-25s\n"
-                + "%-25s"
-                + "%-25s"
-                + "%-25s\n"
-                + "%-25s"
-                + "%-25s"
-                + "%-25s\n\n"
-                + "%-25s"
-                + "%-25s"
-                + "%-25s\n"
-                + "%-25s"
-                + "%-25s"
-                + "%-25s\n"
-                + "%-25s\n\n"
-                + "%-25s"
-                + "%-25s\n\n"
-                + "%s\n",
-                "Games Played: " + pitcher.getGamesPlayed(),
-                "Innings Pitched: " + pitcher.getInningsPitched(),
-                "Earned Runs: " + pitcher.getEarnedRuns(),
-                "Hits Allowed: " + pitcher.getHitsAllowed(),
-                "Walks Allowed: " + pitcher.getWalksAllowed(),
-                "Strikeouts: " + pitcher.getStrikeouts(),
-                "Homeruns Allowed: " + pitcher.getHomeRunsAllowed(),
-                "Wins: " + pitcher.getWins(),
-                "Losses: " + pitcher.getLosses(),
-                "Saves: " + pitcher.getSaves(),
-                "Blown Saves: " + pitcher.getBlownSaves(),
-                "Save Opportunities: " + (pitcher.getSaves() + pitcher.getBlownSaves()),
-                "ERA: " + pitcher.getEra(),
-                "WHIP: " + pitcher.getWhip(),
-                "Hits/9: " + pitcher.getHitsPer9(),
-                "Walks/9: " + pitcher.getWalksPer9(),
-                "Strikeouts/9: " + pitcher.getStrikeoutsPer9(),
-                "Homeruns/9: " + pitcher.getHomerunsPer9(),
-                "Saves Per Opportunity: " + pitcher.getSavesPerOpportunity(),
-                "Bats: " + pitcher.getBatHand(),
-                "Throws: " + pitcher.getThrowHand(),
-                "MLB ID#: " + pitcher.getMlbPlayerId());
+    }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + this.earnedRuns;
+        hash = 53 * hash + this.strikeouts;
+        hash = 53 * hash + this.homeRunsAllowed;
+        hash = 53 * hash + this.wins;
+        hash = 53 * hash + this.losses;
+        hash = 53 * hash + this.saves;
+        hash = 53 * hash + this.blownSaves;
+        hash = 53 * hash + this.hitsAllowed;
+        hash = 53 * hash + this.walksAllowed;
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.era) ^ (Double.doubleToLongBits(this.era) >>> 32));
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.whip) ^ (Double.doubleToLongBits(this.whip) >>> 32));
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.inningsPitched) ^ (Double.doubleToLongBits(this.inningsPitched) >>> 32));
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.hitsPer9) ^ (Double.doubleToLongBits(this.hitsPer9) >>> 32));
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.walksPer9) ^ (Double.doubleToLongBits(this.walksPer9) >>> 32));
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.strikeoutsPer9) ^ (Double.doubleToLongBits(this.strikeoutsPer9) >>> 32));
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.homerunsPer9) ^ (Double.doubleToLongBits(this.homerunsPer9) >>> 32));
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.savesPerOpportunity) ^ (Double.doubleToLongBits(this.savesPerOpportunity) >>> 32));
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.inningsPitchedMath) ^ (Double.doubleToLongBits(this.inningsPitchedMath) >>> 32));
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.winLossPercent) ^ (Double.doubleToLongBits(this.winLossPercent) >>> 32));
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.strikeoutWalkRatio) ^ (Double.doubleToLongBits(this.strikeoutWalkRatio) >>> 32));
+        hash = 53 * hash + this.runsAllowed;
+        hash = 53 * hash + this.completeGames;
+        hash = 53 * hash + this.shutouts;
+        hash = 53 * hash + this.hitBatters;
+        hash = 53 * hash + this.balks;
+        hash = 53 * hash + this.wildPitches;
+        hash = 53 * hash + this.battersFaced;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pitcher other = (Pitcher) obj;
+        if (this.earnedRuns != other.earnedRuns) {
+            return false;
+        }
+        if (this.strikeouts != other.strikeouts) {
+            return false;
+        }
+        if (this.homeRunsAllowed != other.homeRunsAllowed) {
+            return false;
+        }
+        if (this.wins != other.wins) {
+            return false;
+        }
+        if (this.losses != other.losses) {
+            return false;
+        }
+        if (this.saves != other.saves) {
+            return false;
+        }
+        if (this.blownSaves != other.blownSaves) {
+            return false;
+        }
+        if (this.hitsAllowed != other.hitsAllowed) {
+            return false;
+        }
+        if (this.walksAllowed != other.walksAllowed) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.era) != Double.doubleToLongBits(other.era)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.whip) != Double.doubleToLongBits(other.whip)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.inningsPitched) != Double.doubleToLongBits(other.inningsPitched)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.hitsPer9) != Double.doubleToLongBits(other.hitsPer9)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.walksPer9) != Double.doubleToLongBits(other.walksPer9)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.strikeoutsPer9) != Double.doubleToLongBits(other.strikeoutsPer9)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.homerunsPer9) != Double.doubleToLongBits(other.homerunsPer9)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.savesPerOpportunity) != Double.doubleToLongBits(other.savesPerOpportunity)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.inningsPitchedMath) != Double.doubleToLongBits(other.inningsPitchedMath)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.winLossPercent) != Double.doubleToLongBits(other.winLossPercent)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.strikeoutWalkRatio) != Double.doubleToLongBits(other.strikeoutWalkRatio)) {
+            return false;
+        }
+        if (this.runsAllowed != other.runsAllowed) {
+            return false;
+        }
+        if (this.completeGames != other.completeGames) {
+            return false;
+        }
+        if (this.shutouts != other.shutouts) {
+            return false;
+        }
+        if (this.hitBatters != other.hitBatters) {
+            return false;
+        }
+        if (this.balks != other.balks) {
+            return false;
+        }
+        if (this.wildPitches != other.wildPitches) {
+            return false;
+        }
+        if (this.battersFaced != other.battersFaced) {
+            return false;
+        }
+        return true;
     }
 
 }

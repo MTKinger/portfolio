@@ -12,11 +12,20 @@ public class Batter {
     private int totalBases;
     private int RBI;
     private int steals;
+    private int caughtStealing;
+    private int groundedIntoDP;
+    private int hitByPitch;
+    private int sacHits;
+    private int sacFlies;
+    private int intBB;
+    private int leftOnBase;
     private double battingAverage;
     private double onBasePercentage;
     private double onBasePlusSlugging;
     private double homerunsPerAB;
     private double strikeoutsPerAB;
+    private double runsPerGame;
+    
 
     public int getAtBats() {
         return atBats;
@@ -137,6 +146,182 @@ public class Batter {
     public void setStrikeoutsPerAB(double strikeoutsPerAB) {
         this.strikeoutsPerAB = strikeoutsPerAB;
     }
+
+    public int getCaughtStealing() {
+        return caughtStealing;
+    }
+
+    public void setCaughtStealing(int caughtStealing) {
+        this.caughtStealing = caughtStealing;
+    }
+
+    public int getGroundedIntoDP() {
+        return groundedIntoDP;
+    }
+
+    public void setGroundedIntoDP(int groundedIntoDP) {
+        this.groundedIntoDP = groundedIntoDP;
+    }
+
+    public int getHitByPitch() {
+        return hitByPitch;
+    }
+
+    public void setHitByPitch(int hitByPitch) {
+        this.hitByPitch = hitByPitch;
+    }
+
+    public int getSacHits() {
+        return sacHits;
+    }
+
+    public void setSacHits(int sacHits) {
+        this.sacHits = sacHits;
+    }
+
+    public int getSacFlies() {
+        return sacFlies;
+    }
+
+    public void setSacFlies(int sacFlies) {
+        this.sacFlies = sacFlies;
+    }
+
+    public int getIntBB() {
+        return intBB;
+    }
+
+    public void setIntBB(int intBB) {
+        this.intBB = intBB;
+    }
+
+    public int getLeftOnBase() {
+        return leftOnBase;
+    }
+
+    public void setLeftOnBase(int leftOnBase) {
+        this.leftOnBase = leftOnBase;
+    }
+
+    public double getRunsPerGame() {
+        return runsPerGame;
+    }
+
+    public void setRunsPerGame(double runsPerGame) {
+        this.runsPerGame = runsPerGame;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + this.atBats;
+        hash = 29 * hash + this.plateAppearances;
+        hash = 29 * hash + this.strikeouts;
+        hash = 29 * hash + this.hits;
+        hash = 29 * hash + this.homeruns;
+        hash = 29 * hash + this.doubles;
+        hash = 29 * hash + this.tripples;
+        hash = 29 * hash + this.totalBases;
+        hash = 29 * hash + this.RBI;
+        hash = 29 * hash + this.steals;
+        hash = 29 * hash + this.caughtStealing;
+        hash = 29 * hash + this.groundedIntoDP;
+        hash = 29 * hash + this.hitByPitch;
+        hash = 29 * hash + this.sacHits;
+        hash = 29 * hash + this.sacFlies;
+        hash = 29 * hash + this.intBB;
+        hash = 29 * hash + this.leftOnBase;
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.battingAverage) ^ (Double.doubleToLongBits(this.battingAverage) >>> 32));
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.onBasePercentage) ^ (Double.doubleToLongBits(this.onBasePercentage) >>> 32));
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.onBasePlusSlugging) ^ (Double.doubleToLongBits(this.onBasePlusSlugging) >>> 32));
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.homerunsPerAB) ^ (Double.doubleToLongBits(this.homerunsPerAB) >>> 32));
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.strikeoutsPerAB) ^ (Double.doubleToLongBits(this.strikeoutsPerAB) >>> 32));
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.runsPerGame) ^ (Double.doubleToLongBits(this.runsPerGame) >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Batter other = (Batter) obj;
+        if (this.atBats != other.atBats) {
+            return false;
+        }
+        if (this.plateAppearances != other.plateAppearances) {
+            return false;
+        }
+        if (this.strikeouts != other.strikeouts) {
+            return false;
+        }
+        if (this.hits != other.hits) {
+            return false;
+        }
+        if (this.homeruns != other.homeruns) {
+            return false;
+        }
+        if (this.doubles != other.doubles) {
+            return false;
+        }
+        if (this.tripples != other.tripples) {
+            return false;
+        }
+        if (this.totalBases != other.totalBases) {
+            return false;
+        }
+        if (this.RBI != other.RBI) {
+            return false;
+        }
+        if (this.steals != other.steals) {
+            return false;
+        }
+        if (this.caughtStealing != other.caughtStealing) {
+            return false;
+        }
+        if (this.groundedIntoDP != other.groundedIntoDP) {
+            return false;
+        }
+        if (this.hitByPitch != other.hitByPitch) {
+            return false;
+        }
+        if (this.sacHits != other.sacHits) {
+            return false;
+        }
+        if (this.sacFlies != other.sacFlies) {
+            return false;
+        }
+        if (this.intBB != other.intBB) {
+            return false;
+        }
+        if (this.leftOnBase != other.leftOnBase) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.battingAverage) != Double.doubleToLongBits(other.battingAverage)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.onBasePercentage) != Double.doubleToLongBits(other.onBasePercentage)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.onBasePlusSlugging) != Double.doubleToLongBits(other.onBasePlusSlugging)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.homerunsPerAB) != Double.doubleToLongBits(other.homerunsPerAB)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.strikeoutsPerAB) != Double.doubleToLongBits(other.strikeoutsPerAB)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.runsPerGame) != Double.doubleToLongBits(other.runsPerGame)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 
 }
