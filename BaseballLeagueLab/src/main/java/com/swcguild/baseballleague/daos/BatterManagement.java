@@ -16,6 +16,8 @@ public class BatterManagement implements BatterInterface {
     final String BATTER_FILE = "allBatters.txt";
     final String DELIMITER = "::";
 
+    //**TESTED**
+    
     @Override
     public void writeBattersToFile() throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(BATTER_FILE));
@@ -38,7 +40,7 @@ public class BatterManagement implements BatterInterface {
                     + thisBatter.getTeamName() + DELIMITER
                     + thisBatter.getAge() + DELIMITER
                     + thisBatter.getLeague() + DELIMITER
-                    + thisBatter.getAtBats()
+                    + thisBatter.getAtBats() + DELIMITER
                     + +thisBatter.getPlateAppearances() + DELIMITER
                     + thisBatter.getStrikeouts() + DELIMITER
                     + thisBatter.getHits() + DELIMITER
@@ -67,6 +69,8 @@ public class BatterManagement implements BatterInterface {
         out.close();
     }
 
+    //**TESTED**
+    
     @Override
     public void loadBatterToFile() throws FileNotFoundException {
         Scanner sc = new Scanner(new BufferedReader(new FileReader(BATTER_FILE)));
@@ -156,10 +160,14 @@ public class BatterManagement implements BatterInterface {
         sc.close();
     }
 
+    //**TESTED**
+    
     @Override
     public ArrayList<Batter> getallBatters() {
         return allBatters;
     }
+    
+    //**TESTED**
 
     @Override
     public ArrayList<Batter> getBatterByBatHand(char batHand) {
@@ -171,17 +179,21 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
+    
+    //**TESTED**
 
     @Override
     public ArrayList<Batter> getBatterByStrikeouts(int strikeouts) {
         ArrayList<Batter> foundBatters = new ArrayList<>();
         for (Batter thisBatter : allBatters) {
-            if (thisBatter.getStrikeouts() >= strikeouts) {
+            if (thisBatter.getStrikeouts() <= strikeouts) {
                 foundBatters.add(thisBatter);
             }
         }
         return foundBatters;
     }
+    
+    //**TESTED**
 
     @Override
     public ArrayList<Batter> getBatterByHits(int hits) {
@@ -193,6 +205,8 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
+    
+    //**TESTED**
 
     @Override
     public ArrayList<Batter> getBatterByHomeruns(int homeruns) {
@@ -204,6 +218,8 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
+    
+    //**TESTED**
 
     @Override
     public ArrayList<Batter> getBatterByRBI(int rbi) {
@@ -215,6 +231,8 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
+    
+    //**TESTED**
 
     @Override
     public ArrayList<Batter> getBatterBySteals(int steals) {
@@ -226,6 +244,8 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
+    
+    //**TESTED**
 
     @Override
     public ArrayList<Batter> getBatterByBattingAverage(double battingAverage) {
@@ -237,6 +257,8 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
+    
+    //**TESTED**
 
     @Override
     public ArrayList<Batter> getBatterByOnBasePercentage(double obp) {
@@ -248,6 +270,8 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
+    
+    //**TESTED**
 
     @Override
     public ArrayList<Batter> getBatterByOnBasePlusSlugging(double obps) {
@@ -260,16 +284,34 @@ public class BatterManagement implements BatterInterface {
         return foundBatters;
     }
     
+    //**TESTED**
+    
     public void addBatter(Batter thisBatter){
         allBatters.add(thisBatter);
     }
+    
+    //**TESTED**
     
     public void removeBatter(Batter thisBatter){
         allBatters.remove(thisBatter);
     }
     
+    //**TESTED**
+    
     public int getSizeBattersList(){
         return allBatters.size();
+    }
+    
+    //**TESTED**
+    
+    public Batter getBatterByLastName(String lastName){
+        Batter foundBatter = new Batter(0);
+        for (Batter thisBatter : allBatters) {
+            if (thisBatter.getLastName().equalsIgnoreCase(lastName)) {
+                foundBatter = thisBatter;
+            }
+        }
+        return foundBatter;
     }
 
 }
