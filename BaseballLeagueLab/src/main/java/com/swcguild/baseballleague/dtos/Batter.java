@@ -22,10 +22,13 @@ public class Batter extends Player {
     private double battingAverage;
     private double onBasePercentage;
     private double onBasePlusSlugging;
-    private double homerunsPerAB;
-    private double strikeoutsPerAB;
-    private double runsPerGame;
+    private double atBatsPerHR;
+    private double atBatsPerStrikeout;
+    private double runsPerAtBat;
     private int runs;
+    private double sluggingPercentage;
+    private int singles;
+    private int walks;
     
     public Batter(int id){
         this.mlbPlayerId = id;
@@ -136,21 +139,7 @@ public class Batter extends Player {
         this.onBasePlusSlugging = onBasePlusSlugging;
     }
 
-    public double getHomerunsPerAB() {
-        return homerunsPerAB;
-    }
 
-    public void setHomerunsPerAB(double homerunsPerAB) {
-        this.homerunsPerAB = homerunsPerAB;
-    }
-
-    public double getStrikeoutsPerAB() {
-        return strikeoutsPerAB;
-    }
-
-    public void setStrikeoutsPerAB(double strikeoutsPerAB) {
-        this.strikeoutsPerAB = strikeoutsPerAB;
-    }
 
     public int getCaughtStealing() {
         return caughtStealing;
@@ -208,17 +197,66 @@ public class Batter extends Player {
         this.leftOnBase = leftOnBase;
     }
 
-    public double getRunsPerGame() {
-        return runsPerGame;
+
+    public int getRuns() {
+        return runs;
     }
 
-    public void setRunsPerGame(double runsPerGame) {
-        this.runsPerGame = runsPerGame;
+    public void setRuns(int runs) {
+        this.runs = runs;
+    }
+
+    public double getSluggingPercentage() {
+        return sluggingPercentage;
+    }
+
+    public void setSluggingPercentage(double sluggingPercentage) {
+        this.sluggingPercentage = sluggingPercentage;
+    }
+
+    public double getAtBatsPerHR() {
+        return atBatsPerHR;
+    }
+
+    public void setAtBatsPerHR(double atBatsPerHR) {
+        this.atBatsPerHR = atBatsPerHR;
+    }
+
+    public double getAtBatsPerStrikeout() {
+        return atBatsPerStrikeout;
+    }
+
+    public void setAtBatsPerStrikeout(double atBatsPerStrikeout) {
+        this.atBatsPerStrikeout = atBatsPerStrikeout;
+    }
+
+    public double getRunsPerAtBat() {
+        return runsPerAtBat;
+    }
+
+    public void setRunsPerAtBat(double runsPerAtBat) {
+        this.runsPerAtBat = runsPerAtBat;
+    }
+
+    public int getSingles() {
+        return singles;
+    }
+
+    public void setSingles(int singles) {
+        this.singles = singles;
+    }
+
+    public int getWalks() {
+        return walks;
+    }
+
+    public void setWalks(int walks) {
+        this.walks = walks;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
+        int hash = 7;
         hash = 97 * hash + this.atBats;
         hash = 97 * hash + this.plateAppearances;
         hash = 97 * hash + this.strikeouts;
@@ -239,10 +277,13 @@ public class Batter extends Player {
         hash = 97 * hash + (int) (Double.doubleToLongBits(this.battingAverage) ^ (Double.doubleToLongBits(this.battingAverage) >>> 32));
         hash = 97 * hash + (int) (Double.doubleToLongBits(this.onBasePercentage) ^ (Double.doubleToLongBits(this.onBasePercentage) >>> 32));
         hash = 97 * hash + (int) (Double.doubleToLongBits(this.onBasePlusSlugging) ^ (Double.doubleToLongBits(this.onBasePlusSlugging) >>> 32));
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.homerunsPerAB) ^ (Double.doubleToLongBits(this.homerunsPerAB) >>> 32));
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.strikeoutsPerAB) ^ (Double.doubleToLongBits(this.strikeoutsPerAB) >>> 32));
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.runsPerGame) ^ (Double.doubleToLongBits(this.runsPerGame) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.atBatsPerHR) ^ (Double.doubleToLongBits(this.atBatsPerHR) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.atBatsPerStrikeout) ^ (Double.doubleToLongBits(this.atBatsPerStrikeout) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.runsPerAtBat) ^ (Double.doubleToLongBits(this.runsPerAtBat) >>> 32));
         hash = 97 * hash + this.runs;
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.sluggingPercentage) ^ (Double.doubleToLongBits(this.sluggingPercentage) >>> 32));
+        hash = 97 * hash + this.singles;
+        hash = 97 * hash + this.walks;
         return hash;
     }
 
@@ -315,28 +356,35 @@ public class Batter extends Player {
         if (Double.doubleToLongBits(this.onBasePlusSlugging) != Double.doubleToLongBits(other.onBasePlusSlugging)) {
             return false;
         }
-        if (Double.doubleToLongBits(this.homerunsPerAB) != Double.doubleToLongBits(other.homerunsPerAB)) {
+        if (Double.doubleToLongBits(this.atBatsPerHR) != Double.doubleToLongBits(other.atBatsPerHR)) {
             return false;
         }
-        if (Double.doubleToLongBits(this.strikeoutsPerAB) != Double.doubleToLongBits(other.strikeoutsPerAB)) {
+        if (Double.doubleToLongBits(this.atBatsPerStrikeout) != Double.doubleToLongBits(other.atBatsPerStrikeout)) {
             return false;
         }
-        if (Double.doubleToLongBits(this.runsPerGame) != Double.doubleToLongBits(other.runsPerGame)) {
+        if (Double.doubleToLongBits(this.runsPerAtBat) != Double.doubleToLongBits(other.runsPerAtBat)) {
             return false;
         }
         if (this.runs != other.runs) {
             return false;
         }
+        if (Double.doubleToLongBits(this.sluggingPercentage) != Double.doubleToLongBits(other.sluggingPercentage)) {
+            return false;
+        }
+        if (this.singles != other.singles) {
+            return false;
+        }
+        if (this.walks != other.walks) {
+            return false;
+        }
         return true;
     }
+    
+    
 
-    public int getRuns() {
-        return runs;
-    }
-
-    public void setRuns(int runs) {
-        this.runs = runs;
-    }
+    
+    
+    
 
     
     

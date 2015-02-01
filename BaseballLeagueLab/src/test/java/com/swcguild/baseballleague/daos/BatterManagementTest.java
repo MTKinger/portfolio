@@ -296,4 +296,29 @@ public class BatterManagementTest {
         strikeoutsTest = bm.getBatterByOnBasePlusSlugging(.320);
         assertEquals(strikeoutsTest.size(), 1);
     }
+    
+    @Test
+    public void getBatterBySluggingTest(){
+        testBatter1.setSluggingPercentage(.313);
+        testBatter2.setSluggingPercentage(.275);
+        testBatter3.setSluggingPercentage(.291);
+        bm.addBatter(testBatter1);
+        bm.addBatter(testBatter2);
+        bm.addBatter(testBatter3);
+        ArrayList<Batter> strikeoutsTest = bm.getBatterBySluggingPercentage(.280);
+        assertEquals(strikeoutsTest.size(), 2);
+        bm.removeBatter(testBatter1);
+        bm.removeBatter(testBatter2);
+        bm.removeBatter(testBatter3);
+        strikeoutsTest.clear();
+        assertEquals(strikeoutsTest.size(), 0);
+        testBatter1.setSluggingPercentage(.260);
+        testBatter2.setSluggingPercentage(.320);
+        testBatter3.setSluggingPercentage(.280);
+        bm.addBatter(testBatter1);
+        bm.addBatter(testBatter2);
+        bm.addBatter(testBatter3);
+        strikeoutsTest = bm.getBatterBySluggingPercentage(.320);
+        assertEquals(strikeoutsTest.size(), 1);
+    }
 }

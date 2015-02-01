@@ -17,13 +17,13 @@ import org.junit.Test;
  *
  * @author apprentice
  */
-public class BuildPitcherTest {
+public class PitcherConstructorTest {
     
-    PitcherBuilder pb = new PitcherBuilder();
+    PitcherConstructor pb = new PitcherConstructor();
     Pitcher testPitcher1 = new Pitcher(1);
     Pitcher testPitcher2 = new Pitcher(2);
     
-    public BuildPitcherTest() {
+    public PitcherConstructorTest() {
     }
     
     @BeforeClass

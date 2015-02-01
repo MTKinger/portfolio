@@ -3,7 +3,7 @@ package com.swcguild.baseballleague.businesslogic;
 import com.swcguild.baseballleague.dtos.Pitcher;
 import com.swcguild.baseballleague.dtos.Player;
 
-public class PitcherBuilder {
+public class PitcherConstructor {
 
     public Pitcher buildPitcher(Pitcher thisPitcher) {
         Pitcher currentPitcher = thisPitcher;

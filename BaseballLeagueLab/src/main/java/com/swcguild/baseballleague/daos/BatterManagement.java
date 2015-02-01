@@ -17,7 +17,6 @@ public class BatterManagement implements BatterInterface {
     final String DELIMITER = "::";
 
     //**TESTED**
-    
     @Override
     public void writeBattersToFile() throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(BATTER_FILE));
@@ -25,7 +24,7 @@ public class BatterManagement implements BatterInterface {
                 + "BatHand, ThrowHand, GamesPlayed, GamesStarted, TeamCity, TeamNNickname, Age, League, "
                 + "AtBats, PlateAppearances, Strikeouts, Hits, Homeruns, Doubles, Triples, TotalBases, "
                 + "RBI, Steals, CaughtStealing, GIDP, HBP, SacHits, SacFlies, IBB, LOB, AVG, OBP, "
-                + "OBPS, HomerunsPerAB, StrikeoutsPerGame, RunsPerGame, Runs");
+                + "OBPS, ABPerHR, ABPerStrikeouts, RunsPerAB, Runs, SluggingPercentage, Singles, Walks");
         for (Batter thisBatter : allBatters) {
             out.println(thisBatter.getMlbPlayerId() + DELIMITER
                     + thisBatter.getFirstName() + DELIMITER
@@ -60,23 +59,25 @@ public class BatterManagement implements BatterInterface {
                     + thisBatter.getBattingAverage() + DELIMITER
                     + thisBatter.getOnBasePercentage() + DELIMITER
                     + thisBatter.getOnBasePlusSlugging() + DELIMITER
-                    + thisBatter.getHomerunsPerAB() + DELIMITER
-                    + thisBatter.getStrikeoutsPerAB() + DELIMITER
-                    + thisBatter.getRunsPerGame() + DELIMITER
-            +thisBatter.getRuns());
+                    + thisBatter.getAtBatsPerHR() + DELIMITER
+                    + thisBatter.getAtBatsPerStrikeout() + DELIMITER
+                    + thisBatter.getRunsPerAtBat() + DELIMITER
+                    + thisBatter.getRuns() + DELIMITER
+                    + thisBatter.getSluggingPercentage() + DELIMITER
+                    + thisBatter.getSingles() + DELIMITER
+                    + thisBatter.getWalks());
             out.flush();
         }
         out.close();
     }
 
     //**TESTED**
-    
     @Override
     public void loadBatterToFile() throws FileNotFoundException {
         Scanner sc = new Scanner(new BufferedReader(new FileReader(BATTER_FILE)));
         String currentLine = sc.nextLine();
         String[] currentTokens = currentLine.split(DELIMITER);
-        while(sc.hasNextLine()){
+        while (sc.hasNextLine()) {
             currentLine = sc.nextLine();
             currentTokens = currentLine.split(DELIMITER);
             int mlbPlayerId = Integer.parseInt(currentTokens[0]);
@@ -116,7 +117,10 @@ public class BatterManagement implements BatterInterface {
             double strikeoutsPerAB = Double.parseDouble(currentTokens[34]);
             double runsPerGame = Double.parseDouble(currentTokens[35]);
             int runs = Integer.parseInt(currentTokens[36]);
-            
+            double sluggingPercentage = Double.parseDouble(currentTokens[37]);
+            int singles = Integer.parseInt(currentTokens[38]);
+            int walks = Integer.parseInt(currentTokens[39]);
+
             Batter thisBatter = new Batter(mlbPlayerId);
             thisBatter.setFirstName(firstName);
             thisBatter.setLastName(lastname);
@@ -150,25 +154,26 @@ public class BatterManagement implements BatterInterface {
             thisBatter.setBattingAverage(battingAverage);
             thisBatter.setOnBasePercentage(onBasePercentage);
             thisBatter.setOnBasePlusSlugging(onBasePlusSlugging);
-            thisBatter.setHomerunsPerAB(homerunsPerAB);
-            thisBatter.setStrikeoutsPerAB(strikeoutsPerAB);
-            thisBatter.setRunsPerGame(runsPerGame);
+            thisBatter.setAtBatsPerHR(homerunsPerAB);
+            thisBatter.setAtBatsPerStrikeout(strikeoutsPerAB);
+            thisBatter.setRunsPerAtBat(runsPerGame);
             thisBatter.setRuns(runs);
-            
+            thisBatter.setSluggingPercentage(sluggingPercentage);
+            thisBatter.setSingles(singles);
+            thisBatter.setWalks(walks);
+
             allBatters.add(thisBatter);
         }
         sc.close();
     }
 
     //**TESTED**
-    
     @Override
     public ArrayList<Batter> getallBatters() {
         return allBatters;
     }
-    
-    //**TESTED**
 
+    //**TESTED**
     @Override
     public ArrayList<Batter> getBatterByBatHand(char batHand) {
         ArrayList<Batter> foundBatters = new ArrayList<>();
@@ -179,9 +184,8 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
-    
-    //**TESTED**
 
+    //**TESTED**
     @Override
     public ArrayList<Batter> getBatterByStrikeouts(int strikeouts) {
         ArrayList<Batter> foundBatters = new ArrayList<>();
@@ -192,22 +196,20 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
-    
-    //**TESTED**
 
+    //**TESTED**
     @Override
     public ArrayList<Batter> getBatterByHits(int hits) {
         ArrayList<Batter> foundBatters = new ArrayList<>();
         for (Batter thisBatter : allBatters) {
-            if (thisBatter.getHits( ) >= hits) {
+            if (thisBatter.getHits() >= hits) {
                 foundBatters.add(thisBatter);
             }
         }
         return foundBatters;
     }
-    
-    //**TESTED**
 
+    //**TESTED**
     @Override
     public ArrayList<Batter> getBatterByHomeruns(int homeruns) {
         ArrayList<Batter> foundBatters = new ArrayList<>();
@@ -218,9 +220,8 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
-    
-    //**TESTED**
 
+    //**TESTED**
     @Override
     public ArrayList<Batter> getBatterByRBI(int rbi) {
         ArrayList<Batter> foundBatters = new ArrayList<>();
@@ -231,9 +232,8 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
-    
-    //**TESTED**
 
+    //**TESTED**
     @Override
     public ArrayList<Batter> getBatterBySteals(int steals) {
         ArrayList<Batter> foundBatters = new ArrayList<>();
@@ -244,9 +244,8 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
-    
-    //**TESTED**
 
+    //**TESTED**
     @Override
     public ArrayList<Batter> getBatterByBattingAverage(double battingAverage) {
         ArrayList<Batter> foundBatters = new ArrayList<>();
@@ -257,9 +256,8 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
-    
-    //**TESTED**
 
+    //**TESTED**
     @Override
     public ArrayList<Batter> getBatterByOnBasePercentage(double obp) {
         ArrayList<Batter> foundBatters = new ArrayList<>();
@@ -270,9 +268,8 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
-    
-    //**TESTED**
 
+    //**TESTED**
     @Override
     public ArrayList<Batter> getBatterByOnBasePlusSlugging(double obps) {
         ArrayList<Batter> foundBatters = new ArrayList<>();
@@ -283,28 +280,34 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatters;
     }
-    
+
+    public ArrayList<Batter> getBatterBySluggingPercentage(double slugging) {
+        ArrayList<Batter> foundBatters = new ArrayList<>();
+        for (Batter thisBatter : allBatters) {
+            if (thisBatter.getSluggingPercentage() >= slugging) {
+                foundBatters.add(thisBatter);
+            }
+        }
+        return foundBatters;
+    }
+
     //**TESTED**
-    
-    public void addBatter(Batter thisBatter){
+    public void addBatter(Batter thisBatter) {
         allBatters.add(thisBatter);
     }
-    
+
     //**TESTED**
-    
-    public void removeBatter(Batter thisBatter){
+    public void removeBatter(Batter thisBatter) {
         allBatters.remove(thisBatter);
     }
-    
+
     //**TESTED**
-    
-    public int getSizeBattersList(){
+    public int getSizeBattersList() {
         return allBatters.size();
     }
-    
+
     //**TESTED**
-    
-    public Batter getBatterByLastName(String lastName){
+    public Batter getBatterByLastName(String lastName) {
         Batter foundBatter = new Batter(0);
         for (Batter thisBatter : allBatters) {
             if (thisBatter.getLastName().equalsIgnoreCase(lastName)) {
