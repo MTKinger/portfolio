@@ -39,7 +39,7 @@ public class PitcherManagement implements PitcherInterface {
                     + thisPitcher.getTeamCity() + DELIMITER
                     + thisPitcher.getTeamName() + DELIMITER
                     + thisPitcher.getAge() + DELIMITER
-                    + thisPitcher.getAge() + DELIMITER
+                    + thisPitcher.getLeague() + DELIMITER
                     + thisPitcher.getEarnedRuns() + DELIMITER
                     + thisPitcher.getStrikeouts() + DELIMITER
                     + thisPitcher.getHomeRunsAllowed() + DELIMITER

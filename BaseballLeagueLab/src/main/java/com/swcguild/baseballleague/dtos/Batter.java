@@ -8,7 +8,7 @@ public class Batter extends Player {
     private int hits;
     private int homeruns;
     private int doubles;
-    private int tripples;
+    private int triples;
     private int totalBases;
     private int RBI;
     private int steals;
@@ -25,6 +25,7 @@ public class Batter extends Player {
     private double homerunsPerAB;
     private double strikeoutsPerAB;
     private double runsPerGame;
+    private int runs;
     
     public Batter(int id){
         this.mlbPlayerId = id;
@@ -79,12 +80,12 @@ public class Batter extends Player {
         this.doubles = doubles;
     }
 
-    public int getTripples() {
-        return tripples;
+    public int getTriples() {
+        return triples;
     }
 
-    public void setTripples(int tripples) {
-        this.tripples = tripples;
+    public void setTriples(int triples) {
+        this.triples = triples;
     }
 
     public int getTotalBases() {
@@ -217,30 +218,31 @@ public class Batter extends Player {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + this.atBats;
-        hash = 29 * hash + this.plateAppearances;
-        hash = 29 * hash + this.strikeouts;
-        hash = 29 * hash + this.hits;
-        hash = 29 * hash + this.homeruns;
-        hash = 29 * hash + this.doubles;
-        hash = 29 * hash + this.tripples;
-        hash = 29 * hash + this.totalBases;
-        hash = 29 * hash + this.RBI;
-        hash = 29 * hash + this.steals;
-        hash = 29 * hash + this.caughtStealing;
-        hash = 29 * hash + this.groundedIntoDP;
-        hash = 29 * hash + this.hitByPitch;
-        hash = 29 * hash + this.sacHits;
-        hash = 29 * hash + this.sacFlies;
-        hash = 29 * hash + this.intBB;
-        hash = 29 * hash + this.leftOnBase;
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.battingAverage) ^ (Double.doubleToLongBits(this.battingAverage) >>> 32));
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.onBasePercentage) ^ (Double.doubleToLongBits(this.onBasePercentage) >>> 32));
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.onBasePlusSlugging) ^ (Double.doubleToLongBits(this.onBasePlusSlugging) >>> 32));
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.homerunsPerAB) ^ (Double.doubleToLongBits(this.homerunsPerAB) >>> 32));
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.strikeoutsPerAB) ^ (Double.doubleToLongBits(this.strikeoutsPerAB) >>> 32));
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.runsPerGame) ^ (Double.doubleToLongBits(this.runsPerGame) >>> 32));
+        int hash = 3;
+        hash = 97 * hash + this.atBats;
+        hash = 97 * hash + this.plateAppearances;
+        hash = 97 * hash + this.strikeouts;
+        hash = 97 * hash + this.hits;
+        hash = 97 * hash + this.homeruns;
+        hash = 97 * hash + this.doubles;
+        hash = 97 * hash + this.triples;
+        hash = 97 * hash + this.totalBases;
+        hash = 97 * hash + this.RBI;
+        hash = 97 * hash + this.steals;
+        hash = 97 * hash + this.caughtStealing;
+        hash = 97 * hash + this.groundedIntoDP;
+        hash = 97 * hash + this.hitByPitch;
+        hash = 97 * hash + this.sacHits;
+        hash = 97 * hash + this.sacFlies;
+        hash = 97 * hash + this.intBB;
+        hash = 97 * hash + this.leftOnBase;
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.battingAverage) ^ (Double.doubleToLongBits(this.battingAverage) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.onBasePercentage) ^ (Double.doubleToLongBits(this.onBasePercentage) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.onBasePlusSlugging) ^ (Double.doubleToLongBits(this.onBasePlusSlugging) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.homerunsPerAB) ^ (Double.doubleToLongBits(this.homerunsPerAB) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.strikeoutsPerAB) ^ (Double.doubleToLongBits(this.strikeoutsPerAB) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.runsPerGame) ^ (Double.doubleToLongBits(this.runsPerGame) >>> 32));
+        hash = 97 * hash + this.runs;
         return hash;
     }
 
@@ -271,7 +273,7 @@ public class Batter extends Player {
         if (this.doubles != other.doubles) {
             return false;
         }
-        if (this.tripples != other.tripples) {
+        if (this.triples != other.triples) {
             return false;
         }
         if (this.totalBases != other.totalBases) {
@@ -322,8 +324,21 @@ public class Batter extends Player {
         if (Double.doubleToLongBits(this.runsPerGame) != Double.doubleToLongBits(other.runsPerGame)) {
             return false;
         }
+        if (this.runs != other.runs) {
+            return false;
+        }
         return true;
     }
+
+    public int getRuns() {
+        return runs;
+    }
+
+    public void setRuns(int runs) {
+        this.runs = runs;
+    }
+
+    
     
     
     
