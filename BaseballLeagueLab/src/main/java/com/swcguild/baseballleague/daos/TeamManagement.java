@@ -105,4 +105,14 @@ public class TeamManagement implements TeamInterface {
     public void removeTeam(String thisTeam){
         league.remove(thisTeam);
         }
+    
+    public HashMap<String, Team> getAllTeams(){
+        HashMap<String, Team> output = new HashMap<>();
+        Set<String> keyset = league.keySet();
+        for(String currentTeam : keyset){
+            Team thisTeam = league.get(currentTeam);
+            output.put(currentTeam, thisTeam);
+        }
+        return output;
+    }
     }
