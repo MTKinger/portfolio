@@ -44,7 +44,7 @@ public class AddressBook {
         return lastNameList.size();
     }
 
-    public void loadAddressBook() throws FileNotFoundException {
+    /**public void loadAddressBook() throws FileNotFoundException {
         Scanner sc = new Scanner(new BufferedReader(new FileReader(ADDRESS_FILE)));
         String currentLine;
         String[] currentTokens;
@@ -62,6 +62,7 @@ public class AddressBook {
         }
         sc.close();
     }
+    */
 
     public void writeAddressBook() throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(ADDRESS_FILE));

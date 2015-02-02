@@ -2,17 +2,19 @@ package com.swcguild.addressbooklab;
 
 import java.util.Objects;
 
-public class House {
+public class House implements Comparable<House>{
 
-    private final String lastName;
+    private int id;
+    private String lastName;
     private String firstName;
     private String streetAddress;
     private String city;
     private String state;
     private String zip;
 
-    public House(String lastName) {
-        this.lastName = lastName;
+
+    public House (int id){
+        this.id = id;
     }
 
     public String getLastName() {
@@ -101,6 +103,27 @@ public class House {
         return true;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Override
+    public int compareTo(House o) {
+        int result = this.getLastName().compareTo(o.getLastName());
+        if(result != 0){
+            return result;
+        }else{
+            return this.getFirstName().compareTo(o.getFirstName());
+            }
+        }
+    }
+    
+    
+
     
     
     
@@ -108,4 +131,4 @@ public class House {
     
     
     
-}
+

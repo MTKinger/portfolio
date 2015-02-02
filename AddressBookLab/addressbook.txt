@@ -1,3 +1,2 @@
-King0002::Debi::1383 Brook La::Jamison::PA::18929
-King0001::Mike::401 S Main St::Akron::OH::44311
-Bostick0001::Jim::9900 Ashley Rd::Mentor::OH::44606
+Jones0001::Mike::401 South Main St.::Akron::OH::44311
+King0001::Mike::1383 Brook Lane::Jamison::PA::18929
