@@ -21,33 +21,31 @@ public class TeamManagement implements TeamInterface {
     final String MLB_TEAMS = "mlbTeams.txt";
 
     //**TESTED**
-    
     @Override
     public void writeTeamsToFile() throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(MLB_TEAMS));
         out.println("City, Nickname, Stadium, League, Division");
         Team currentTeam = new Team();
         Set<String> keySet = league.keySet();
-        for (String currentTeamName : keySet){
+        for (String currentTeamName : keySet) {
             currentTeam = league.get(currentTeamName);
             out.println(currentTeam.getCity() + DELIMITER
-            + currentTeam.getNickname() + DELIMITER
-            + currentTeam.getStadium() + DELIMITER
-            + currentTeam.getLeague() + DELIMITER
-            + currentTeam.getDivision());
+                    + currentTeam.getNickname() + DELIMITER
+                    + currentTeam.getStadium() + DELIMITER
+                    + currentTeam.getLeague() + DELIMITER
+                    + currentTeam.getDivision());
             out.flush();
         }
         out.close();
     }
 
     //**TESTED**
-    
     @Override
-    public void loadTeamsFromFile() throws FileNotFoundException{
-        Scanner sc  = new Scanner(new BufferedReader(new FileReader(MLB_TEAMS)));
+    public void loadTeamsFromFile() throws FileNotFoundException {
+        Scanner sc = new Scanner(new BufferedReader(new FileReader(MLB_TEAMS)));
         String currentLine = sc.nextLine();
-        String [] currentTokens;
-        while(sc.hasNextLine()){
+        String[] currentTokens;
+        while (sc.hasNextLine()) {
             currentLine = sc.nextLine();
             currentTokens = currentLine.split(DELIMITER);
             Team currentTeam = new Team();
@@ -59,11 +57,10 @@ public class TeamManagement implements TeamInterface {
             league.put(currentTeam.getNickname(), currentTeam);
         }
         sc.close();
-        
+
     }
 
     //**TESTED**
-    
     @Override
     public Team getTeamByName(String name) {
         Team thisTeam = new Team();
@@ -77,7 +74,6 @@ public class TeamManagement implements TeamInterface {
     }
 
     //**TESTED**
-    
     public ArrayList<Player> getTeamRosterByName(String TeamName) {
         ArrayList<Player> roster = new ArrayList<>();
         Team thisTeam = new Team();
@@ -89,30 +85,48 @@ public class TeamManagement implements TeamInterface {
         }
         return roster;
     }
-    
+
     //**TESTED**
-    
-    public void addTeam(Team teamToAdd){
+    public void addTeam(Team teamToAdd) {
         league.put(teamToAdd.getNickname(), teamToAdd);
     }
-    
+
     //**TESTED**
-    
-    public int getLeagueSize(){
+    public int getLeagueSize() {
         return league.size();
     }
-    
-    public void removeTeam(String thisTeam){
+
+    public void removeTeam(String thisTeam) {
         league.remove(thisTeam);
-        }
-    
-    public HashMap<String, Team> getAllTeams(){
+    }
+
+    public HashMap<String, Team> getAllTeams() {
         HashMap<String, Team> output = new HashMap<>();
         Set<String> keyset = league.keySet();
-        for(String currentTeam : keyset){
+        for (String currentTeam : keyset) {
             Team thisTeam = league.get(currentTeam);
             output.put(currentTeam, thisTeam);
         }
         return output;
     }
+
+    public void addPlayerToRoster(Player thisPlayer) {
+        Set<String> keySet = league.keySet();
+        for (String currentTeam : keySet) {
+            Team thisTeam = getTeamByName(currentTeam);
+            ArrayList thisTeamsRoster = getTeamRosterByName(currentTeam);
+            if (thisPlayer.getTeamName().equalsIgnoreCase(currentTeam)) {
+                thisTeamsRoster.add(thisPlayer);
+            }
+            thisTeam.setRoster(thisTeamsRoster);
+        }
     }
+
+    public void clearTeams() {
+        Set<String> keySet = league.keySet();
+        for (String currentTeam : keySet) {
+            Team thisTeam = getTeamByName(currentTeam);
+            league.remove(currentTeam, thisTeam);
+        }
+    }
+}

@@ -316,5 +316,11 @@ public class BatterManagement implements BatterInterface {
         }
         return foundBatter;
     }
+    
+    public void clearBatters(){
+        for (Batter thisBatter : allBatters){
+            allBatters.remove(thisBatter);
+        }
+    }
 
 }

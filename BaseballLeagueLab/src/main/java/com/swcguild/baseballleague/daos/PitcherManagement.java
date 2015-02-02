@@ -362,5 +362,11 @@ public class PitcherManagement implements PitcherInterface {
     public void removePitcher(Pitcher thisPitcher) {
         allPitchers.remove(thisPitcher);
     }
+    
+    public void clearPitchers(){
+        for (Pitcher thisPitcher : allPitchers){
+            allPitchers.remove(thisPitcher);
+        }
+    }
 
 }

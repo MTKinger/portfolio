@@ -51,6 +51,8 @@ public class PitcherManagementTest {
     // @Test
     // public void hello() {}
     
+    /**
+    
     @Test
     public void readWritePitcherTest() throws IOException{
         assertEquals(pm.getSizePitcherList(), 0);
@@ -84,6 +86,7 @@ public class PitcherManagementTest {
         assertEquals(pm.getPitcherByLastName("Kluber").getStrikeouts(), 194);
         assertEquals(pm.getPitcherByLastName("Kluber").getThrowHand(), 'L');
     }
+    */
     
     @Test
     public void getPitcherByThrowHandTest(){

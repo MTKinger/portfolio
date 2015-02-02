@@ -6,35 +6,32 @@ import com.swcguild.baseballleague.daos.TeamManagement;
 import com.swcguild.baseballleague.dtos.Player;
 import com.swcguild.baseballleague.dtos.Team;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
 public class TeamSorter {
-    
+
     PitcherManagement pm = new PitcherManagement();
     BatterManagement bm = new BatterManagement();
     TeamManagement tm = new TeamManagement();
-    
-    public void sortRosters() throws FileNotFoundException{
+
+    public ArrayList<Player> sortRosters(Team thisTeam) throws FileNotFoundException {
         tm.loadTeamsFromFile();
         pm.loadPitchersFromFile();
         bm.loadBatterToFile();
-        ArrayList<Player> teamsRoster = new ArrayList<>();
-        ArrayList<Player> mlbPlayers = new ArrayList<>();
+        ArrayList< Player> teamsRoster = new ArrayList<>();
+        ArrayList< Player> mlbPlayers = new ArrayList<>();
         mlbPlayers.addAll(pm.getAllPitchers());
         mlbPlayers.addAll(bm.getallBatters());
-        HashMap<String, Team> allTeams = tm.getAllTeams();
-        Set<String> keySet = allTeams.keySet();
-        for(String currentTeam : keySet){
-            Team thisTeam = tm.getTeamByName(currentTeam);
-            for(Player currentPlayer : mlbPlayers){
-                if(currentPlayer.getTeamName().equalsIgnoreCase(currentTeam)){
-                    teamsRoster.add(currentPlayer);
-                }
+        for(Player thisPlayer : mlbPlayers){
+            if (thisPlayer.getTeamName().equalsIgnoreCase(thisTeam.getNickname())){
+                teamsRoster.add(thisPlayer);
             }
-            thisTeam.setRoster(teamsRoster);
+            mlbPlayers.remove(thisPlayer);
         }
+        return teamsRoster;
     }
 
 }

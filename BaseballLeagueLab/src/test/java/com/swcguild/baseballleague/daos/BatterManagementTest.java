@@ -51,6 +51,8 @@ public class BatterManagementTest {
     // @Test
     // public void hello() {}
     
+    
+    /**
     @Test
     public void batterReadWriteTest() throws IOException{
         assertEquals(bm.getSizeBattersList(), 0);
@@ -83,7 +85,7 @@ public class BatterManagementTest {
         assertEquals(bm.getBatterByLastName("Abreu").getHits(), 197);
         assertEquals(bm.getBatterByLastName("Abreu").getRuns(), 111);
         assertEquals(bm.getBatterByLastName("Abreu").getSacHits(), 13);
-    }
+    }*/
     
     @Test
     public void getBatterByBatHandTest(){
