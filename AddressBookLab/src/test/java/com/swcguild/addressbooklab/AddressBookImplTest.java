@@ -5,6 +5,8 @@
  */
 package com.swcguild.addressbooklab;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -197,4 +199,18 @@ public class AddressBookImplTest {
         actualList = ab.getHousesByZip("11111");
         assertEquals(0, actualList.size());
     }
+    
+    // Counter will increase each time test is run
+    // which will cause further tests to fail
+    
+    
+    /**
+    @Test
+    public void setCounterTest() throws IOException, FileNotFoundException{
+        House newHouse = ab.setHouseCounter();
+        assertEquals(6, newHouse.getId());
+        House newHouse2 = ab.setHouseCounter();
+        assertEquals(7, newHouse2.getId());
+    }
+    */
 }

@@ -5,6 +5,7 @@
  */
 package com.swcguild.addressbooklab;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ public interface AddressBookDao {
     public List<House> getHousesByCity(String city);
     public Map<String, List<House>> getHousesByState(String state);
     public List<House> getHousesByZip(String zipCode);
+    public House setHouseCounter()throws FileNotFoundException, IOException;
 
     
 }

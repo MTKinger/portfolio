@@ -59,14 +59,15 @@ public class AddressBookImpl implements AddressBookDao{
         out.close();
     }
     
-    public void readCounter()throws FileNotFoundException{
+    public int readCounter()throws FileNotFoundException{
         Scanner sc  = new Scanner(new BufferedReader(new FileReader(COUNTER_FILE)));
         String currentLine;
         while(sc.hasNextLine()){
             currentLine = sc.nextLine();
-            counter = Integer.parseInt(currentLine) + 1;
+            counter = Integer.parseInt(currentLine);
         }
         sc.close();
+        return counter;
     }
     
     public void writeCounter()throws IOException{
@@ -127,6 +128,15 @@ public class AddressBookImpl implements AddressBookDao{
         return addressMap.values().stream()
                 .filter(house -> house.getZip().equalsIgnoreCase(zipCode))
                 .collect(Collectors.toList());
+    }
+    
+    @Override
+    public House setHouseCounter() throws FileNotFoundException, IOException{
+        counter = readCounter();
+        House output = new House(counter);
+        counter++;
+        writeCounter();
+        return output;
     }
     
     
