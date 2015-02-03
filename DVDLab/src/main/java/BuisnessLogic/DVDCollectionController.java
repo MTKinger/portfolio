@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class DVDCollectionController {
 
-    ConsoleIO cio = new ConsoleIO();
+    /**ConsoleIO cio = new ConsoleIO();
     DVDCollection library = new DVDCollection();
     Random r = new Random();
 
@@ -261,6 +261,6 @@ public class DVDCollectionController {
                     + " collection.");
             cio.getInt("\nPress 1 to return to menu.", 1, 1);
         }
-    }
+    }*/
 
 }

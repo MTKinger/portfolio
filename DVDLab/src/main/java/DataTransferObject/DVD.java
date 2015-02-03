@@ -1,6 +1,7 @@
 package DataTransferObject;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -9,24 +10,24 @@ public class DVD {
 
     private Random r = new Random();
 
+    private int dvdID;
     private String title;
     private LocalDate releaseDate;
     private String rating;
     private String director;
     private String studio;
     private ArrayList<String> comments;
-    private String id;
 
     @Override
     public String toString() {
         return "Title: " + title + ", Relase Date: " + releaseDate.toString()
                 + "\nRating: " + rating + ", Director: " + director
                 + "\nStudio: " + studio + "\n Notes: " + comments.toString()
-                + ", Identifier: " + id;
+                + ", Identifier: " + dvdID;
     }
     
-    public DVD(){
-        
+    public DVD(int dvdID){
+        this.dvdID = dvdID;
     }
 
     public String getTitle() {
@@ -76,15 +77,15 @@ public class DVD {
     public void setComments(ArrayList<String> comments) {
         this.comments = comments;
     }
-
-    public String getId() {
-        return id;
+    
+    public long getAge(){
+        Period p = releaseDate.until(LocalDate.now());
+        return p.getYears();
     }
-
-    public void setId(String id) {
-        int identifierNumber = 1+r.nextInt(200000000);
-        String idNum = Integer.toString(identifierNumber);
-        this.id = idNum;
+    
+    
+    public int getNumberComments(){
+        return this.comments.size();
     }
 
     @Override
@@ -127,6 +128,10 @@ public class DVD {
             return false;
         }
         return true;
+    }
+
+    public int getDvdID() {
+        return dvdID;
     }
     
     

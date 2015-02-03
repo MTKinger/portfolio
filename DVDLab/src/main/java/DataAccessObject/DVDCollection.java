@@ -38,7 +38,7 @@ public class DVDCollection {
         return library.get(id);
     }
 
-    public ArrayList<DVD> getAllDVD() {
+    /**public ArrayList<DVD> getAllDVD() {
         ArrayList<DVD> allDVD = new ArrayList<>();
         for (String key : identifiers) {
             DVD currentDVD = new DVD();
@@ -46,9 +46,9 @@ public class DVDCollection {
             allDVD.add(currentDVD);
         }
         return allDVD;
-    }
+    }*/
 
-    public void writeLibrary() throws IOException {
+    /**public void writeLibrary() throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(LIBRARY_FILE));
         for (String id : identifiers) {
             DVD currentDVD = this.getDVD(id);
@@ -95,7 +95,7 @@ public class DVDCollection {
             currentDVD.setRating(currentTokens[4]);
             currentDVD.setDirector(currentTokens[5]);
             currentDVD.setStudio(currentTokens[6]);
-            currentDVD.setId(currentTokens[7]);
+            currentDVD.setdvdID(Integer.parseInt(currentTokens[7]));
             for (int i = 8; i < currentTokens.length; i++){
                 comments.add(currentTokens[i]);
             }
@@ -103,5 +103,5 @@ public class DVDCollection {
             library.put(currentDVD.getId(), currentDVD);
         }
         sc.close();
-    }
+    }*/
 }
