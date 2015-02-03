@@ -7,7 +7,7 @@ import java.util.InputMismatchException;
 
 public class AddressBookController {
 
-    ConsoleIO cio = new ConsoleIO();
+    /**ConsoleIO cio = new ConsoleIO();
     AddressBook addressBook = new AddressBook();
 
     public void run() {
@@ -326,4 +326,4 @@ public class AddressBookController {
             cio.printMessage("\nAddress ID: " + currentHouse.getLastName());
         }
     }
-}
+*/}
