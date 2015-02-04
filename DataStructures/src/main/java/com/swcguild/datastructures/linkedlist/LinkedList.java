@@ -11,19 +11,23 @@ public class LinkedList implements LinkedListInterface {
     private Node last;
 
     //**TESTED**
-    
     @Override
     public void prepend(Object object) {
-        Node oldFirst = first;
-        first = new Node();
-        first.item = object;
-        first.next = oldFirst;
-        numItems++;
+        if (numItems == 0) {
+            last = new Node();
+            last.item = object;
+            first = last;
+            numItems++;
+        } else {
+            Node oldFirst = first;
+            first = new Node();
+            first.item = object;
+            first.next = oldFirst;
+            numItems++;
+        }
     }
 
-    
     //**TESTED**
-    
     @Override
     public void append(Object object) {
         if (numItems == 0) {
@@ -42,22 +46,27 @@ public class LinkedList implements LinkedListInterface {
     }
 
     //**TESTED**
-    
     @Override
     public void insert(Object object, int element) {
-        Node current = first;
-        Node inNode = new Node();
-        for (int counter = 1; counter < element; counter++) {
-            current = current.next;
+        if (element == 0) {
+            last = new Node();
+            last.item = object;
+            first = last;
+            numItems++;
+        } else {
+            Node current = first;
+            Node inNode = new Node();
+            for (int counter = 1; counter < element; counter++) {
+                current = current.next;
+            }
+            inNode.item = object;
+            inNode.next = current.next;
+            current.next = inNode;
+            numItems++;
         }
-        inNode.item = object;
-        inNode.next = current.next;
-        current.next = inNode;
-        numItems++;
     }
 
     //**TESTED**
-    
     @Override
     public Object get(int element) {
         Node current = first;
@@ -68,7 +77,6 @@ public class LinkedList implements LinkedListInterface {
     }
 
     //**TESTED**
-    
     @Override
     public Object remove(int element) {
         Node current = first;
@@ -84,22 +92,19 @@ public class LinkedList implements LinkedListInterface {
 
     }
 
-   //**TESTED**
-    
+    //**TESTED**
     @Override
     public int size() {
         return numItems;
     }
 
     //**TESTED**
-    
     @Override
     public boolean isEmpty() {
         return first == null;
     }
 
     //**TESTED**
-    
     @Override
     public Iterator iterator() {
         return new linkedListIterator();

@@ -89,7 +89,7 @@ public class LinkedListTest {
     
     @Test
     public void insertTest(){
-        llLinkedList.append(test1);
+        llLinkedList.insert(test1, 0);
         llLinkedList.append(test2);
         llLinkedList.append(test3);
         llLinkedList.append(test4);
