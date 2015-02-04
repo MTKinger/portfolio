@@ -3,27 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.swcguild.datastructures.stack;
+package com.swcguild.datastructures.queue;
 
-import com.swcguild.datastructures.queue.ArrayQueue;
-import com.swcguild.datastructures.queue.Queue;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
  * @author apprentice
  */
-public class ArrayQueueTest {
-    
-    Queue aq = new ArrayQueue();
+public class LinkedListQueueTest {
+
+    Queue aq = new LinkedListQueue();
     ArrayQueue aq2 = new ArrayQueue(16);
     Integer test1;
     Integer test2;
@@ -41,17 +37,18 @@ public class ArrayQueueTest {
     Integer test14;
     Integer test15;
     Integer test16;
-    public ArrayQueueTest() {
+
+    public LinkedListQueueTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
         test1 = 1;
@@ -71,7 +68,7 @@ public class ArrayQueueTest {
         test15 = 15;
         test16 = 16;
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -82,15 +79,16 @@ public class ArrayQueueTest {
     // @Test
     // public void hello() {}
     
+    
     @Test
-    public void isEmptyTest(){
+    public void isEmptyTest() {
         assertTrue(aq.isEmpty());
         aq.enqueue(test1);
         assertFalse(aq.isEmpty());
     }
-    
+
     @Test
-    public void sizeTest(){
+    public void sizeTest() {
         assertEquals(0, aq.size());
         aq.enqueue(test1);
         assertEquals(1, aq.size());
@@ -98,12 +96,13 @@ public class ArrayQueueTest {
         assertEquals(2, aq.size());
         aq.enqueue(test3);
         assertEquals(3, aq.size());
-        aq.dequeue();
+        Object intTest = (Integer)aq.dequeue();
         assertEquals(2, aq.size());
+        assertEquals(1, intTest);
     }
-    
+
     @Test
-    public void resizeUpTest(){
+    public void resizeUpTest() {
         ArrayList<Integer> testArray = new ArrayList<>();
         aq.enqueue(test1);
         aq.enqueue(test2);
@@ -112,8 +111,8 @@ public class ArrayQueueTest {
         aq.enqueue(test4);
         aq.enqueue(test5);
         aq.enqueue(test1);
-        for (Object o : aq){
-            int currentNumber = (Integer)o;
+        for (Object o : aq) {
+            int currentNumber = (Integer) o;
             testArray.add(currentNumber);
         }
         assertEquals(5, testArray.size());
@@ -123,9 +122,9 @@ public class ArrayQueueTest {
         assertTrue(5 == testArray.get(3));
         assertTrue(1 == testArray.get(4));
     }
-    
+
     @Test
-    public void resizeDownTest(){
+    public void resizeDownTest() {
         aq2.enqueue(test1);
         aq2.enqueue(test3);
         aq2.enqueue(test7);
@@ -152,6 +151,4 @@ public class ArrayQueueTest {
         assertEquals(4, aq2.returnArraySize());
         assertEquals(2, aq2.size());
     }
-    
-    
 }

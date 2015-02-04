@@ -84,8 +84,8 @@ public class ArrayQueue implements Queue {
 
         items = temp;
     }
-    
-    public int returnArraySize(){
+
+    public int returnArraySize() {
         return items.length;
     }
 
@@ -103,7 +103,6 @@ public class ArrayQueue implements Queue {
         public Object next() {
             return items[i++];
         }
-
     }
 
 }
