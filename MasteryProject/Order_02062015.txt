@@ -1,0 +1,2 @@
+OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total, CustomerFirstName, CustomerLastName
+11,Mike King,CA,8.5,wood,100.0,5.15,4.75,515.0,475.0,84.15,1074.15

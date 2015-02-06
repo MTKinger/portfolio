@@ -12,6 +12,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -19,7 +21,7 @@ import static org.junit.Assert.*;
  */
 public class CostCalculatorTest {
     
-    CostCalculator cc = new CostCalculator();
+    CostCalculator cc;
     double result;
 
     public CostCalculatorTest() {
@@ -35,6 +37,9 @@ public class CostCalculatorTest {
     
     @Before
     public void setUp() {
+        
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        cc = ctx.getBean("costCalculator", CostCalculator.class);
     }
     
     @After

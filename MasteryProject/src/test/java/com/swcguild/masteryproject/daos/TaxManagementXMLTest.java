@@ -5,6 +5,7 @@
  */
 package com.swcguild.masteryproject.daos;
 
+import com.swcguild.masteryproject.businesslogic.CostCalculator;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.junit.After;
@@ -13,6 +14,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -20,7 +23,7 @@ import static org.junit.Assert.*;
  */
 public class TaxManagementXMLTest {
     
-    TaxManagementXML taxes = new TaxManagementXML();
+    TaxManagementXML taxes;
     
     public TaxManagementXMLTest() {
     }
@@ -35,6 +38,8 @@ public class TaxManagementXMLTest {
     
     @Before
     public void setUp() {
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        taxes = ctx.getBean("taxManagement", TaxManagementXML.class);
     }
     
     @After

@@ -19,13 +19,23 @@ import java.util.Scanner;
 import javax.xml.stream.XMLStreamException;
 
 public class ManagementController {
+    
+    private ConsoleIO cio;
+    private TaxManagementXML tm;
+    private ProductManagement pm;
+    private OrderManagement om;
+    private CostCalculator calc;
+    
+    public ManagementController(ConsoleIO cio, TaxManagementXML tm, ProductManagement pm, OrderManagement om, CostCalculator calc){
+        this.tm = tm;
+        this.pm = pm;
+        this.om = om;
+        this.cio = cio;
+        this.calc = calc;
+    }
 
-    ConsoleIO cio = new ConsoleIO();
+    
     int menuChoice;
-    TaxManagementXML tm = new TaxManagementXML();
-    ProductManagement pm = new ProductManagement();
-    OrderManagement om = new OrderManagement();
-    CostCalculator calc = new CostCalculator();
     final String MODE_FILE = "ModeConfiguration.txt";
     boolean writeToFile = false;
     final String COUNTER_FILE = "counter.txt";

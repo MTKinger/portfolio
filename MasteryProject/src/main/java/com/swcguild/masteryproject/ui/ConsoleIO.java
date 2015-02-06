@@ -3,10 +3,11 @@ package com.swcguild.masteryproject.ui;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class ConsoleIO {
+public class ConsoleIO implements ConsoleIOInterface{
 
     Scanner sc = new Scanner(System.in);
 
+    @Override
     public int getInt(String prompt) {
         boolean badInput;
         int result = 0;
@@ -24,6 +25,7 @@ public class ConsoleIO {
         return result;
     }
 
+    @Override
     public int getInt(String prompt, int min, int max) {
         int input = 0;
         boolean badInput;
@@ -44,12 +46,14 @@ public class ConsoleIO {
         return input;
     }
 
+    @Override
     public String getString(String prompt) {
         System.out.println(prompt);
         String input = sc.nextLine();
         return input;
     }
 
+    @Override
     public float getFloat(String prompt) {
         boolean badInput;
         float input = 0;
@@ -67,6 +71,7 @@ public class ConsoleIO {
         return input;
     }
 
+    @Override
     public float getFloat(String prompt, float min, float max) {
         float input = 0;
         boolean badInput;
@@ -85,6 +90,7 @@ public class ConsoleIO {
         return input;
     }
 
+    @Override
     public double getDouble(String prompt) {
         boolean badInput;
         double input = 0;
@@ -102,6 +108,7 @@ public class ConsoleIO {
         return input;
     }
 
+    @Override
     public double getDouble(String prompt, double min, double max) {
         double input = 0;
         boolean badInput;
@@ -123,10 +130,12 @@ public class ConsoleIO {
         return input;
     }
 
+    @Override
     public void printMessage(String prompt) {
         System.out.println(prompt);
     }
     
+    @Override
     public void printMessageNoReturn(String prompt) {
         System.out.print(prompt);
     }

@@ -5,6 +5,7 @@
  */
 package com.swcguild.masteryproject.daos;
 
+import com.swcguild.masteryproject.businesslogic.CostCalculator;
 import com.swcguild.masteryproject.daos.OrderManagement;
 import com.swcguild.masteryproject.dtos.Order;
 import java.io.FileNotFoundException;
@@ -16,6 +17,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -23,7 +26,7 @@ import org.junit.Test;
  */
 public class OrderManagementTest {
 
-    OrderManagement om = new OrderManagement();
+    OrderManagement om;
     Order testOrder = new Order("Mike", "Wood", 10);
     Order testOrder2 = new Order("Sam", "Tile", 20);
     ArrayList<Order> testArray = new ArrayList<Order>();
@@ -41,6 +44,8 @@ public class OrderManagementTest {
 
     @Before
     public void setUp() {
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        om = ctx.getBean("orderManagement", OrderManagement.class);
     }
 
     @After

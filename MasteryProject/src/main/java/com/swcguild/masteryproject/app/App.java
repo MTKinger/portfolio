@@ -4,6 +4,8 @@ import com.swcguild.masteryproject.businesslogic.ManagementController;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.xml.stream.XMLStreamException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 
@@ -11,8 +13,9 @@ import javax.xml.stream.XMLStreamException;
 public class App {
     
     public static void main(String[] args) throws FileNotFoundException, IOException, XMLStreamException {
-        ManagementController mc = new ManagementController();
-        mc.run();
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ManagementController controller = ctx.getBean("managementController", ManagementController.class);
+        controller.run();
     }
 
 }

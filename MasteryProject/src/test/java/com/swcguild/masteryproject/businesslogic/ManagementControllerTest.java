@@ -13,6 +13,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -20,7 +22,7 @@ import static org.junit.Assert.*;
  */
 public class ManagementControllerTest {
     
-    ManagementController mc = new ManagementController();
+    ManagementController mc;
     boolean result;
     
     public ManagementControllerTest() {
@@ -36,6 +38,8 @@ public class ManagementControllerTest {
     
     @Before
     public void setUp() {
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        mc = ctx.getBean("managementController", ManagementController.class);
     }
     
     @After

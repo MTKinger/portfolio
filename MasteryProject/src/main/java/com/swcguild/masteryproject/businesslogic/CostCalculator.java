@@ -8,9 +8,14 @@ import java.time.LocalDate;
 import javax.xml.stream.XMLStreamException;
 
 public class CostCalculator implements Calculator {
-
-    TaxManagementXML tm = new TaxManagementXML();
-    ProductManagement pm = new ProductManagement();
+    
+    private TaxManagementXML tm;
+    private ProductManagement pm;
+    
+    public CostCalculator(TaxManagementXML tm, ProductManagement pm){
+        this.tm = tm;
+        this.pm = pm;
+    }
 
     //**TESTED**
     @Override

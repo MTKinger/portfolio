@@ -5,6 +5,7 @@
  */
 package com.swcguild.masteryproject.daos;
 
+import com.swcguild.masteryproject.businesslogic.CostCalculator;
 import com.swcguild.masteryproject.daos.ProductManagement;
 import com.swcguild.masteryproject.dtos.Product;
 import java.io.FileNotFoundException;
@@ -16,6 +17,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -23,7 +26,7 @@ import org.junit.Test;
  */
 public class ProductManagementTest {
     
-    ProductManagement pm = new ProductManagement();
+    ProductManagement pm;
     Product testProduct = new Product();
     Product testProduct2 = new Product();
     boolean result;
@@ -41,6 +44,8 @@ public class ProductManagementTest {
     
     @Before
     public void setUp() {
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        pm = ctx.getBean("productManagement", ProductManagement.class);
     }
     
     @After
