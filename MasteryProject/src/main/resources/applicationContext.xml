@@ -31,4 +31,37 @@
         <constructor-arg ref="consoleIo"/>
         <constructor-arg ref="costCalculator"/>
     </bean>
+    
+    <!--AOP CONFIGURATION-->
+    
+    <bean id="auditAspect" class="com.swcguild.masteryproject.aspects.AuditAspect" />
+    <bean id="timingAspect" class="com.swcguild.masteryproject.aspects.TimingAspect" />
+    
+    <aop:config>
+        <aop:aspect ref="auditAspect">
+            <aop:after
+                method="auditCreateOrder"
+                pointcut="execution(* com.swcguild.masteryproject.daos.OrderInterface.addOrder(..))" />
+            <aop:after
+                method="auditDeleteOrder"
+                pointcut="execution(* com.swcguild.masteryproject.daos.OrderInterface.removeOrder(..))" />
+            <aop:after
+                method="auditUpdateOrder"
+                pointcut="execution(* com.swcguild.masteryproject.daos.OrderInterface.editOrder(..))" />
+        </aop:aspect>
+        <aop:aspect ref="timingAspect">
+            <aop:around
+                method="readProductTimer"
+                pointcut="execution(* com.swcguild.masteryproject.daos.ProductInterface.loadFromFile(..))" />
+            <aop:around
+                method="readTaxTimer"
+                pointcut="execution(* com.swcguild.masteryproject.daos.TaxInterface.loadFromFile(..))" />
+            <aop:around
+                method="readOrdersTimer"
+                pointcut="execution(* com.swcguild.masteryproject.daos.OrderInterface.loadFromFile(..))" />
+            <aop:around
+                method="writeOrdersTimer"
+                pointcut="execution(* com.swcguild.masteryproject.daos.OrderInterface.writeToFile(..))" />
+        </aop:aspect>
+    </aop:config>
 </beans>

@@ -1,0 +1,6 @@
+OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LaborCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total, CustomerFirstName, CustomerLastName
+13,Mike,TX,5.67,tile,100.0,3.5,4.15,350.0,415.00000000000006,43.3755,808.3755
+14,Mike,PA,6.75,wood,100.0,5.15,4.75,515.0,475.0,66.825,1056.825
+15,Mike king,PA,6.75,wood,100.0,5.15,4.75,515.0,475.0,66.825,1056.825
+16,Mike King,PA,6.75,tile,100.0,3.5,4.15,350.0,415.00000000000006,51.6375,816.6375
+18,Mike King,PA,6.75,wood,1000.0,5.15,4.75,5150.0,4750.0,668.25,10568.25

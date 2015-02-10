@@ -19,7 +19,7 @@ import java.util.Scanner;
  *
  * @author apprentice
  */
-public class ProductManagement implements ProductInterface {
+public class ProductManagement implements ProductInterface{
 
     final String DELIMITER = ",";
     final String TARGET_FILE = "products.txt";
@@ -47,6 +47,7 @@ public class ProductManagement implements ProductInterface {
         sc.close();
     }
 
+    @Override
     public void writeToFile() throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(TARGET_FILE));
         out.println("ProductType, CostPerSquareFoot, LaborPerSquareFoot");
@@ -94,24 +95,29 @@ public class ProductManagement implements ProductInterface {
         return allProductTypes;
     }
     
+    @Override
     public ArrayList<Product> getAllProducts(){
         return allProducts;
     }
 
     //**TESTED
+    @Override
     public int getSize() {
         return allProducts.size();
     }
 
+    @Override
     public void clearAllProducts() {
         allProducts.clear();
     }
 
+    @Override
     public void addProduct(Product product) {
         allProducts.add(product);
     }
 
     
+    @Override
     public ArrayList<Product> removeProduct(String productType, ArrayList<Product> productToBeDeleted) {
         int index = 0;
         boolean found = false;

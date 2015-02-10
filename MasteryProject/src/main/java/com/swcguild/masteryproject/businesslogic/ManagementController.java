@@ -1,8 +1,8 @@
 package com.swcguild.masteryproject.businesslogic;
 
-import com.swcguild.masteryproject.daos.OrderManagement;
-import com.swcguild.masteryproject.daos.ProductManagement;
-import com.swcguild.masteryproject.daos.TaxManagementXML;
+import com.swcguild.masteryproject.daos.OrderInterface;
+import com.swcguild.masteryproject.daos.ProductInterface;
+import com.swcguild.masteryproject.daos.TaxInterface;
 import com.swcguild.masteryproject.dtos.Order;
 import com.swcguild.masteryproject.dtos.Product;
 import com.swcguild.masteryproject.dtos.Taxes;
@@ -21,15 +21,15 @@ import javax.xml.stream.XMLStreamException;
 public class ManagementController {
     
     private ConsoleIO cio;
-    private TaxManagementXML tm;
-    private ProductManagement pm;
-    private OrderManagement om;
-    private CostCalculator calc;
+    private TaxInterface tm;
+    private ProductInterface pm;
+    private OrderInterface oi;
+    private Calculator calc;
     
-    public ManagementController(ConsoleIO cio, TaxManagementXML tm, ProductManagement pm, OrderManagement om, CostCalculator calc){
+    public ManagementController(ConsoleIO cio, TaxInterface tm, ProductInterface pm, OrderInterface oi, Calculator calc){
         this.tm = tm;
         this.pm = pm;
-        this.om = om;
+        this.oi = oi;
         this.cio = cio;
         this.calc = calc;
     }
@@ -45,7 +45,7 @@ public class ManagementController {
     DecimalFormat df = new DecimalFormat("#.00");
 
     public void run() throws FileNotFoundException, IOException, XMLStreamException {
-        om.readCounter();
+        oi.readCounter();
         doMenu();
     }
 
@@ -68,7 +68,7 @@ public class ManagementController {
                     removeOrder();
                     break;
                 case 5:
-                    om.writeCounter();
+                    oi.writeCounter();
                     cio.printMessage("saving....\n\nsaving.....\n\nYour work has been saved.\n");
                     break;
 
@@ -79,7 +79,7 @@ public class ManagementController {
                     managerEntry();
                     break;
                 case 8:
-                    om.writeCounter();
+                    oi.writeCounter();
                     break;
                 default:
                     cio.printMessage("Please enter a valid menu choice!\n");
@@ -598,17 +598,17 @@ public class ManagementController {
 
             if (approved == 1) {
                 try {
-                    ArrayList<Order> allOrdersFromAnotherDate = om.loadFromFile(defaultDateToString());
-                    om.addOrder(currentOrder, allOrdersFromAnotherDate);
-                    om.writeToFile(allOrdersFromAnotherDate, defaultDateToString());
+                    ArrayList<Order> allOrdersFromAnotherDate = oi.loadFromFile(defaultDateToString());
+                    oi.addOrder(currentOrder, allOrdersFromAnotherDate);
+                    oi.writeToFile(allOrdersFromAnotherDate, defaultDateToString());
                     cio.printMessage("Your order has been added to our database");
-                    cio.printMessage("Your order number was " + (om.getCounter() - 1));
+                    cio.printMessage("Your order number was " + (oi.getCounter() - 1));
                 } catch (FileNotFoundException fnf) {
                     ArrayList<Order> holdingOneOrder = new ArrayList<>();
-                    om.addOrder(currentOrder, holdingOneOrder);
-                    om.writeToFile(holdingOneOrder, defaultDateToString());
+                    oi.addOrder(currentOrder, holdingOneOrder);
+                    oi.writeToFile(holdingOneOrder, defaultDateToString());
                     cio.printMessage("Your order has been added to our database");
-                    cio.printMessage("Your order number was " + (om.getCounter() - 1));
+                    cio.printMessage("Your order number was " + (oi.getCounter() - 1));
                 } catch (IOException ioe) {
                     cio.printMessage("Sorry, your order could not be added to our database.");
                 }
@@ -622,7 +622,7 @@ public class ManagementController {
 
     private void displayOrders() throws FileNotFoundException {
         try {
-            ArrayList<Order> ordersToBeDisplayed = om.loadFromFile(defaultDateToString());
+            ArrayList<Order> ordersToBeDisplayed = oi.loadFromFile(defaultDateToString());
             for (Order currentOrder : ordersToBeDisplayed) {
                 cio.printMessage(currentOrder.orderToString());
                 cio.printMessage("-=-=-=-=-=-=-=-=-=-=-=-=-=");
@@ -637,12 +637,12 @@ public class ManagementController {
         Order foundOrder = new Order("null", "null", 0.0);
         try {
             displayOrders();
-            ArrayList<Order> ordersToBeDeleted = om.loadFromFile(defaultDateToString());
+            ArrayList<Order> ordersToBeDeleted = oi.loadFromFile(defaultDateToString());
             int orderNumber = cio.getInt("Please enter the order ID# for the order you wish to remove");
-            foundOrder = om.getOrderByID(orderNumber, ordersToBeDeleted);
+            foundOrder = oi.getOrderByID(orderNumber, ordersToBeDeleted);
             while (foundOrder.getCustomerName().equalsIgnoreCase("null")) {
                 orderNumber = cio.getInt("Error: No such Order ID# has been found. Please enter a valid ID#");
-                foundOrder = om.getOrderByID(orderNumber, ordersToBeDeleted);
+                foundOrder = oi.getOrderByID(orderNumber, ordersToBeDeleted);
             }
             cio.printMessage("\n" + foundOrder.orderToString());
 
@@ -652,8 +652,8 @@ public class ManagementController {
             } else {
                 int approved = cio.getInt("\nAre you sure you would like to delete this order? (press 1 for yes, 2 for no)", 1, 2);
                 if (approved == 1) {
-                    om.removeOrder(orderNumber, ordersToBeDeleted);
-                    om.writeToFile(ordersToBeDeleted, defaultDateToString());
+                    oi.removeOrder(orderNumber, ordersToBeDeleted);
+                    oi.writeToFile(ordersToBeDeleted, defaultDateToString());
                     cio.printMessage("\nYour order has been deleted. Thank you.");
                 } else {
                     cio.printMessage("\nYour order will not be deleted.");
@@ -667,6 +667,7 @@ public class ManagementController {
     }
 
     private void editOrder() throws FileNotFoundException, IOException, XMLStreamException {
+        oi.editOrder();
         ArrayList<Order> onlyEditedOrder = new ArrayList<>();
         boolean badDouble = false;
         boolean badDate = false;
@@ -675,13 +676,13 @@ public class ManagementController {
         Order foundOrder = new Order("null", "null", 0.0);
         try {
             displayOrders();
-            ArrayList<Order> ordersToBeEdited = om.loadFromFile(defaultDateToString());
+            ArrayList<Order> ordersToBeEdited = oi.loadFromFile(defaultDateToString());
             int orderNumber = cio.getInt("Please enter the order ID# for the order you wish to edit");
-            foundOrder = om.getOrderByID(orderNumber, ordersToBeEdited);
+            foundOrder = oi.getOrderByID(orderNumber, ordersToBeEdited);
             Order editedOrder = new Order("", "", 0);
             while (foundOrder.getCustomerName().equalsIgnoreCase("null")) {
                 orderNumber = cio.getInt("\nError: No such Order ID# has been found. Please enter a valid ID#");
-                foundOrder = om.getOrderByID(orderNumber, ordersToBeEdited);
+                foundOrder = oi.getOrderByID(orderNumber, ordersToBeEdited);
             }
             cio.printMessage("\n\n" + foundOrder.orderToString());
 
@@ -819,14 +820,14 @@ public class ManagementController {
                 int approved = cio.getInt("\nAre you sure you would like to submit this edited order? (press 1 for yes, 2 for no)", 1, 2);
 
                 if (approved == 1) {
-                    om.removeOrder(foundOrder.getOrderNumber(), ordersToBeEdited);
-                    om.writeToFile(ordersToBeEdited, defaultDateToString());
+                    oi.removeOrder(foundOrder.getOrderNumber(), ordersToBeEdited);
+                    oi.writeToFile(ordersToBeEdited, defaultDateToString());
                     onlyEditedOrder.add(editedOrder);
                     LocalDate ld3 = editedOrder.getDate();
                     ArrayList<Order> editedOrders = new ArrayList<>();
-                    editedOrders = om.loadFromFile(localDateToString(ld3));
+                    editedOrders = oi.loadFromFile(localDateToString(ld3));
                     editedOrders.add(editedOrder);
-                    om.writeToFile(editedOrders, localDateToString(ld3));
+                    oi.writeToFile(editedOrders, localDateToString(ld3));
                     cio.printMessage("\nYour order has been changed. Thank you.");
                 } else {
                     cio.printMessage("\nYour order will not be changed.");
@@ -836,7 +837,7 @@ public class ManagementController {
             pm.clearAllProducts();
         } catch (FileNotFoundException fnf) {
             LocalDate ld4 = onlyEditedOrder.get(0).getDate();
-            om.writeToFile(onlyEditedOrder, localDateToString(ld4));
+            oi.writeToFile(onlyEditedOrder, localDateToString(ld4));
             cio.printMessage("Your order will be changed. Thank you.");
         } catch (IOException ioe) {
             cio.printMessage("Error changing our database, please try again later.");

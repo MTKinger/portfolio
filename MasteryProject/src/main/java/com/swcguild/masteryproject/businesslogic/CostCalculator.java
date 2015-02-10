@@ -1,6 +1,8 @@
 package com.swcguild.masteryproject.businesslogic;
 
+import com.swcguild.masteryproject.daos.ProductInterface;
 import com.swcguild.masteryproject.daos.ProductManagement;
+import com.swcguild.masteryproject.daos.TaxInterface;
 import com.swcguild.masteryproject.daos.TaxManagementXML;
 import com.swcguild.masteryproject.dtos.Order;
 import java.io.FileNotFoundException;
@@ -9,10 +11,10 @@ import javax.xml.stream.XMLStreamException;
 
 public class CostCalculator implements Calculator {
     
-    private TaxManagementXML tm;
-    private ProductManagement pm;
+    private TaxInterface tm;
+    private ProductInterface pm;
     
-    public CostCalculator(TaxManagementXML tm, ProductManagement pm){
+    public CostCalculator(TaxInterface tm, ProductInterface pm){
         this.tm = tm;
         this.pm = pm;
     }

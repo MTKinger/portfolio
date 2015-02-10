@@ -5,19 +5,37 @@
  */
 package com.swcguild.masteryproject.daos;
 
+import com.swcguild.masteryproject.dtos.Product;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- *
- * @author apprentice
- */
+
 public interface ProductInterface {
-    
-    public void loadFromFile() throws FileNotFoundException;
-    public double getCostPerSquareFoot(String productType);
-    public double getLaborPerSquareFoot(String productType);
-    public ArrayList<String> getAllProductTypes();
-    
+
+    void addProduct(Product product);
+
+    void clearAllProducts();
+
+    //**TESTED**
+    ArrayList<String> getAllProductTypes();
+
+    ArrayList<Product> getAllProducts();
+
+    double getCostPerSquareFoot(String productType);
+
+    //**TESTED**
+    double getLaborPerSquareFoot(String productType);
+
+    //**TESTED
+    int getSize();
+
+    //**TESTED**
+    void loadFromFile() throws FileNotFoundException;
+
+    ArrayList<Product> removeProduct(String productType, ArrayList<Product> productToBeDeleted);
+
+    void writeToFile() throws IOException;
+    //**TESTED**
     
 }

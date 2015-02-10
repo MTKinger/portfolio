@@ -10,18 +10,37 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- *
- * @author apprentice
- */
+
 public interface OrderInterface {
 
-    public void writeToFile(ArrayList<Order> orders, String monthDayYear) throws IOException;
+    ArrayList<Order> addOrder(Order newOrder, ArrayList<Order> orderToBeAdded);
 
-    public ArrayList<Order> loadFromFile(String monthDayYear) throws FileNotFoundException;
+    int getCounter();
 
-    public ArrayList<Order> addOrder(Order newOrder, ArrayList<Order> orderToBeAdded);
+    //**TESTED**
+    int getCurrentOrderSize(ArrayList<Order> orderSizeArray);
 
-    public ArrayList<Order> removeOrder(int orderNumber, ArrayList<Order> orderToBeDeleted);
+    //**TESTED**
+    Order getOrder(int slot, ArrayList<Order> getOrderArray);
 
+    //**TESTED**
+    Order getOrderByID(int id, ArrayList<Order> currentList);
+
+    ArrayList<Order> getTodaysOrders();
+
+    //**TESTED**
+    ArrayList<Order> loadFromFile(String monthDayYear) throws FileNotFoundException;
+
+    void readCounter() throws FileNotFoundException;
+
+    //**TESTED**
+    ArrayList<Order> removeOrder(int orderNumber, ArrayList<Order> orderToBeDeleted);
+
+    void writeCounter() throws IOException;
+
+    //**TESTED**
+    void writeToFile(ArrayList<Order> orders, String monthDayYear) throws IOException;
+    
+    void editOrder();
+    
 }

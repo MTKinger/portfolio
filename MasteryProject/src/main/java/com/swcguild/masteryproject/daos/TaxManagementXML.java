@@ -22,7 +22,7 @@ import javax.xml.stream.events.StartDocument;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-public class TaxManagementXML implements TaxInterface {
+public class TaxManagementXML implements TaxInterface{
 
     ArrayList<Taxes> allTaxes = new ArrayList<>();
 
@@ -65,6 +65,7 @@ public class TaxManagementXML implements TaxInterface {
         allTaxes.add(currentTax);
     }
     
+    @Override
     public void loadFromFile() throws FileNotFoundException, XMLStreamException {
         try {
 
@@ -114,6 +115,7 @@ public class TaxManagementXML implements TaxInterface {
 
     }
     
+    @Override
     public ArrayList<Taxes> removeTax(ArrayList<Taxes> allTaxes, String state) {
         int index = 0;
         boolean found = false;
@@ -186,6 +188,7 @@ public class TaxManagementXML implements TaxInterface {
         eventWriter.add(end);
     }
     
+    @Override
     public ArrayList<Taxes> getAllTaxes() {
         return allTaxes;
     }

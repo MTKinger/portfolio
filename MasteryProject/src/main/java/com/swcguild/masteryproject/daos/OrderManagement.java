@@ -142,16 +142,19 @@ public class OrderManagement implements OrderInterface {
     }
 
     //**TESTED**
+    @Override
     public int getCurrentOrderSize(ArrayList<Order> orderSizeArray) {
         return orderSizeArray.size();
     }
 
     //**TESTED**
+    @Override
     public Order getOrder(int slot, ArrayList<Order> getOrderArray) {
         return getOrderArray.get(slot);
     }
 
     //**TESTED**
+    @Override
     public Order getOrderByID(int id, ArrayList<Order> currentList) {
         Order returnOrder = new Order("null", "null", 0.0);
         for (Order currentOrder : currentList) {
@@ -162,10 +165,12 @@ public class OrderManagement implements OrderInterface {
         return returnOrder;
     }
 
+    @Override
     public ArrayList<Order> getTodaysOrders() {
         return todayOrders;
     }
     
+    @Override
      public void writeCounter() throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(COUNTER_FILE));
         out.println(counter);
@@ -173,14 +178,21 @@ public class OrderManagement implements OrderInterface {
         out.close();
     }
 
+    @Override
     public void readCounter() throws FileNotFoundException {
         Scanner sc = new Scanner(new BufferedReader(new FileReader(COUNTER_FILE)));
         counter = sc.nextInt();
         
     }
 
+    @Override
     public int getCounter() {
         return counter;
+    }
+    
+    @Override
+    public void editOrder(){
+        
     }
     
     
