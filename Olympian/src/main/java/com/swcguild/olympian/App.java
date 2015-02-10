@@ -7,11 +7,13 @@ public class App {
     
     public static void main(String[] args){
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        /**SkiJumper jumper = ctx.getBean("superSkiJumper", SkiJumper.class);
+        SkiJumper jumper = ctx.getBean("superSkiJumper", SkiJumper.class);
         jumper.competeInEvent();
         
+        System.out.println("++++++++++++++++++++++++++++++++++++");
         Olympian olympian = new Olympian(new SkiJumpEvent());
-        olympian.competeInEvent();*/
+        olympian.competeInEvent();
+        System.out.println("++++++++++++++++++++++++++++++++++++");
         
         Olympian usaSkiJumper = ctx.getBean("usaSkiJumper", Olympian.class);
         Olympian usaSpeedSkater = ctx.getBean("usaSpeedSkater", Olympian.class);

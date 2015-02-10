@@ -35,4 +35,26 @@
         <property name="country" value="Canada"/>
     </bean>
     
+    <!--AOP Configuration-->
+    
+    <bean id="olympicOfficial" class="com.swcguild.olympian.OlympicOfficial" />
+    <bean id="simpleTimerAspect" class="com.swcguild.olympian.SimpleTimerAspect" />
+    
+    <aop:config>
+        <aop:aspect ref="olympicOfficial">
+            <aop:before 
+                method="inspectEquipment" 
+                pointcut="execution(* com.swcguild.olympian.Event.compete(..))"/>
+            
+            <aop:after 
+                method="testForPed"
+                pointcut="execution(* com.swcguild.olympian.SkiJumpEvent.compete(..))"/>
+        </aop:aspect>
+        <aop:aspect ref="simpleTimerAspect">
+            <aop:around
+                method="timeMethod"
+                pointcut="execution(* com.swcguild.olympian.SkiJumpEvent.compete(..))"/>
+        </aop:aspect>
+    </aop:config>
+    
 </beans>
