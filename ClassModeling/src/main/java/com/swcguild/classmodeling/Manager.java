@@ -7,7 +7,7 @@ public class Manager {
     private double wage;
     private double hoursPer;
 
-    public void manager(String nameIn, String genderIn, double wageIn, double hoursPerIn) {
+    public Manager(String nameIn, String genderIn, double wageIn, double hoursPerIn) {
         name = nameIn;
         gender = genderIn;
         wage = wageIn;

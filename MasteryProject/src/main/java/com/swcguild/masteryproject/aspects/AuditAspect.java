@@ -1,5 +1,6 @@
 package com.swcguild.masteryproject.aspects;
 
+import com.swcguild.masteryproject.dtos.Order;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +12,7 @@ public class AuditAspect {
     
     public void auditCreateOrder()throws IOException{
         PrintWriter out = new PrintWriter(new FileWriter(TARGET_FILE, true));
-        out.println("New order created @ " + LocalDateTime.now());
+        out.println("Order created @ " + LocalDateTime.now());
         out.flush();
         out.close();
     }

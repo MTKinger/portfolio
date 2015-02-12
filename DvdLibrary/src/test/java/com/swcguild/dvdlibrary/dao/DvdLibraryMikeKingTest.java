@@ -17,6 +17,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -24,11 +26,12 @@ import org.junit.Test;
  */
 public class DvdLibraryMikeKingTest {
     
-    DvdLibraryDao dvd = new DvdLibraryMikeKing();
     Dvd test1;
     Dvd test2;
     Dvd test3;
     Dvd test4;
+    DvdLibraryDao dvd;
+    
     
     public DvdLibraryMikeKingTest() {
     }
@@ -43,6 +46,9 @@ public class DvdLibraryMikeKingTest {
     
     @Before
     public void setUp() {
+        
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        dvd = ctx.getBean("dvdLibraryDao", DvdLibraryDao.class);
         
         test1 = new Dvd();
         test2 = new Dvd();

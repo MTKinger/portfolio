@@ -1,6 +1,6 @@
 package DataAccessObject;
 
-import DataTransferObject.DVD;
+import com.swcguild.dvdlibrary.dto.DVD;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -157,6 +157,13 @@ public class DVDLabImpl implements DVDLabDao {
 
     @Override
     public DVD findNewestDVD() {
+//        ArrayList<Integer> foo = new ArrayList<>();
+//        foo.add(10);
+//        foo.add(9);
+//        foo.add(8);
+        
+//        int max = foo.stream().mapToInt(p->p).min().getAsInt();
+        
         Set<Integer> keySet = library.keySet();
         long dvdMinAge = 100000000;
         DVD newest = new DVD(0);

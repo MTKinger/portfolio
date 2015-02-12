@@ -7,8 +7,9 @@ public class Employee {
     private double pay;
     private double hoursPer;
     private int age;
-
-    public void employee(String nameIn, String genderIn, double payIn, double hoursPerIn, int ageIn) {
+    
+    
+    public Employee(String nameIn, String genderIn, double payIn, double hoursPerIn, int ageIn) {
         name = nameIn;
         gender = genderIn;
         pay = payIn;

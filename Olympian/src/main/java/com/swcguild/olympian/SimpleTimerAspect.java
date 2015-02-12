@@ -13,7 +13,7 @@ public class SimpleTimerAspect {
             long finish = System.currentTimeMillis();
             
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
-            System.out.println(jp.getSignature().getName() + "took " + (finish-start) + " ms.");
+            System.out.println(jp.getSignature().getName() + " took " + (finish-start) + " ms.");
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
         }catch(Throwable thr){
             System.out.println("Exception in simple timer aspect.");

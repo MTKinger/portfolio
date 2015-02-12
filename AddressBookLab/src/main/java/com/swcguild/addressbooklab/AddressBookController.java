@@ -1,5 +1,6 @@
 package com.swcguild.addressbooklab;
 
+import com.swcguild.consoleio.ConsoleIO;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -326,4 +327,8 @@ public class AddressBookController {
             cio.printMessage("\nAddress ID: " + currentHouse.getLastName());
         }
     }
-*/}
+*/
+
+    ConsoleIO cio = new ConsoleIO();
+
+}

@@ -10,8 +10,8 @@ public class Olympian {
     }
 
     public String competeInEvent(){
-        System.out.println("Now competing for " + country + ":");
-        return event.compete();
+        //System.out.println("Now competing for " + country + ":");
+        return event.compete("Now competing for " + country + ":");
     }
     
     public String getCountry() {

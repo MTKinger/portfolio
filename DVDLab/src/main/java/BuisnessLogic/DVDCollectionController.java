@@ -2,7 +2,7 @@ package BuisnessLogic;
 
 import ConsoleIO.ConsoleIO;
 import DataAccessObject.DVDCollection;
-import DataTransferObject.DVD;
+import com.swcguild.dvdlibrary.dto.DVD;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;

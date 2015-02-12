@@ -44,7 +44,7 @@
         <aop:aspect ref="olympicOfficial">
             <aop:before 
                 method="inspectEquipment" 
-                pointcut="execution(* com.swcguild.olympian.Event.compete(..))"/>
+                pointcut="execution(* com.swcguild.olympian.Event.compete(..)) and args (message)"/>
             
             <aop:after 
                 method="testForPed"

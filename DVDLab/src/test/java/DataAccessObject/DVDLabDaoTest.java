@@ -5,7 +5,9 @@
  */
 package DataAccessObject;
 
-import DataTransferObject.DVD;
+import DataAccessObject.DVDLabDao;
+import DataAccessObject.DVDLabImpl;
+import com.swcguild.dvdlibrary.dto.DVD;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -163,6 +165,8 @@ public class DVDLabDaoTest {
         test = dvd.getDVDByMPAA("R");
         assertEquals(3, test.size());
     }
+    
+    
     
     
 }

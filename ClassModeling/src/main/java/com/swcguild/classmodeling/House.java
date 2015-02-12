@@ -9,7 +9,7 @@ public class House {
     private int backyard;
     private int address;
     
-    public void house(int wallsIn, int floorsIn, int windowsIn, int garageIn, int backyardIn, int addressIn){
+    public House(int wallsIn, int floorsIn, int windowsIn, int garageIn, int backyardIn, int addressIn){
         walls=wallsIn;
         floors=floorsIn;
         windows=windowsIn;

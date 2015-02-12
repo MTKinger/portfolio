@@ -79,7 +79,7 @@ public class ChooseYourOwn {
                 }
             }
         }
-            //apparently i need some real help with booleans.
+        //apparently i need some real help with booleans.
         //I understand their purpose, but not how they work.   
 
     }

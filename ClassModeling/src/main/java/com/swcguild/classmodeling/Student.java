@@ -6,7 +6,7 @@ public class Student {
     private int grade;
     private double gpa;
     
-    public void student(String nameIn, int gradeIn, double gpaIn){
+    public Student(String nameIn, int gradeIn, double gpaIn){
         name=nameIn;
         grade=gradeIn;
         gpa=gpaIn;

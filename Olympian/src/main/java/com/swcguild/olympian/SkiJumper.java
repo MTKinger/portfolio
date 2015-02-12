@@ -9,7 +9,7 @@ public class SkiJumper {
     }
     
     public String competeInEvent(){
-        return myEvent.compete();
+        return myEvent.compete("This is from harcoded SkiJumper");
     }
 
 }

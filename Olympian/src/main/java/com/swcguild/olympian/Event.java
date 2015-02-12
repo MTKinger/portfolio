@@ -11,7 +11,7 @@ package com.swcguild.olympian;
  */
 public interface Event {
     
-    public String compete();
+    public String compete(String message);
 
     
 }

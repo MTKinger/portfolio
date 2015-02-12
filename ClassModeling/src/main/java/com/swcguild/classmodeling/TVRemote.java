@@ -6,6 +6,8 @@ public class TVRemote {
     private int channel = 0;
     private int previousChannel = 0;
     private int volume = 0;
+    
+    
 
     public void channelUp() {
         channel++;
