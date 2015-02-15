@@ -37,6 +37,7 @@
                 <li role="presentation"><a href="${pageContext.request.contextPath}/displayFactorizerForm">Factorizer</a></li>
                 <li role="presentation"><a href="${pageContext.request.contextPath}/displayInterestCalculatorForm">Interest Calculator</a></li>
                 <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displayFlooringCalculatorForm">Flooring Calculator</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/displayTipCalculatorForm">Tip Calculator</a></li>
             </ul>    
         </div>
         <h2>${orderMessage}</h2>

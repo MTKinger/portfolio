@@ -1,11 +1,14 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%-- 
+    Document   : tipCalculatorForm
+    Created on : Feb 15, 2015, 12:33:16 PM
+    Author     : apprentice
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Hello Controller Page</title>
+        <title>Tip Calculator</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
@@ -14,9 +17,8 @@
 
         <!-- SWC Icon -->
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon.png">
-
+        <!-- Testing custom css reliance -->
         <link href="${pageContext.request.contextPath}/css/sitemap.css" rel="stylesheet">
-
     </head>
     <body>
         <div class="container">
@@ -30,22 +32,21 @@
             <div class="navbar">
                 <ul class="nav nav-tabs">
                     <li role="presentation"><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
-                    <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/hello/sayhi">Hello Controller</a></li>
+                    <li role="presentation"><a href="${pageContext.request.contextPath}/hello/sayhi">Hello Controller</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displayLuckySevensForm">Lucky Sevens</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displayFactorizerForm">Factorizer</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displayInterestCalculatorForm">Interest Calculator</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displayFlooringCalculatorForm">Flooring Calculator</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayTipCalculatorForm">Tip Calculator</a></li>
+                    <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displayTipCalculatorForm">Tip Calculator</a></li>
                 </ul>    
             </div>
-            <h2>Controller</h2>
-            <h3>${message}</h3>
-        </div>
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="${pageContext.request.contextPath}/js/jquery-1.11.0.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-
+            <h2>Tip Calculator</h2>
+            <form action="calculateTip" method="POST">
+                <h3>What was your check total?</h3>
+                <input type="text" name="checkTotal">
+                <h3>What percent would you like to tip?</h3>
+                <input type="text" name="tipPercent">
+                <input type="submit" value="Calculate Tip!!!">
+            </form>
     </body>
 </html>
-
-

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : interestCalculatorResult
-    Created on : Feb 14, 2015, 2:50:15 PM
+    Document   : tipCalculatorResult
+    Created on : Feb 15, 2015, 12:55:24 PM
     Author     : apprentice
 --%>
 
@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Interest Calculator Result</title>
+        <title>Tip Calculator Result</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
@@ -19,7 +19,6 @@
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon.png">
 
         <link href="${pageContext.request.contextPath}/css/sitemap.css" rel="stylesheet">
-
     </head>
     <body>
         <div class="container">
@@ -35,21 +34,22 @@
                 <li role="presentation"><a href="${pageContext.request.contextPath}/hello/sayhi">Hello Controller</a></li>
                 <li role="presentation"><a href="${pageContext.request.contextPath}/displayLuckySevensForm">Lucky Sevens</a></li>
                 <li role="presentation"><a href="${pageContext.request.contextPath}/displayFactorizerForm">Factorizer</a></li>
-                <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displayInterestCalculatorForm">Interest Calculator</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/displayInterestCalculatorForm">Interest Calculator</a></li>
                 <li role="presentation"><a href="${pageContext.request.contextPath}/displayFlooringCalculatorForm">Flooring Calculator</a></li>
-                <li role="presentation"><a href="${pageContext.request.contextPath}/displayTipCalculatorForm">Tip Calculator</a></li>
+                <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displayTipCalculatorForm">Tip Calculator</a></li>
             </ul>    
         </div>
-        <h2>${initialTotal}</h2>
+        <h2>${beforeTipMessage}</h2>
         <br>
-        <h2>${investmentDetails}</h2>
+        <h2>${tipPercentMessage}</h2>
         <br>
-        <h2>${finalTotal}</h2>
+        <h2>${tipTotalMessage}</h2>
         <br>
-        <h2>${thankYou}</h2>
+        <h2>${afterTipMessage}</h2>
     </div>
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.0.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </body>
+    </body>
 </html>
