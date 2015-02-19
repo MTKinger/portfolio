@@ -47,7 +47,7 @@
                 <input type="text" name="companyName">
                 <h3>What is the area of the order?</h3>
                 <input type="text" name="orderArea">
-                <!--                <div class="dropdown">
+                                <div class="dropdown">
                                     <br>
                                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                                         State
@@ -73,7 +73,7 @@
                                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Laminate</a></li>
                                     </ul>
                                 </div>
-                                <br>-->
+                                <br>
                 <h3>What state are you placing the order from?</h3>
                 <input type="text" name="orderState">
                 <h3>What product do you wish to order?</h3>
@@ -82,7 +82,7 @@
             </form>
         </div>
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="${pageContext.request.contextPath}/js/jquery-1.11.0.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     </body>
 </html>
