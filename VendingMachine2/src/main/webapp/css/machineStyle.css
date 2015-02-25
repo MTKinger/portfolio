@@ -1,0 +1,23 @@
+.page-header{
+    text-align: center;
+    font-family: "Purisa";
+}
+
+#purchase-button{
+    color: orange;
+}
+
+.table-bordered{
+    border: groove;
+    border-color: orange;
+}
+
+.snack-image{
+    height: 75px;
+    width: 100px;
+}
+
+.page-header{
+    background-color: #6fcb9f;
+    color: #fb2e01;
+}
