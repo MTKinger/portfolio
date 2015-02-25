@@ -1,7 +1,7 @@
 $('document').ready(function () {
     loadInventory();
     
-    $('#purchase-button').click(function(event) {
+    $('#insert-money').click(function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -75,4 +75,8 @@ function loadInventory() {
 
 function clearInventory() {
     $('#content-rows').empty();
+}
+
+function loadMoney(){
+    
 }

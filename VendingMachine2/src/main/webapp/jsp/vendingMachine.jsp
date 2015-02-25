@@ -18,34 +18,36 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-md-offset-1 col-md-10" style="padding-left: 100px">
+                <div class="col-md-offset-1 col-md-10" style="padding-left: 50px">
                     <form class="form-inline">
                         <div class="form-group">
                             <label for="exampleInputName2">Snack Number:</label>
-                            <input type="text" class="form-control" id="snack-choice" placeholder="Enter a Number!">
+                            <input type="text" class="form-control" id="snack-choice" placeholder="Enter a Snack Number!">
                         </div>
+                        <button type="submit" class="btn btn-primary" id="purchase-button">Purchase Snack</button>
                         <div class="form-group">
                             <label for="exampleInputEmail2">Please Enter Money:</label>
                             <input type=text class="form-control" id="money-input" placeholder="$0.00">
                         </div>
-                        <button type="submit" class="btn btn-default" id="purchase-button">Get Snack!</button>
+                        <button type="submit" class="btn btn-success" id="insert-money">Insert Money</button>
                     </form>
                     <br>
-                    <h3 style="text-align: center" id="show-money"></h3>
-                    <br><br><hr><br><br>
+                    <h4 style="text-align: center" id="show-money">Current Funds:</h4>
+                    <h4 style="text-align: center" id="show-money">$1.25</h4>
+                    <hr><br>
                 </div>
             </div>
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-md-offset-1 col-md-5">
+                <div class="col-md-5">
                     <table class="table-bordered" id="machine-table">
                         <tbody id="content-rows">
                             <!-- INVENTORY WILL LOAD HERE!!! -->
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <h3 style="text-align: center">You Have Received:</h3>
                     <table id="contactTable" class="table table-hover">
                         <tr>
