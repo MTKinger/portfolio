@@ -32,8 +32,8 @@
                         <button type="submit" class="btn btn-success" id="insert-money">Insert Money</button>
                     </form>
                     <br>
-                    <h4 style="text-align: center" id="show-money">Current Funds:</h4>
-                    <h4 style="text-align: center" id="show-money">$1.25</h4>
+                    <h4 style="text-align: center">Current Funds:</h4>
+                    <h4 style="text-align: center" id="show-money"></h4>
                     <hr><br>
                 </div>
             </div>

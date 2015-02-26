@@ -1,25 +1,23 @@
 $('document').ready(function () {
     loadInventory();
-    
-    $('#insert-money').click(function(event) {
+
+    $('#insert-money').click(function (event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
             url: 'change',
-            data: JSON.stringify({
-                totalChange: $('#money-input').val()
-            }),
+            data: $('#money-input').val(),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             'data-type': 'json'
-        }).success(function(){
+        }).success(function () {
             $('#money-input').val('');
-            loadMoney();
+            $('#show-money').text();
         });
     });
-    
+
 });
 
 //   FUNCTIONS
@@ -75,8 +73,4 @@ function loadInventory() {
 
 function clearInventory() {
     $('#content-rows').empty();
-}
-
-function loadMoney(){
-    
 }
