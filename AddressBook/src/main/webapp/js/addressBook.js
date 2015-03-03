@@ -160,9 +160,9 @@ $('#editModal').on('show.bs.modal', function(event){
         modal.find('#edit-city').val(contact.city);
         modal.find('#edit-state').val(contact.state);
         modal.find('#edit-zip').val(contact.zip);
-    })
+    });
     
-})
+});
 
 
 // TEST DATA
