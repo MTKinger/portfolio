@@ -54,6 +54,11 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+        <div class="container-fluid">
+            <div class="col-md-9">
+                <img src="${pageContext.request.contextPath}/img/dvd.png" style="padding-top: 150px; padding-left: 150px"/>
+            </div>
+        </div>
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
